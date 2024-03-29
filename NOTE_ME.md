@@ -192,10 +192,10 @@ Add function messages() to update error message display for username field.
 
 4. Create Home Page UI with TailwindCSS
 
+Commit all updated files into git with comment "Implement username create and update on user".
+
 User not auth will redirect to Login Page.
 After login+authenticated, in home will see something.
-
-Commit all updated files into git with comment "Implement username create and update on user".
 
 - Update welcome page to home page, delete dashboard related code & file
 In web.php, change 'Welcome' to 'Home' in this route here:-
@@ -211,3 +211,5 @@ Create HomeController file, run php artisan make:controller HomeController.
 Add index() function returning view page inside HomeController file.
 Update inside web.php, for route '/', change second parameter from function () into returning HomeController directory.
 Inside 'Home.vue', delete everything inside template tag.
+
+Commit all updated files into git with comment "Clear unnecessary routes and view files".
