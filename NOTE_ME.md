@@ -196,3 +196,18 @@ User not auth will redirect to Login Page.
 After login+authenticated, in home will see something.
 
 Commit all updated files into git with comment "Implement username create and update on user".
+
+- Update welcome page to home page, delete dashboard related code & file
+In web.php, change 'Welcome' to 'Home' in this route here:-
+<!-- Route::get('/', function () {return Inertia::render('Home', ... -->
+Change name of file resources/js/Pages/... from 'Welcome.vue' to 'Home.vue'.
+And that route only accessible by verified/auth user, add this:-
+<!-- ->middleware(['auth', 'verified']). -->
+Delete file of 'Dashboard.vue' from file resources/js/Pages/.. here previously.
+<!-- Comment out any related code to Dashboard inside Home.vue, can ctrl+f search for it. -->
+
+- Update home page related route, controller & view pages
+Create HomeController file, run php artisan make:controller HomeController.
+Add index() function returning view page inside HomeController file.
+Update inside web.php, for route '/', change second parameter from function () into returning HomeController directory.
+Inside 'Home.vue', delete everything inside template tag.
