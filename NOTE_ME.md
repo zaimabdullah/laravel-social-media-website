@@ -34,6 +34,22 @@ php artisan breeze:install = give options Breeze stack to install = we choose Vu
 
 ### By Doing This, our Default Laravel Main Page Got Login + Register Links & Pages + Without Refreshing(see refresh button in browser) = Because of Inertia
 
+--------------------------------------------------------------------------
+Package Used
+
+laravel/breeze - Inertia with Vue in No. 1
+laravel-sluggable in No. 3 
+--------------------------------------------------------------------------
+User Credentials
+
+Husni Zaim, husni@example.com Y3-m2gc7@pG7DEX
+--------------------------------------------------------------------------
+MailPit
+
+port 1025 used to send email
+port 8025 used for dashboard
+--------------------------------------------------------------------------
+
 2. Generate Models and Migrations
 
 Relation Schema
@@ -129,8 +145,54 @@ Open MySQL Workbench should see new DB name there, inside also have all migratio
 
 3. Generate Unique Username on Registration
 
+Commit all updated files into git with comment "Add migrations files for database schema".
 
+- Make sure slug username auto-generated from name field
+As we use inertia with vue, the pages and all things related used is inside resources/js/...
+For register, resources/js/Pages/Auth/Register.vue.
+Will do like this, when user register only provide name, email, password while username will auto-generated AND Only will be update-able in profile later.
 
+Search google spatie sluggable => https://github.com/spatie/laravel-sluggable.
+Package that generate slugs from certain field.
+Run composer require spatie/laravel-sluggable to install the package.
+Find inside the link, part where how to 'using multiple fields to create the slug' + copy it.
+Inside User.php Model file, paste the code + add use HasSlug.
+Update code accordingly, generateSlugsFrom ='name' & saveSlugsTo ='username'.
 
+- Testing by creating new user Husni Zaim/husni@example.com
+Register + verify email + dashboard can display.
 
+- Add username field inside Profile page
+Give the user possibility to change their username in Profile.
 
+For Profile, resources/js/Pages/Profile/Edit.vue = main container, which use other components.
+Inside resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue = the real component that hold the form fields.
+Add username field inside this page.
+
+### Issues
+Make sure Only auto-generated username using slug by getting value based on name Only when Registering, Not Updating Profile.
+
+### Solve
+Check laravel-sluggable github, find 'Prevent slug updates' + copy code needed.
+Paste inside User.php Model file.
+
+### Solve only If User change name, username will not change anymore in Profile.
+Must find reason why change username not being saved.
+
+Inside ProfileUpdateRequest class, web.php -> app/Http/Controllers/ProfileController update() method -> app/Http/Requests/ProfileUpdateRequest class, the rules only return name & email there.
+Add new field 'username' in rules return statement.
+Add 'username' + in fillable inside User.php Model file.
+
+### Need to make sure space is not possible to be used for username, only dot/alphaNumeric/dash/number
+Have to make use of Regex Validator, google laravel validators inside Laravel Doc.
+Use regex inside app/Http/Requests/ProfileUpdateRequest class rules return username.
+Add function messages() to update error message display for username field.
+
+### Done
+
+4. Create Home Page UI with TailwindCSS
+
+User not auth will redirect to Login Page.
+After login+authenticated, in home will see something.
+
+Commit all updated files into git with comment "Implement username create and update on user".
