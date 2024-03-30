@@ -314,3 +314,38 @@ Update code make sure scrolling work again.
 5. Create User Profile Page UI with Tailwind.css
 
 Commit all updated files into git with comment "Use AuthenticatedLayout on home to display navbar".
+
+A user can make it's profile page to be Public or Private.
+
+- Render profile page with url '.../u/{username-slug}' + update/change profile page
+In web.php, add new route to '/u/{username}' that go to index or profile page.
+Change link inside 'AuthenticatedLayout', at here from profile.edit to profile, {username: ...} ===>
+<!-- <template #content><DropdownLink :href="route('profile.edit')"> Profile </DropdownLink> -->
+Do the same thing to Responsive Link with same code.
+Add function index() + use code+little edit from func edit() which the func edit() deleted after that.
+Create a new component + add the code inside 'resources/js/Pages/Profile/View.vue'.
+
+- Render Tab elements for 'About', 'Posts', 'Followers', 'Followings', and 'Photos' inside profile page
+Add styling from Tabs in headlessUI ===> https://headlessui.com/vue/tabs + edit code.
+Add cover area for image, avatar.
+Adjust Tab + TabPanels.
+Create separate component 'resources/js/Pages/Profiel/Partials/TabItem.vue' to hold repeated elements which are button inside Tab element.
+Use this component between Tab inside 'View.vue'.
+
+- Render 'Edit.vue' component as content for 'About' tab button
+Under 'About' tab, we render 'Edit.vue' component + update code accordingly.
+
+- Ensure 'About' tab not display to other user except owner
+Add 'user' => $user in ProfileController func index().
+Add/Change to const authUser = usePage().props.auth.user; + use the 'authUser' inside 'View.vue' & 'AuthenticatedLayout.vue'.
+Inside 'AuthenticatedLayout.vue', we hide 'Dropdown' + 'Responsive Settings Options' using 'authUser' === if 'authUser' not exist/value dont display.
+Inside 'View.vue', we hide 'Tab' + 'TabPanel' + 'Edit Profile' using 'authUser/isMyProfile'.
+Add 'Login' button that bring other user to login-page from our Profile-page inside 'AuthenticatedLayout.vue', find where we use v-else + Link...Login.
+
+### Check how other user will see our profile page by opening the url link in incognito browser.
+
+### Make sure to sometime stop+rerun npm run dev, because things not render properly as should be.
+
+6. User Cover & Avatar Image Upload
+
+Commit all updated files into git with comment "Implement user profile page UI".
