@@ -304,3 +304,13 @@ Use it inside 'FollowingList.vue' component.
 ### Done
 
 Commit all updated files into git with comment "Define website home page".
+
+- Add navigation header same as in '/profile'
+Use 'AuthenticatedLayout.vue' inside 'Home.vue'.
+Update code make sure scrolling work again.
+
+### I change class size inside AuthenticatedLayout <!-- Primary Navigation Menu <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8"> --> from max-w-7xl to max-w-8xl.
+
+5. Create User Profile Page UI with Tailwind.css
+
+Commit all updated files into git with comment "Use AuthenticatedLayout on home to display navbar".
