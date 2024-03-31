@@ -439,3 +439,47 @@ Delete 'Edit Profile' btn from 'View.vue' as we already display the edit form of
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement updating profile details".
+
+#### View.vue main div i change to 900px
+
+- Create a textarea of input field for Post Creation
+Add code in function index() inside 'HomeController.php'.
+Adjusting input field inside 'CreatePost.vue' by changing it to use textarea.
+Lets create separate component for textarea by create 'InputTextarea.vue' in '/resources/js/Components' + copy code from 'TextInput.vue'.
+Use the component inside 'CreatePost.vue'.
+Update the code inside 'InputTextarea.vue' to be autoresize.
+
+- Make Post Creation work
+Create function submit() that connect as click handler to 'submit' button.
+Add route in 'web.php' for submission of Post.
+Create new controller 'PostController.php', run php artisan make:controller PostController --model=Post.
+
+Mistakes below (use resource, SHOULD BE request) Delete the below created
+### Create new resource 'StorePostRequest.php', run php artisan make:resource StorePostRequest.
+### Create new resource 'UpdatePostRequest.php', run php artisan make:resource UpdatePostRequest.
+
+Remake
+### Create new resource 'StorePostRequest.php', run php artisan make:request StorePostRequest.
+### Create new resource 'UpdatePostRequest.php', run php artisan make:request UpdatePostRequest.
+
+Add fillable inside 'Post.php'.
+Add code in function store() inside 'PostController'.
+Add code in 'StorePostRequest'.
+### Done created
+
+- Read back created Post and display
+Update code of retrieve post from DB in function index() inside 'HomeController'.
+Create a new resource, run php artisan make:resource PostResource + add code.
+Create a relation from 'Post.php' Model into 'User', add function user(), group(), attachments() inside 'Post.php'.
+
+Use 'posts' props comes from 'HomeController' which 'Home.vue' received & pass-to 'PostList', pass-to 'PostItem' and render it as Post + update the code.
+Update the code inside 'Home.vue', 'PostList', 'PostItem' to display all data coming from 'posts/post' prop.
+
+### Post should can be created in home, profile and inside of group page.
+
+8. Updating & Deleting of Posts 
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement creating posts".
+
+We gonna create three-dot drop-down button at the top-right of the post and have edit menu item, when click on it we can edit the post + submit.
