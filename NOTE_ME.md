@@ -349,3 +349,45 @@ Add 'Login' button that bring other user to login-page from our Profile-page ins
 6. User Cover & Avatar Image Upload
 
 Commit all updated files into git with comment "Implement user profile page UI".
+
+- Implement user Avatar & profile page update
+Update code in 'View.vue' to add 'Update Cover Image' + some script code at the bottom.
+Make sure cover image coming from backend, So, need the file + code do that.
+Run php artisan make:resource UserResource.
+### UserResource ===> means to transfer user model into some sort of data.
+### Resource generally created for the API BUT DO REMEMBER, here we can use to sanitize data pass from Profile remove any sensitive data because it still can be access through browser if not remove than we process the data.
+
+- Make sure our data not wrap in 'data' : {our data 'id',...}
+Add JsonResource::withoutWrapping(); inside 'AppServiceProvider' for read here ===> https://laravel.com/docs/11.x/eloquent-resources#data-wrapping.
+
+- Prepare Default Image for cover and avatar for profile
+Prepare a default cover image + avatar profile image by downloading image being used and put inside /public/img/ folder and use inside 'View.vue'.
+
+- Add close and submit button with heroicon in cover image, will display after user have choose other cover image
+Handle the svg code that too lengthy by installing package from heroicons ===> https://github.com/tailwindlabs/heroicons. Run npm install @heroicons/vue.
+Add icon in 'View.vue' for 'Close' and 'Submit' of cover image.
+
+- Implement close + submit button to make it work
+Add functions for both close and submit, put it into @click event on the button inside 'View.vue'.
+Add route 'updateImage @ update-cover @ name(profile.updateCover)' for submitting the cover image in 'web.php'.
+Add function updateImage() inside 'ProfileController.php' + add code.
+Run php artisan storage:link for image storing places.
+Add 'cover_path' + 'avatar_path' in fillable 'User.php' model.
+
+- Saving the cover image to public folder + auto into DB
+Saving the images or cover_image inside /storage/app/public/avatars/{user-id} folder/cover_image.jpg, the code inside function updateImage() 'ProfileController.php'.
+
+- Retrive & use the saved cover image
+Inside UserResource.php, in function toArray() use this "cover_url" => Storage::url($this->cover_path), ...
+
+- Redirect after submit + change from display cancel+submit button to display change cover image + with some success notification
+In ProfileController, function updateImage() add this return back()->with('status', 'cover-image-update');.
+In View.vue, make sure function submitCoverImage() has this 
+onSuccess: (user) => { cancelCoverImage();}, inside #.post(..here..).
+In View.vue, also received the status of notification + display the notification with v-show="status === 'cover-image-update'".
+
+- Removing success notification after that + Add error message display if-any
+In 'View.vue', use the showNotification variable + settimeout of 3 seconds to auto remove the notifications of success in change cover img.
+Use the same as showNotification we make in 'View.vue'.
+
+Commit all updated files into git with comment "Implement uploading cover image on user".

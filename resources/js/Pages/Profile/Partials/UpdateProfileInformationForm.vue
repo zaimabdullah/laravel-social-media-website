@@ -1,26 +1,26 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+  import InputError from '@/Components/InputError.vue';
+  import InputLabel from '@/Components/InputLabel.vue';
+  import PrimaryButton from '@/Components/PrimaryButton.vue';
+  import TextInput from '@/Components/TextInput.vue';
+  import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-defineProps({
-  mustVerifyEmail: {
-    type: Boolean,
-  },
-  status: {
-    type: String,
-  },
-});
+  defineProps({
+    mustVerifyEmail: {
+      type: Boolean,
+    },
+    status: {
+      type: String,
+    },
+  });
 
-const user = usePage().props.auth.user;
+  const user = usePage().props.auth.user;
 
-const form = useForm({
-  name: user.name,
-  username: user.username,
-  email: user.email,
-});
+  const form = useForm({
+    name: user.name,
+    username: user.username,
+    email: user.email,
+  });
 </script>
 
 <template>
@@ -37,8 +37,7 @@ const form = useForm({
       <div>
         <InputLabel for="name" value="Name" />
 
-        <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus
-          autocomplete="name" />
+        <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autocomplete="name" />
 
         <InputError class="mt-2" :message="form.errors.name" />
       </div>
@@ -46,7 +45,7 @@ const form = useForm({
       <div>
         <InputLabel for="username" value="Username" />
 
-        <TextInput id="username" type="text" class="mt-1 block w-full" v-model="form.username" required autofocus
+        <TextInput id="username" type="text" class="mt-1 block w-full" v-model="form.username" required
           autocomplete="username" />
 
         <InputError class="mt-2" :message="form.errors.username" />
