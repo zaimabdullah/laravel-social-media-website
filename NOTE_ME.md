@@ -391,3 +391,9 @@ In 'View.vue', use the showNotification variable + settimeout of 3 seconds to au
 Use the same as showNotification we make in 'View.vue'.
 
 Commit all updated files into git with comment "Implement uploading cover image on user".
+
+- Update folder name that store cover img + delete old cover img when add other
+Update folder from avatars/ to user-{user-id}.
+Add code of delete inside 'ProfileController.php' in function updateImage().
+
+Commit all updated files into git with comment "Delete previous cover image on update".
