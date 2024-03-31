@@ -69,6 +69,7 @@ Run php artisan make:model Follower -m === create Follower model file & migratio
 <!-- Dont Do Yet Run php artisan make:model Notification -m === create Notification model file & migration db table -->
 
 - Make git repo and commit stages
+#### Make Git Commit
 First commit all folders and file except folder models(all) + all migrations files just created above with comment of "Setup the project and install laravel/breeze with vue".
 Second commit folder model and all migration files that just being created above with comment of "Generate empty models and migrations".
 
@@ -147,6 +148,7 @@ Open MySQL Workbench should see new DB name there, inside also have all migratio
 
 3. Generate Unique Username on Registration
 
+#### Make Git Commit
 Commit all updated files into git with comment "Add migrations files for database schema".
 
 - Make sure slug username auto-generated from name field
@@ -194,6 +196,7 @@ Add function messages() to update error message display for username field.
 
 4. Create Home Page UI with TailwindCSS
 
+#### Make Git Commit
 Commit all updated files into git with comment "Implement username create and update on user".
 
 User not auth will redirect to Login Page.
@@ -214,6 +217,7 @@ Add index() function returning view page inside HomeController file.
 Update inside web.php, for route '/', change second parameter from function () into returning HomeController directory.
 Inside 'Home.vue', delete everything inside template tag.
 
+#### Make Git Commit
 Commit all updated files into git with comment "Clear unnecessary routes and view files".
 
 ### Issue
@@ -303,6 +307,7 @@ Create new component 'FollowingListItems.vue' and put the code of TextInput + di
 Use it inside 'FollowingList.vue' component.
 ### Done
 
+#### Make Git Commit
 Commit all updated files into git with comment "Define website home page".
 
 - Add navigation header same as in '/profile'
@@ -313,6 +318,7 @@ Update code make sure scrolling work again.
 
 5. Create User Profile Page UI with Tailwind.css
 
+#### Make Git Commit
 Commit all updated files into git with comment "Use AuthenticatedLayout on home to display navbar".
 
 A user can make it's profile page to be Public or Private.
@@ -348,6 +354,7 @@ Add 'Login' button that bring other user to login-page from our Profile-page ins
 
 6. User Cover & Avatar Image Upload
 
+#### Make Git Commit
 Commit all updated files into git with comment "Implement user profile page UI".
 
 - Implement user Avatar & profile page update
@@ -363,13 +370,14 @@ Add JsonResource::withoutWrapping(); inside 'AppServiceProvider' for read here =
 - Prepare Default Image for cover and avatar for profile
 Prepare a default cover image + avatar profile image by downloading image being used and put inside /public/img/ folder and use inside 'View.vue'.
 
+### Update, Save Cover Image
 - Add close and submit button with heroicon in cover image, will display after user have choose other cover image
 Handle the svg code that too lengthy by installing package from heroicons ===> https://github.com/tailwindlabs/heroicons. Run npm install @heroicons/vue.
 Add icon in 'View.vue' for 'Close' and 'Submit' of cover image.
 
 - Implement close + submit button to make it work
 Add functions for both close and submit, put it into @click event on the button inside 'View.vue'.
-Add route 'updateImage @ update-cover @ name(profile.updateCover)' for submitting the cover image in 'web.php'.
+Add route 'updateImage @ update-cover @ name(profile.updateImages)' for submitting the cover image in 'web.php'.
 Add function updateImage() inside 'ProfileController.php' + add code.
 Run php artisan storage:link for image storing places.
 Add 'cover_path' + 'avatar_path' in fillable 'User.php' model.
@@ -390,10 +398,30 @@ In View.vue, also received the status of notification + display the notification
 In 'View.vue', use the showNotification variable + settimeout of 3 seconds to auto remove the notifications of success in change cover img.
 Use the same as showNotification we make in 'View.vue'.
 
+#### Make Git Commit
 Commit all updated files into git with comment "Implement uploading cover image on user".
 
 - Update folder name that store cover img + delete old cover img when add other
 Update folder from avatars/ to user-{user-id}.
 Add code of delete inside 'ProfileController.php' in function updateImage().
 
+#### Make Git Commit
 Commit all updated files into git with comment "Delete previous cover image on update".
+
+### Update, Save Avatar
+- Add heroicon + button cancel, submit + click handler function
+Use the heroicon + btn use in cover image into avatar + update icon and code.
+Update the name of click handler function receive into ...Avatar... .
+Add the new function below.
+Remove all text between button and heroicon in this avatar part.
+
+- Add storing code of avatar
+Inside 'ProfileController.php', copy+paste the if statement of cover image and change to avatar.
+Adjust the code for 'success' notification inside updateImage() and index() of 'ProfileController.php'.
+Use the 'success' inside 'View.vue' for displaying the success notification in script defineProp and template.
+
+- Retrive & use the saved avatar image
+Inside UserResource.php, in function toArray() use this "avatar_url" => Storage::url($this->avatar_path), ...
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement uploading avatar image on user".
