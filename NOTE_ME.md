@@ -352,7 +352,7 @@ Add 'Login' button that bring other user to login-page from our Profile-page ins
 
 ### Make sure to sometime stop+rerun npm run dev, because things not render properly as should be.
 
-6. User Cover & Avatar Image Upload
+6. User Cover & Avatar Image Upload + Profile Details Update
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement user profile page UI".
@@ -425,3 +425,17 @@ Inside UserResource.php, in function toArray() use this "avatar_url" => Storage:
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement uploading avatar image on user".
+
+### Profile Detail Update
+- Use route for update + destroy, update redirect path after update
+Uncomment the code of those 2 inside 'web.php'.
+Update code for redirect path with success msg inside function update() in 'ProfileController.php'.
+
+- Change 'About' tab name + Remove 'Edit Profile' btn
+Change the name of 'About' tab name to 'My Profile'.
+Delete 'Edit Profile' btn from 'View.vue' as we already display the edit form of our profile inside 'My Profile' tab.
+
+7. Implement Post Creation
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement updating profile details".
