@@ -8,11 +8,6 @@
 
   const input = ref(null);
 
-  onMounted(() => {
-    if (input.value.hasAttribute('autofocus')) {
-      input.value.focus();
-    }
-  });
 
   defineExpose({ focus: () => input.value.focus() });
 
@@ -30,6 +25,13 @@
       input.value.style.height = (input.value.scrollHeight + 1) + 'px';
     }
   }
+
+  onMounted(() => {
+    if (input.value.hasAttribute('autofocus')) {
+      input.value.focus();
+    }
+    adjustHeight();
+  });
 
   watch(model, () => {
     setTimeout(() => {

@@ -483,3 +483,60 @@ Update the code inside 'Home.vue', 'PostList', 'PostItem' to display all data co
 Commit all updated files into git with comment "Implement creating posts".
 
 We gonna create three-dot drop-down button at the top-right of the post and have edit menu item, when click on it we can edit the post + submit.
+
+- Add drop-down menu button
+Get the example of drop-down menu button from heaadlessUI ===> https://headlessui.com/vue/menu + use it inside 'PostItem'.
+Adjust the code to make sure drop-down menu display properly + as needed.
+
+- Display dialog after click edit menu
+Make the dialog code in separate component 'PostModal.vue' + use this inside 'PostItem.vue' at the bottom.
+Take code of example of Dialog from headlessUI ===> https://headlessui.com/vue/dialog + put it into 'PostModal' & adjust code.
+Adding func show() inside 'PostModal' + using func showEditModal inside 'PostItem' make clicking edit menu opened the modal work.
+Adding teleport tag inside 'PostModal'.
+
+- Update content of modal
+Change DialogTitle text.
+Add textarea field inside DialogPanel in 'PostModal'.
+
+We want to add user icon and little bit details like in 'PostItem' inside this modal.
+
+- Create new component 'PostUserHeader' for display icon + name + date(optional)
+Create the new component + add code by copy + paste code from 'PostItem'.
+Use this 'PostUserHeader' component inside 'PostItem' & 'PostModal' for now.
+Add X(XMarkIcon) icon inside DialogTitle for closing the modal.
+Update class styling.
+Use button 'submit' styling same like in 'CreatePost'.
+
+- Create submit() function
+2 ways to handle submit from this modal :-
+i- like we use before, inertia form way which is make a post request on the form.
+ii- through custom HTTP request maybe through axios.
+For now, stick to traditional way which number one, but later gonna have to use axios.
+Use form inside function submit().
+Reroute the page after form submit.
+
+- Initialize the route
+Inside web.php, add the post.update route.
+
+- Update the function update()
+Inside 'PostController', add code inside function update().
+We also change some authorize rule inside 'UpdatePostRequest' that being used inside func update().
+
+- Update the 'InputTextarea' that only change size on input event
+Add onMounted inside 'InputTextarea' + call adjustHeight() in it that will make modal that just mounted to the screen already adjust the height of textarea accordingly.
+
+*- Handling of each post has it own PostModal
+Cut PostModal component used inside 'PostItem'.
+Paste it inside 'PostList'.
+Create func openEditModal() + defineEmits of 'editClick' inside 'PostItem'.
+Take showModal from 'PostItem' into 'PostList'.
+
+- Adjust the input value that currently update on live-changes of post
+#### Currently, when we open modal for edit the post, and when user typing any update sentence/things inside input field, at the behind the modal we can see that that old post also being updated-live-update.
+#### What we want to do = listen to props.post + create a copy of that and give that copy into textarea/input field + only after submit click, the updated data from the copy will be send + else we roll-back to the old post value/data.
+Add watch on props.post inside 'PostModal' component.
+Update func submit() to be working again + add preserveScroll to make sure after update a post, browser auto go-to that updated post, no need to scroll back to find it again.
+Display updated_at time not created_at inside 'PostUserHeader'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement post update".
