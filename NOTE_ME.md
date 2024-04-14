@@ -540,3 +540,17 @@ Display updated_at time not created_at inside 'PostUserHeader'.
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement post update".
+
+Let's implement post delete
+
+- Initialize the route for delete post inside 'web.php'
+- Add code inside func destroy() inside 'PostController'.
+- Add func deletePost() and listen to it inside 'PostItem'.
+
+9. Add CKEditor During Post Creation
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement post delete".
+
+
+
