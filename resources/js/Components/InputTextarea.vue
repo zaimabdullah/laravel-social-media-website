@@ -3,7 +3,7 @@
 
   const model = defineModel({
     type: String,
-    required: true,
+    required: false,
   });
 
   const input = ref(null);

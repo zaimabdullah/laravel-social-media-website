@@ -552,7 +552,7 @@ Let's implement post delete
 #### Make Git Commit
 Commit all updated files into git with comment "Implement post delete".
 
-- Upgrade the create + edit post input/textarea field into rich-text editor(CKEditor)
+- Upgrade the edit post input/textarea field into rich-text editor(CKEditor)
 Go to https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/vuejs-v3.html, in Quick Start, need to run install command.
 Inside '/resource/js/app.js', add .use(CKEditor) and its import.
 Add ckeditor component inside 'PostModal' component for edit a post.
@@ -570,5 +570,20 @@ Add class name of 'ck-content-output' inside where we use 'post.body' in 'PostIt
 #### Make Git Commit
 Commit all updated files into git with comment "Add ckeditor in post update modal".
 
+- Upgrade the post creation into ckeditor
+Update the code inside 'CreatePost' + func submit(), 'update post' text 'PostModal' + func share() 'HandleInertiaRequests' + model defineModel required to false 'InputTextarea'.
+
+- empty post giving error in displaying all post
+Inside 'PostItem', the substring() give error because cannot read of 'null' value store in DB when user not enter anything in post creation input field.
+Add a line for 'body' to make an 'empty string value' store inside DB if none value given inside input field in func prepareForValidation() 'StorePostRequest'.
+
+- Enable air mode in ckeditor (make use of balloon)
+## Run npm install --save @ckeditor/ckeditor5-build-balloon.
+Add + use this package inside 'PostModal' component.
+## Run npm uninstall --save @ckeditor/ckeditor5-build-classic to remove previously used ckeditor basic.
+## Reinstall classic by run Run npm install --save @ckeditor/ckeditor5-build-classic + use it inside 'PostModal'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement post creation through PostModal".
 
 
