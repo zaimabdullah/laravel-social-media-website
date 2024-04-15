@@ -27,8 +27,9 @@
                   <!-- <pre>{{ post }}</pre> -->
 
                   <PostUserHeader :post="post" :show-time="false" class="mb-4" />
-                  <InputTextarea @click="postCreating = true" class="mb-3 w-full"
-                    placeholder="Click here to create new post" rows="1" v-model="form.body"></InputTextarea>
+                  <ckeditor :editor="editor" v-model="form.body" :config="editorConfig"></ckeditor>
+                  <!-- <InputTextarea @click="postCreating = true" class="mb-3 w-full"
+                    placeholder="Click here to create new post" rows="1" v-model="form.body" /> -->
                 </div>
                 <div class="py-3 px-4">
                   <button type="button"
@@ -48,7 +49,7 @@
 </template>
 
 <script setup>
-  import { computed, watch, reactive } from 'vue';
+  import { computed, watch } from 'vue';
   import { XMarkIcon } from '@heroicons/vue/24/solid';
   import {
     TransitionRoot,
@@ -60,6 +61,12 @@
   import InputTextarea from "../InputTextarea.vue";
   import PostUserHeader from "./PostUserHeader.vue";
   import { useForm } from '@inertiajs/vue3';
+  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+  const editor = ClassicEditor;
+  const editorConfig = {
+    toolbar: ['heading', '|', 'bold', 'italic', '|', 'link', '|', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote']
+  };
 
   const props = defineProps({
     post: {

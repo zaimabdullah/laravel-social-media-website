@@ -552,5 +552,23 @@ Let's implement post delete
 #### Make Git Commit
 Commit all updated files into git with comment "Implement post delete".
 
+- Upgrade the create + edit post input/textarea field into rich-text editor(CKEditor)
+Go to https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/vuejs-v3.html, in Quick Start, need to run install command.
+Inside '/resource/js/app.js', add .use(CKEditor) and its import.
+Add ckeditor component inside 'PostModal' component for edit a post.
+
+- Custom the toolbar of ckeditor (there is something not needed provided defaultly)
+Add toolbar inside editorConfig inside 'PostModal' component.
+
+- Solving things related to (bulletpoint/number point/heading from ckeditor reset because using tailwind)
+Take css styling from here https://github.com/thecodeholic/laravel-vue-ecommerce/blob/main/backend/src/index.css, & put inside resource/css/index.css class name of 'ck-content'.
+Now text render properly + nicely inside the input field BUT not inside the list of post yet.
+Add class name of 'ck-content-output' inside where we use 'post.body' in 'PostItem'.
+
+<!-- - IGNORE Adjust how to make 'read more' be display, not by use calculating >200 characters -->
+
+#### Make Git Commit
+Commit all updated files into git with comment "Add ckeditor in post update modal".
+
 
 
