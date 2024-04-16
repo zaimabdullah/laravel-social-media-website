@@ -1,8 +1,7 @@
 <script setup>
   import { ref } from "vue";
-  import InputTextarea from "../InputTextarea.vue";
   import PostModal from './PostModal.vue';
-  import { useForm, usePage } from "@inertiajs/vue3";
+  import { usePage } from "@inertiajs/vue3";
 
   const authUser = usePage().props.auth.user;
 

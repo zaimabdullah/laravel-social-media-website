@@ -586,4 +586,12 @@ Add + use this package inside 'PostModal' component.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement post creation through PostModal".
 
+- When we logout the page will redirect us to login page and there is error of id null because just now we have + need to change the HandleInertiaRequest which we get 'user' data from UserResource now which that was null when user not login.
+Update the code to check either login user exist or not.
 
+10. Uploading Attachments on frontend only
+
+#### Make Git Commit
+Commit all updated files into git with comment "Fix bug in HandleInertiaRequests".
+
+- 
