@@ -4,17 +4,13 @@
   import { PencilIcon, TrashIcon, EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
   import PostUserHeader from '@/Components/app/PostUserHeader.vue';
   import { router } from '@inertiajs/vue3';
+  import { isImage } from '@/helpers';
 
   const props = defineProps({
     post: Object
   });
 
   const emit = defineEmits(['editClick']);
-
-  function isImage(attachment) {
-    const mime = attachment.mime.split('/');
-    return mime[0].toLowerCase() === 'image';
-  }
 
   function openEditModal() {
     emit('editClick', props.post);
@@ -52,18 +48,18 @@
             <div class="px-1 py-1">
               <MenuItem v-slot="{ active }">
               <button @click="openEditModal" :class="[
-        active ? 'bg-indigo-500 text-white' : 'text-gray-900',
-        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-      ]">
+                active ? 'bg-indigo-500 text-white' : 'text-gray-900',
+                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              ]">
                 <PencilIcon class="mr-2 h-5 w-5" aria-hidden="true" />
                 Edit
               </button>
               </MenuItem>
               <MenuItem v-slot="{ active }">
               <button @click="deletePost" :class="[
-        active ? 'bg-indigo-500 text-white' : 'text-gray-900',
-        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-      ]">
+                active ? 'bg-indigo-500 text-white' : 'text-gray-900',
+                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+              ]">
                 <TrashIcon class="mr-2 h-5 w-5" aria-hidden="true" />
                 Delete
               </button>

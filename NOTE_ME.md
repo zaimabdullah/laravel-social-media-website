@@ -594,4 +594,40 @@ Update the code to check either login user exist or not.
 #### Make Git Commit
 Commit all updated files into git with comment "Fix bug in HandleInertiaRequests".
 
-- 
+- Make a place to render file attachment in Modal(PostModal.vue)
+Copy+paste code for place to render attachment from 'PostItem' into 'PostModal'.
+Take function isImage() from 'PostItem' and add into separate js file 'resources/js/helpers.js'.
+Make new function 'onAttachmentChoose()' & 'readFile()' related to read+manipulate the file attachment inside 'PostModal'.
+Update the code inside 'PostModal' + 'helpers.js' + 'PostItem'.
+
+- Add remove file attachment icon + function
+Add XMarkIcon + function removeFile() inside 'PostModal'.
+
+- Render only 3 first files while add 'view more' on the forth when attach a lot files
+Update code inside 'PostModal' however we cannot delete the other attach files anymore, this things should be implement in rendering files that have been submitted into DB.
+So, we undo the changes BUT the code will be saved here first:
+<!-- <template v-for="(myFile, ind) of attachmentFiles.slice(0, 4)">
+
+  <div class="group aspect-square bg-blue-100 flex flex-col items-center justify-center text-gray-500 relative">
+    <div v-if="ind === 3" class="absolute left-0 top-0 right-0 bottom-0 z-10 bg-black/60 text-white flex items-center justify-center text-xl">
+      +{{ attachmentFiles.length - 4 }} more
+    </div>
+
+    // remove attachment
+    <button @click="removeFile(myFile)" class="absolute z-20 right-3 top-3 w-7 h-7 flex items-center justify-center bg-black/30 text-white rounded-full hover:bg-black/40">
+      <XMarkIcon class="h-4 w-4" />
+    </button>
+    // /remove attachment
+
+    <img v-if="isImage(myFile.file)" :src="myFile.url" class="object-cover aspect-square" />
+
+    <template v-else>
+      <PaperClipIcon class="w-10 h-10 mb-3" />
+      <small class="text-center">{{ myFile.file.name }}</small>
+    </template>
+  </div>
+</template> -->
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement uploading attachments on vue.js side".
+
