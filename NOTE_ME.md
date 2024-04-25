@@ -631,3 +631,51 @@ So, we undo the changes BUT the code will be saved here first:
 #### Make Git Commit
 Commit all updated files into git with comment "Implement uploading attachments on vue.js side".
 
+- Focus on server-side which save files into DB
+Add attachments in useForm inside 'PostModal'.
+Use it inside func submit().
+Test + check does the post req + data is submit into the server (sometime Chrome do not show the req data, have to try inside Firefox).
+
+- Specify validation of max-num of files & files-type(mime)
+Add the max number of attachments to 10 inside func rules() in backend-related-file 'StorePostRequest'.
+Specify all kind of file's type will be support inside File::types() same page.
+
+- Make reset form after submit
+Create func resetModal() call within func closeModal().
+Use closeModal() inside func submit() ->onSuccess.
+
+
+- Folder to store the attachment submitted
+Later we want our attachment to accessible in the browser so they should be inside 'storage/app/public'.
+The 'storage/app/public' folder is link to 'storage' in another public folder.
+We want to make another folder specific for attachment and within it may have subfolder, CURRENTLY we only have specific folder for each user(user-{userID}).
+
+- Add column size inside table post_attachments DB
+Run php artisan make:migration add_size_column_to_post_attachments_table.
+Add code inside that file to specify adding the column size.
+Run php artisan migrate.
+
+- Save the attach files into public folder
+Inside 'PostController', iterate over files data to store each file inside the public folder.
+This attachments will be saved inside 'storage/app/public/attachments/{post->id}'.
+Add fillable inside 'PostAttachment' same field use inside 'PostController' at PostAttachment::create([...this one...]).
+
+- Make safe-failed security when success/fail to process attachments
+Add DB-transaction, because we do not want, if we create post with attachment but the attachment is failed, that post STILL created inside the Database.
+Create checking with transaction, if attachments okay THEN commit, if attachments failed THEN rollback.
+One more checking for the foreach loop because if the PostAttachment::create which save the data into DB is failed, the part $file->store which store file inside public folder still success and remain there.
+Create $allFilePaths to store all path created, & iterate over it in catch() when failed to delete it back.
+Add const UPDATED_AT = null; inside 'PostAttachment'.
+
+- Work on the preview after post + attachment successfully submit + save in DB
+Run php artisan make:resource PostAttachmentResource.
+Use the PostAttachmentResource inside func toArray() 'PostResource'.
+Add code inside 'PostAttachmentResource'.
+Make use of the code commented above, and use it inside 'PostItem'.
+Make the display of attachments if only 1 use class 'grid-cols-1' otherwise use 'grid-cols-2' inside 'PostItem' & 'PostModal'.
+Change z-[value] inside 'PostModal' for Dialog & 'PostItem' for Download btn.
+
+11. Delete and download post attachments
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement uploading attachments on server side".
