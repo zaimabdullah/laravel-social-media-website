@@ -720,3 +720,15 @@ Add overwrite function boot() inside 'PostAttachment'.
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement editing post attachments: Removing and adding new ones".
+
+- Downloading Attachment
+Change button to anchor inside 'PostItem'.
+Add route for download inside 'web.php'.
+Add function downloadAttachment() + code inside 'PostController'.
+Add href url to route path in web.php inside 'PostItem' at <!-- Download -->.
+## Done Download Attachment
+
+11. Preview Post Attachments on Full Screen
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement downloading attachments on the post.".
