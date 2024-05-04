@@ -679,3 +679,44 @@ Change z-[value] inside 'PostModal' for Dialog & 'PostItem' for Download btn.
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement uploading attachments on server side".
+
+- Edit/Update existing file
+(Before That we makesure to display the existing file when editing first)
+At first inside 'PostModal', we duplicate <!-- Attachment --> section code, and change a little bit to display the existing file uploaded on a post. = after click edit, modal display post edit input field + any attachmment that uploaded for that post should display here.
+The code was so similar a lot, so we gonna make a changes by make computedAttachments (computed property) to make the code simpler and leaner.
+Remove the duplicate code before.
+Use the computedAttachments inside <!-- Attachment --> section.
+Update code that use myFile beforethis into (myFile.file || myFile) for certain places.
+
+### (Now the existing has displayed and new attachment also can be added & display together BUT do not have any clarification which one is existing and new, but we will tackle about removing by clicking 'x' icon, if click on new one we just need to remove that from attachmentFiles & not send to server, BUT for existing it has to delete from server too as it already exist there)
+Inside func removeFile() 'PostModal', update code by checking if new file or existing file is currently trying to be remove + Do some styling for that 'to be deleted' attachment.
+Add also the 'Undo' for that to be deleted attachment by add undoDelete() function + icon.
+Add z-[value] inside 'PostItem' for <Menu> item.
+
+- Error on edit post, first it just created new post when submit an edit + second error 403
+Adding _method in useForm() inside 'PostModal'.
+Use it inside function submit() // update.
+
+- When edit a post, sometimes the data for body of that post not display + error when closing the modal/dialog
+Add emit of 'hide' in function closeModal() & defineEmits() inside 'PostModal'.
+Use this emit 'hide'/@hide inside 'PostList' & add+connect it to function onModalHide() for reseting the post value to be null.
+Change code in watch() add if(), delete form.id inside 'PostModal'.
+Delete id: from useForm() inside 'PostModal'.
+Change code in computedAttachments = computed() inside 'PostModal'.
+Update code inside 'UpdatePostRequest'.
+Add some code inside editPost.value in function onModalHide() inside 'PostList'. 
+#### => onModalHide() is for reseting any value of post when modal is close & pass it into PostModal in watch(), assigning form.body to a value.
+Inside 'UpdatePostRequest', we extends the file to StorePostRequest file as function rules() would be just the same & function authorize() only diff.
+Update the code in function update() inside 'PostController', just use code from store().
+Add ->latest() to function attachments() in 'Post'.
+## Done Edit/Add Attachment of Post
+
+- Deleting attachments
+Add an overwrite rules for 'deleted_file_ids' inside 'UpdatePostRequest'.
+Use this inside function update() 'PostController'.
+Query over PostAttachment for each attachments available using ids inside $deleted_ids based on post_id.
+Add overwrite function boot() inside 'PostAttachment'.
+## Done Delete Attachment of Post (From DB + File System)
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement editing post attachments: Removing and adding new ones".
