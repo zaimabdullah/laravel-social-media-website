@@ -728,7 +728,27 @@ Add function downloadAttachment() + code inside 'PostController'.
 Add href url to route path in web.php inside 'PostItem' at <!-- Download -->.
 ## Done Download Attachment
 
-11. Preview Post Attachments on Full Screen
+12. Preview Post Attachments on Full Screen
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement downloading attachments on the post.".
+
+- Update code in 'PostItem'
+Change template to div for not image file like in PostModal.
+Add click handler to div that trigger new function openAttchment().
+
+- Create new modal AttachmentPreviewModal.vue copy from PostModal
+Remove some code inside 'AttachmentPreviewModal'.
+Add AttachmentPreviewModal inside 'PostList' with passing some value to it + add emit to PostItem too (@attachmentClick + openAttachmentPreviewModal).
+Add a few function related to data that being pass to 'AttachmentPreviewModal' inside 'PostList'.
+Add emit definition + use the emit inside function openAttachment() inside 'PostItem'.
+
+# Change the index of attachment being preview with next-preview-button clicked
+Add currentIndex = coumputed() for props.index to get and set value of index.
+Use this computed property value inside function prev() & next() for updating index value.
+Adjust the styling.
+
+13. Post Attachments Validation
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement preview of the attachments.".
