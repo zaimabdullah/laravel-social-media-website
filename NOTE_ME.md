@@ -752,3 +752,22 @@ Adjust the styling.
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement preview of the attachments.".
+
+### After submit post with attachment that is not allowed to be uploaded, we already have the error data Under Preview inside Inspect Element -> Network -> localhost(things we send to server) -> Preview looks at props->error.
+### Now lets display the error/validation but different type which is if we want to send multiple attachment but the file MIME Type provided is not support for this project, we want to display the error under each of that attachment.
+Add onError: in function submit() inside 'PostModal'.
+Overwrite function messages() inside 'StorePostRequest'.
+Add function processErrors() to separate error handling and use it inside the onError: inside function submit() 'PostModal'.
+Add 'sentence' that provides info about supported MIME Type here <!-- Support Extension --> inside 'PostModal'.
+The list of supported MIME Type is in Backend inside 'StorePostRequest' & to access that add a line inside 'HandleInertiaRequests' function share(). = 'attachmentExtensions' => StorePostRequest::$extensions.
+Use 'attachmentExtensions' inside 'PostModal'. = const attachmentExtensions = usePage().props.attachmentExtensions.
+Display the list of supported MIME Type only when user upload a unsupported attachment by checking it inside function onAttachmentChoose() 'PostModal'.
+
+14. Customize Uploaded File Size
+
+#### Make Git Commit
+Commit all updated files into git with comment "Display proper validation errors on attachments".
+ 
+
+
+
