@@ -47,7 +47,7 @@ class StorePostRequest extends FormRequest
       ],
       'attachments.*' => [
         'file',
-        File::types(self::$extensions)
+        File::types(self::$extensions),
       ],
       'user_id' => ['numeric']
     ];
