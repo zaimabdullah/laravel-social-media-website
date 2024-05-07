@@ -768,6 +768,33 @@ Display the list of supported MIME Type only when user upload a unsupported atta
 #### Make Git Commit
 Commit all updated files into git with comment "Display proper validation errors on attachments".
  
+- Change/Customize default number of uploaded file & max file size
+#### The default number of file uploaded is 20 & max size is 100Megabyte, this project validation currently that we code inside 'StorePostRequest' have allow file uploaded to 50 + max size 500Megabyte will NOT WORK because of that Laravel+Laravel Sail default value.
+#### PHP Version 8.3.4
+To custom it, go to Laravel Sail inside Laravel Documentation -> Customization, will give command 'sail artisan sail:publish'.
+But if the cmd inside a bash already has to run like this 'php artisan sail:publish'.
+& if outside bash like this './vendor/bin/sail artisan sail:publish'. ---> Run this one here.
+Rewrite the echo phpinfo(); exit; inside /public/index.php file to open in browser the php info page.
+Now, open php.ini file from /docker/8.3-folder/php.ini.
 
+#### We want to implement validation of allow upload 50 files, and each file can be max of 500MB, but totally all files should not be more than 1GB. inside 'StorePostRequest'
+Add code inside function rules() inside 'StorePostRequest'.
+Change and add code inside '/docker/8.3-folder/php.ini' to specify new default number of uploaded file & max size.
+Outside bash cmd, run ./vendor/bin/sail build --no-cache.
+Run ./vendor/bin/sail up -d + npm run dev in bash cmd.
+Open browser localhost, now default number of uploaded file & max size has change to what we have specify.
+Need to have diff types of validation errors msg, 
+-> in the order of code inside 'StorePostRequest', 
+1. max number of file uploaded exceed (50) + 
+2. max total size exceed (1GB) + 
+3. for each file uploaded, type not supported, 
+so have to think how to check and custom all that msg properly inside 'StorePostRequest'.
+Change the showExtensionsText from ref() into computed() property inside 'PostModal' so that it can display when file type not supported is selected & hide when that file is remove back.
+
+15. Implement Reactions on Posts
+
+#### Make Git Commit
+Commit all updated files into git with comment "Call sail:publish and customize php.ini file".
+Commit all updated files into git with comment "".
 
 
