@@ -37,7 +37,7 @@
    */
   const attachmentFiles = ref([]);
   const attachmentErrors = ref([]);
-  const showExtensionsText = ref(false);
+  const formErrors = ref({});
 
   const form = useForm({
     body: '',
@@ -55,6 +55,22 @@
     return [...attachmentFiles.value, ...(props.post.attachments || [])];
   });
 
+  // to display unsupported extension msg
+  const showExtensionsText = computed(() => {
+    for (let myFile of attachmentFiles.value) {
+      const file = myFile.file;
+      // parts when a file name => name.svg.png => save svg.png
+      let parts = file.name.split('.');
+      let ext = parts.pop().toLowerCase();
+      // decide to display or not here
+      if (!attachmentExtensions.includes(ext)) {
+        return true;
+      }
+    }
+
+    return false;
+  });
+
   const emit = defineEmits(['update:modelValue', 'hide']);
 
   watch(() => props.post, () => {
@@ -69,8 +85,8 @@
 
   function resetModal() {
     form.reset();
+    formErrors.value = {};
     attachmentFiles.value = [];
-    showExtensionsText.value = false;
     attachmentErrors.value = [];
     if (props.post.attachments) {
       props.post.attachments.forEach(file => file.deleted = false);
@@ -107,6 +123,7 @@
   }
 
   function processErrors(errors) {
+    formErrors.value = errors;
     for (const key in errors) {
       if (key.includes('.')) {
         const [, index] = key.split('.');
@@ -117,16 +134,7 @@
   }
 
   async function onAttachmentChoose($event) {
-    // control display supported extension
-    showExtensionsText.value = false;
     for (const file of $event.target.files) {
-      // parts when a file name => name.svg.png => save svg.png
-      let parts = file.name.split('.');
-      let ext = parts.pop().toLowerCase();
-      // decide to display or not here
-      if (!attachmentExtensions.includes(ext)) {
-        showExtensionsText.value = true;
-      }
       const myFile = {
         file,
         url: await readFile(file)
@@ -202,13 +210,20 @@
                   <PostUserHeader :post="post" :show-time="false" class="mb-4" />
                   <ckeditor :editor="editor" v-model="form.body" :config="editorConfig"></ckeditor>
 
-                  <!-- Support Extension -->
+                  <!-- Support Extension Error -->
                   <div v-if="showExtensionsText"
                     class="border-l-4 border-amber-500 py-2 px-3 bg-amber-100 mt-3 text-gray-800">
                     Files must be one of the following extensions
                     <small>{{ attachmentExtensions.join(', ') }}</small>
                   </div>
-                  <!--/ End Support Extension -->
+                  <!--/ End Support Extension Error -->
+
+                  <!-- Total Size Error -->
+                  <div v-if="formErrors.attachments"
+                    class="border-l-4 border-red-500 py-2 px-3 bg-red-100 mt-3 text-gray-800">
+                    {{ formErrors.attachments }}
+                  </div>
+                  <!--/ End Total Size Error -->
 
                   <!-- Attachment -->
                   <div class="grid gap-3 my-3" :class="[

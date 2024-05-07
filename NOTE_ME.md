@@ -795,6 +795,6 @@ Change the showExtensionsText from ref() into computed() property inside 'PostMo
 
 #### Make Git Commit
 Commit all updated files into git with comment "Call sail:publish and customize php.ini file".
-Commit all updated files into git with comment "".
+Commit all updated files into git with comment "Add global size validation on all attachments".
 
 
