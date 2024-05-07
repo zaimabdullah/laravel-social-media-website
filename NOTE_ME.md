@@ -25,6 +25,8 @@ Stop project = ./vendor/bin/sail stop
 Going into main container/Laravel container = ./vendor/bin/sail bash
 Run npm run dev
 
+Run exit to out from bash cmd
+
 ## Run any artisan cmd and other related to laravel proj
 Going into main container/Laravel container = ./vendor/bin/sail bash
 Run any cmd there
@@ -37,10 +39,14 @@ php artisan breeze:install = give options Breeze stack to install = we choose Vu
 ### By Doing This, our Default Laravel Main Page Got Login + Register Links & Pages + Without Refreshing(see refresh button in browser) = Because of Inertia
 
 --------------------------------------------------------------------------
-Package Used
+Package/Dependencies Used
 
 laravel/breeze - Inertia with Vue in No. 1
 laravel-sluggable in No. 3 
+headlessui in No. 4
+heroicons in No. 6
+ckeditor in No. 9
+axios - in No. 15
 --------------------------------------------------------------------------
 User Credentials
 
@@ -797,4 +803,48 @@ Change the showExtensionsText from ref() into computed() property inside 'PostMo
 Commit all updated files into git with comment "Call sail:publish and customize php.ini file".
 Commit all updated files into git with comment "Add global size validation on all attachments".
 
+- Lets make the post req using axios(alternative fetch API)
+Inside batch cmd, run npm install -S axios
+Create '/resources/js/axios.js' file.
+Web -search 'https://axios-http.com/docs/interceptors' to copy some code and paste inside 'axiosClient.js'.
+Add click handler with its function sendReaction() inside 'PostItem' at the 'Like' button + use the axiosClient inside the function.
+Add new route for this inside 'web.php' -> to PostController as post.reaction & function postReaction.
+Create the function postReaction() inside 'PostController'.
+Create folder Enums inside 'app/Http', & create 'PostReactions.php' as enum file.
+Add code inside 'PostReactions' enum file.
 
+- Create the reaction functionality + store in DB
+Add validation of reaction inside function postReaction() 'PostController'.
+After validation, we create + store in DB the reaction as per column DB needed inside function postReaction() 'PostController'.
+Configure $fillable + UPDATED_AT field inside 'PostReaction' model file.
+
+- Make one person react once in each post
+Make sure a user only can give one reaction for one post. (click 2-times will delete the prev reaction)
+
+- Display how many like in each post
+Add new relation reactions() with PostReaction inside 'Post' model.
+Use the the relation inside 'PostResource' at 'num_of_reactions' writing like this => 'reactions_count'.
+Have to add '->withCount('reactions')' this inside 'HomeController' to be able to use 'reactions_count'.
+Display the 'num_of_reactions' inside 'PostItem' at the 'Like' button.
+
+- Display either i have like the post or not
+Add '$userId = Auth::id(); ->with(['reactions' => function ($query) use ($userId) {$query->where('user_id', $userId);}])' inside 'HomeController' to get either current user has react on a post or not.
+Add "'current_user_has_reaction' => $this->reactions->count() > 0," inside 'PostResource'.
+Update the styling of 'Like' button inside 'PostItem'.
+Update the function sendReaction() inside 'PostItem'.
+
+16. Writing Comments on Posts
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement Like/Unlike on the post".
+
+
+
+
+
+
+
+## For now (video15) whenever we create a post, inside network we can see that we will get all the list of posts in response(Preview)
+
+## WE DON'T MAKE A FUNCTION TO DELETE A POST YET (DROP-DOWN CLICK DELETE FROM A POST) (CAN CHECK function destroy() 'PostController')
+## WE JUST ONLY MAKE A DELETE OF ATTACHMENTS EITHER NEW UPLOAD ATTACHMENT OR EXISTING ATTACHMENT WHEN WE EDIT A POST (can see function update() 'PostController')

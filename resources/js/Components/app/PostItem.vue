@@ -6,6 +6,7 @@
   import PostUserHeader from '@/Components/app/PostUserHeader.vue';
   import { router } from '@inertiajs/vue3';
   import { isImage } from '@/helpers';
+  import axiosClient from '@/axiosClient.js';
 
   const props = defineProps({
     post: Object
@@ -27,6 +28,15 @@
 
   function openAttachment(ind) {
     emit('attachmentClick', props.post, ind);
+  }
+
+  function sendReaction() {
+    axiosClient.post(route('post.reaction', props.post), {
+      reaction: 'like'
+    }).then(({ data }) => {
+      props.post.current_user_has_reaction = data.current_user_has_reaction;
+      props.post.num_of_reactions = data.num_of_reactions;
+    });
   }
 
 </script>
@@ -122,10 +132,12 @@
       </template>
     </div>
     <div class="flex gap-2">
-      <button
-        class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 bg-gray-100 rounded-lg hover:bg-gray-200 flex-1">
+      <button @click="sendReaction"
+        class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 rounded-lg flex-1" :class="[
+          post.current_user_has_reaction ? 'bg-sky-100 hover:bg-sky-200' : 'bg-gray-100 hover:bg-gray-200'
+        ]">
         <HandThumbUpIcon class="mr-2 h-5 w-5" />
-        Like
+        {{ post.current_user_has_reaction ? 'Unlike' : 'Like' }} ({{ post.num_of_reactions }})
       </button>
       <button
         class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 bg-gray-100 rounded-lg hover:bg-gray-200 flex-1">
