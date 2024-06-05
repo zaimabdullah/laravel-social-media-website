@@ -822,7 +822,7 @@ Configure $fillable + UPDATED_AT field inside 'PostReaction' model file.
 Make sure a user only can give one reaction for one post. (click 2-times will delete the prev reaction)
 
 - Display how many like in each post
-Add new relation reactions() with PostReaction inside 'Post' model.
+Add new relation of post with reactions() with PostReaction inside 'Post' model.
 Use the the relation inside 'PostResource' at 'num_of_reactions' writing like this => 'reactions_count'.
 Have to add '->withCount('reactions')' this inside 'HomeController' to be able to use 'reactions_count'.
 Display the 'num_of_reactions' inside 'PostItem' at the 'Like' button.
@@ -838,13 +838,55 @@ Update the function sendReaction() inside 'PostItem'.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement Like/Unlike on the post".
 
+- Create display place of comments
+Add span for 'num_of_comments' at 'Comment' section inside 'PostItem'.
+Add relation of post with comments() inside backend 'Post' model.
+Add '->withCount('comments')' inside 'HomeController'.
+Add "'num_of_comments' => $this->comments_count," inside 'PostResource'.
+Add Disclosure element code from headlessui into 'PostItem' at <!-- Like & Comment -->.
+Add the user avatar inside the Disclosure for comment section.
+Add button but because we keep copy+paste same tailwindclass, create '/app/IndigoButton.vue'.
 
+- Make create comment functionality
+Add click handler function createComment() on 'Submit' button + v-model of 'newCommentText' on InputTextArea inside <!-- Comments Section --> 'PostItem'.
+Declare 'newCommentText' as an empty string ref() inside 'PostItem'.
+Use axios inside func createComment() + add new route 'post.comment.create' inside 'web.php' that link to function createComment() in 'PostController' that not created yet now.
+Create + add code inside createComment() in 'PostController'.
+Add $fillable inside 'Comment' model.
+## DONE
 
+- Lets Display the comment created properly
+Create CommentResource to process the response data from creating the comment, run php artisan make:resource CommentResource + add code in there.
+Add relation function user() + func post() inside 'Comment' model.
+Add new relation function latest5Comments() inside 'Post' model + use/call it inside 'HomeController' query & inside 'PostResource' rename it to 'comments' + returning it as CommentResource:collection() will give not only data as table comment in DB but also user details data based on 'user_id'.
+Now, we can display the comments inside 'PostItem' using 
+'post.comments'.
 
+- Change how textarea should be when user insert long comment + after submit that
+Update on how textarea for creating comment lookslike when comment is long.
+Add watch with setTimeout to make sure textarea back to normal size after submitting inside 'InputTextarea'.
 
+- Make sure comment display same how it write + submit
+Add nl2br() on 'comment' inside 'PostController' + use v-html for displaying comment inside 'PostItem' now because we want to display comment as how it was submit inside the textarea (with newline & etc).
 
+- Display long comment properly (read more/read less)
+Take out the 'Read More/Read Less' Disclosure for a post into separate component name 'ReadMoreReadLess.vue'.
+Make use the component to use for 'post content' & 'comment content'.
+Adjust code inside function createComment() inside 'PostItem' to ensure new comment display after submit & number of comments increase with it.
+Adjust some style for number of comment with icon + margin between comment content and Read More=this adjust inside app.css by adding .ck-content-output > *:last-child styling.
 
+--------------------------------------------------------------------------------------------
+## (video 16) Problem comment not show 5 latest one & KIV first, currently just USE LAZY LOADING(Post Model + HomeController + PostResource where we not use latest5Comments BUT comments)
+--------------------------------------------------------------------------------------------
+## But based on column in table comment now, we cannot make sub-comment
+--------------------------------------------------------------------------------------------
 ## For now (video15) whenever we create a post, inside network we can see that we will get all the list of posts in response(Preview)
-
-## WE DON'T MAKE A FUNCTION TO DELETE A POST YET (DROP-DOWN CLICK DELETE FROM A POST) (CAN CHECK function destroy() 'PostController')
+--------------------------------------------------------------------------------------------
+## We make post delete BUT DOES IT DELETE ALL ATTACHMENT TOO RELATED To the post ?
 ## WE JUST ONLY MAKE A DELETE OF ATTACHMENTS EITHER NEW UPLOAD ATTACHMENT OR EXISTING ATTACHMENT WHEN WE EDIT A POST (can see function update() 'PostController')
+--------------------------------------------------------------------------------------------
+
+17. Update and Delete of Comments
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement creating comments on post".

@@ -22,6 +22,10 @@
     margin: revert;
 }
 
+.ck-content-output > *:last-child {
+    margin-bottom: 0;
+}
+
 .ck-content > ol,
 .ck-content > ul {
     list-style: revert;
