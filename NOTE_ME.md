@@ -882,7 +882,7 @@ Adjust some style for number of comment with icon + margin between comment conte
 --------------------------------------------------------------------------------------------
 ## For now (video15) whenever we create a post, inside network we can see that we will get all the list of posts in response(Preview)
 --------------------------------------------------------------------------------------------
-## We make post delete BUT DOES IT DELETE ALL ATTACHMENT TOO RELATED To the post ?
+## We make post delete BUT DOES IT DELETE ALL ATTACHMENT RELATED to the post too ?
 ## WE JUST ONLY MAKE A DELETE OF ATTACHMENTS EITHER NEW UPLOAD ATTACHMENT OR EXISTING ATTACHMENT WHEN WE EDIT A POST (can see function update() 'PostController')
 --------------------------------------------------------------------------------------------
 
@@ -890,3 +890,41 @@ Adjust some style for number of comment with icon + margin between comment conte
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement creating comments on post".
+
+- Create 3-dot dropdown menu for edit delete comment
+Copy the Menu code used for dropdown edit-delete post.
+Create a new reusable component 'EditDeleteDropdown.vue' + paste the code.
+Make use this new component by replacing the code at code used for dropdown edit-delete post.
+Make the component 'EditDeleteDropdown' received 2 events 'edit' + 'delete' from anywhere it being used & inside the 'EditDeleteDropdown' file, define those 2 events as emits.
+
+- Make sure owner of comment only can (view+do) edit/delete
+Have to ensure the solution can be reusable wherever the 'EditDeleteDropdown' component being used.
+We check the user id pass from anywhere that being used the 'EditDeleteDropdown' component (exm: PostItem where we pass :user="...") & inside 'EditDeleteDropdown' component, check that user id with current login user id. [client-side check]
+Create function deleteComment() + startCommentEdit() inside 'PostItem' & pass as value of emits to 'EditDeleteDropdown' component.
+
+- Create delete route + controller function
+create delete comment route inside 'web.php' and use related controller funtion with it.
+create the controller function inside 'PostController' as deleteComment().
+Make a [backend checking] inside deleteComment() controller func.
+
+- Implement edit comment
+Inside 'PostItem', below the EditDeleteDropdown, we use the InputeTextarea for editing the comment.
+Add the 'update' & 'cancel' button.
+Add condition of only display it when 'editingComment' var is true, else display the actual comment to the 'div' that wrapped both the above.
+Edit code in func 'startCommentEdit()' to handle issue with displaying 'space' rather than '<br />'.
+At the 'update' button, we call func 'updateComment()' + create that func that will handle of checking which id of comment, iterate over list of comment to be updated back with new updated comment, the routing for update comment.
+Create new route for update comment inside 'web.php' + with PostController func 'updateComment()'.
+Create the PostController func 'updateComment()'.
+Create the request file for updateComment, .
+Run php artisan make:request UpdateCommentRequest + add some code in here. 
+Use UpdateCommentRequest inside func 'updateComment()' in PostController + add more code in here.
+Close the editing comment Textareainput after success edit inside func 'updateComment()' in 'PostItem'.
+
+18. Comment like/unlike
+
+## gonna convert post reactions table into generic reactions table & implement polymorphic relations from Posts and from Comments into Reactions table. After this, going to implement like/unlike functionality on the comments & done in the generic ways also.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement updating and deleting of comments".
+
+## 37:56
