@@ -927,4 +927,63 @@ Close the editing comment Textareainput after success edit inside func 'updateCo
 #### Make Git Commit
 Commit all updated files into git with comment "Implement updating and deleting of comments".
 
-## 37:56
+- Create icon
+Inside 'PostItem', we restructured the code + create the like & reply icon under each of comment. <!--Like & Reply comment-->
+
+## realize not create any comment reaction table in DB like currently have post_reaction table.
+## Solution: change the post_reaction table into generic table for all reaction both from post & comment. [Polymorphic relation]
+
+- Change the DB post_reactions table to be general (post+comment)
+Run 'php artisan make:migration change_post_reactions_table', to make a changes so that we can use one table for both post & comment reaction.
+Add code for up() inside '...._change_post_reactions_table' file.
+
+- Change ALL 'PostReaction' [match all caps] inside this proj folder into 'Reaction'
+## Rename file & all related name from PostReaction to Reaction
+Search using vscode search, 'PostReaction' with 'match case' + 'match whole word', there are 6 places & change all to 'Reaction'.
+Add code for down() inside '...._change_post_reactions_table' file.
+
+- Make a proper & working schema for up() & down() of DB 'post_reactions' table
+Inside '...._change_post_reactions_table', we try-n-check all the code so whenever we run 'php artisan migrate' + the code inside up() will do as what we need & whenver we run 'php artisan migrate:rollback --step=1' + the code inside down() will rollback all change back to before migration.
+
+- Resolve the like/unlike of posts which broken after migration [change of post_reactions to reaction DB table will affect]
+Implement the morph inside 'Model' file.
+Change hasMany to morphMany at func reactions in 'Post'.
+Add func object() of morphTo inside 'Reaction' [rename from PostReaction].
+
+- Rollback migration for preparation of auto insert data inside 'object_type' column
+## We want to 'write update without eloquent model'. BUT generally using models inside migration file is not good practice, here we just use regular update.
+Run 'php artisan migrate:rollback --step=1' to rollback.
+Add code for DB update inside '...._change_post_reactions_table' migration file for inserting value as given inside 'object_type' column.
+Run 'php artisan migrate'.
+Now, inside DB can see the value inserted successfully at 'object_type' column.
+## Now, previous like on post will display successfully on the frontend
+
+- Work on create new like on post
+Change + add code for 'object_id' & 'object_type' inside 'PostController' func postReaction().
+Add 'object_id' & 'object_type' in $fillable inside 'Reaction'.
+
+- Work on like/unlike on comment
+Based on name route use in func sendCommentReaction() in 'PostItem', we create that route inside 'web.php'.
+Update name of route for 'comment.delete' & 'comment.update' inside 'web.php' & Find + change that name route being used inside 'PostItem' too.
+Create func commentReaction() inside 'PostController', that being used at new 'comment.reaction' route 'web.php'.
+Copy +update code from postReaction() into func commentReaction().
+## Rename file & all related name from PostReactionEnum to ReactionEnum
+Add 'num_of_reactions' & 'current_user_has_reaction' inside 'CommentResource'.
+Add func reactions() morphmany inside 'Comment'.
+Make use of func sendCommentReaction() to @click of button for like/unlike comment inside 'PostItem'.
+## like comment works now
+
+- Make sure 'num_of_reactions' can display+give correct value
+Update code ->with(['comments' => ...here...]) inside 'HomeController' to make sure the value can be display.
+Add code for display number of like + does current user like/unlike the comment in frontend inside 'PostItem'.
+Change props.post to comment at .then() in func sendCommentReaction() inside 'PostItem'.
+## num_of_reactions on comment work
+
+19. Implement Writing Sub Comments
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement reaction on comments".
+
+
+
+## 

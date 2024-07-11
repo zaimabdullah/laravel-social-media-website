@@ -17,9 +17,16 @@ class HomeController extends Controller
       ->withCount('reactions')
       ->withCount('comments')
       ->with([
-        'comments',
+        'comments' => function ($query) use ($userId) {
+          $query->withCount('reactions')
+            ->with([
+              'reactions' => function ($query) use ($userId) {
+                $query->where('user_id', $userId); // reactions made by specific user for each comment
+              }
+            ]); // Count of reactions for each comment
+        },
         'reactions' => function ($query) use ($userId) {
-          $query->where('user_id', $userId);
+          $query->where('user_id', $userId); // reactions made by specific user for each Post
         }
       ])
       ->latest()
