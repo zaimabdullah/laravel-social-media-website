@@ -1,16 +1,15 @@
 <script setup>
   import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-  import { PaperClipIcon } from '@heroicons/vue/20/solid';
-  import { HandThumbUpIcon, ChatBubbleLeftRightIcon, ChatBubbleLeftEllipsisIcon, ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
+  import { HandThumbUpIcon, ChatBubbleLeftRightIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/vue/24/outline';
   import PostUserHeader from '@/Components/app/PostUserHeader.vue';
   import { router, usePage } from '@inertiajs/vue3';
-  import { isImage } from '@/helpers';
   import axiosClient from '@/axiosClient.js';
   import InputTextarea from '@/Components/InputTextarea.vue';
   import IndigoButton from '@/Components/app/IndigoButton.vue';
   import ReadMoreReadLess from './ReadMoreReadLess.vue';
   import { ref } from 'vue';
   import EditDeleteDropdown from './EditDeleteDropdown.vue';
+  import PostAttachments from './PostAttachments.vue';
 
   const authUser = usePage().props.auth.user;
   const editingComment = ref(null);
@@ -114,40 +113,15 @@
       <!-- ReadMoreReadLess for post content -->
       <ReadMoreReadLess :content="post.body" />
     </div>
+    <!-- Attachments of post content -->
     <div class="grid gap-3 mb-3" :class="[
       post.attachments.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
     ]">
-      <!-- <pre>{{ attachments }}</pre> -->
-      <template v-for="(attachment, ind) of post.attachments.slice(0, 4)">
-
-        <div @click="openAttachment(ind)"
-          class="group aspect-square bg-blue-100 flex flex-col items-center justify-center text-gray-500 relative cursor-pointer">
-
-          <div v-if="ind === 3 && post.attachments.length > 4"
-            class="absolute left-0 top-0 right-0 bottom-0 z-10 bg-black/60 text-white flex items-center justify-center text-xl">
-            +{{ post.attachments.length - 4 }} more
-          </div>
-
-          <!-- Download -->
-          <a @click.stop :href="route('post.download', attachment)"
-            class="z-10 opacity-0 group-hover:opacity-100 transition-all w-8 h-8 flex items-center justify-center text-gray-100 bg-gray-700 rounded absolute right-2 top-2 cursor-pointer hover:bg-gray-800">
-            <ArrowDownTrayIcon class="w-4 h-4" />
-          </a>
-          <!--/ Download -->
-
-          <!-- Image File -->
-          <img v-if="isImage(attachment)" :src="attachment.url" class="object-contain aspect-square" />
-          <!-- Not Image File -->
-          <div v-else class="flex flex-col justify-center items-center">
-            <PaperClipIcon class="w-10 h-10 mb-3" />
-            <small>{{ attachment.name }}</small>
-          </div>
-          <!--/ Not Image File -->
-        </div>
-      </template>
+      <PostAttachments :attachments="post.attachments" @attachmentClick="openAttachment" />
     </div>
     <!-- Like & Comment -->
     <Disclosure v-slot="{ open }">
+      <!-- Like & Comment buttons -->
       <div class="flex gap-2">
         <button @click="sendReaction"
           class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 rounded-lg flex-1" :class="[
@@ -166,6 +140,7 @@
           Comment
         </DisclosureButton>
       </div>
+
       <DisclosurePanel class="mt-3">
         <div class="flex gap-2 mb-3">
           <a href="javascript:void(0)">
@@ -213,9 +188,10 @@
                   <IndigoButton @click="updateComment" class="w-[100px]">update</IndigoButton>
                 </div>
               </div>
-              <!-- ReadMoreReadLess for actual comment content -->
+              <!-- ReadMoreReadLess actual comment content -->
               <ReadMoreReadLess v-else :content="comment.comment" content-class="text-sm flex flex-1" />
-              <!-- Like & Reply comment -->
+
+              <!-- Like & Reply Comment button -->
               <div class="mt-1 flex gap-2">
                 <button @click="sendCommentReaction(comment)"
                   class="flex items-center text-xs text-indigo-500 py-0.5 px-1 rounded-lg" :class="[
@@ -230,6 +206,7 @@
                   reply
                 </button>
               </div>
+
             </div>
           </div>
           <!--/ End Display 5 Latest Comments -->
