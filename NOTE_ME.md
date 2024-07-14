@@ -984,6 +984,65 @@ Change props.post to comment at .then() in func sendCommentReaction() inside 'Po
 #### Make Git Commit
 Commit all updated files into git with comment "Implement reaction on comments".
 
+## Currently our DB table of comment dont support of parent-child/sub comment/hierarchical data. 1way - to do this is 'Nested Set Model' - there's package for this. 2way - much simpler 'Create ParentId inside current Comment Table'. 
+## If later will have large data, then this will do frequent read from this data and it's better to read only specific level of hierarchical data for that and cos' of that 1st way is good to use.
+## For this project, we use 2nd way as i dont estimate very large set of comments on a single post. So, after finish query all comments on a single post, then i can manipulate & create this tree structure of the data using php.
 
+- Create migration to add parentId into comment table
+Run 'php artisan make:migration add_parent_id_to_comments'.
+Add code inside '..._add_parent_id_to_comments' migration file.
+Run 'php artisan migrate'. ->parent_id added successfully
+## DB is ready now
 
-## 
+- Separate post attachment part to reusable component
+Restructured code inside 'PostItem' by taking-out post-attachment part into separate component file name 'PostAttachments.vue'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Add parent_id to comments table".
+
+#### Make Git Commit
+Commit all updated files into git with comment "Create new PostAttachments component".
+
+- Separate comment part to reusable component
+Restructured code inside 'PostItem' by taking-out comment part into reusable component file name 'CommentList'.
+
+- Click reply comment, display textarea
+Make use of Disclosure, DisclosureButton & DisclosurePanel for the not/display the textarea whenver click reply on a comment inside 'CommenList'.
+In DisclosurePanel, we use CommentList component again as to display textarea+next reply comment.
+Add 'comments ...' line inside 'CommentResource' so that we can pass the 'comment.comments' which ['an empty array'] to CommentList component between DisclosurePanel inside 'CommentList.vue'.
+Create a relation between comment and comments by adding the relation function inside model 'Comment.php'.
+
+- Solving issues by changing 'props.post.comment' inside 'PostItem' + 'CommentList'
+This affect the display comment & reply comment properly + create & update comment.
+We change it to ':data={comments: ...}' when passing to CommenList component at 'PostItem' & 'CommentList'[for reply] & use it as 'props.data.comments' inside 'CommentList' when receiving+manipulate it.
+
+- Implement the parent_id/parentId of comment
+Add, pass & use parent_id/parentId inside 'CommentList'.
+Add parent_id inside func createComment() 'PostController'.
+Make sure parent_id is nullable, especially when the comment is parent-level.
+## creating parent-level & child-level comment success
+
+- Solve issue of child-comment
+## BUT, after refresh, sub/child-comment display as parent-comment, after checking, reason 1 = we not add parent_id in fillable, so parent_id is not store in DB, 2 = the query for comment is problem
+Add 'parent_id' as fillable inside 'Comment'. -> solve: parent_id store inside DB
+Add new condition to comment query '->whereNull('parent_id')' inside 'HomeController'. -> solve: subcomment only display below the related parent-comment
+
+- Add number of sub-comment for each parent-comment
+Add 'num_of_comments' inside 'CommentResource' likes inside 'PostResource'.
+Make use 'num_of_comments' inside 'CommentList' to display the number of sub-comment. -> at the span tag
+Change 'parent_id/parentId' inside 'CommentList' into 'parentComment' to make use of 'num_of_comments'. -> inside createComment() + CommentList call :parent-comment=....
+## Displaying subcomment + editing success
+
+- Solve issue of delete parent & sub-comment[got broken]
+Copy + paste the if-cond of parentComment exist/not from createComment() into deleteComment().
+## The comment is deleted actually but the data inside props.data.comment not removed the deleted comment because 'props.data.comment' is not reactive, so the UI cannot do the update UI.
+Update the code inside func deleteComment() 'CommentList'. -> solve delete issue
+
+- Solve issue of number of comment (the total & the sub-comment only)
+## But the number of comment not change when deleting sub-comment
+Remove the else in 'if (props.parentComment)..' inside both func deleteComment() & createComment() inside 'CommentList'. -> solve for number of comment
+
+#### Make Git Commit
+Commit all updated files into git with comment "Create reusable CommentList.vue component for subcomments".
+
+## 51:20
