@@ -1045,4 +1045,29 @@ Remove the else in 'if (props.parentComment)..' inside both func deleteComment()
 #### Make Git Commit
 Commit all updated files into git with comment "Create reusable CommentList.vue component for subcomments".
 
-## 51:20
+## For now, for each level of comment, there will be new query made for it, so more level of comment made, the number of query also increase which is not very OPTIMUM.
+
+## lets query all the comments of all the post in a single query, then process it with PHP, and convert it into some kind of tree-type of structure + all counts should be available in all the comments.
+
+- Change ways of how query of post + reaction + comment works
+Update code of query for these 3 inside 'HomeController'.
+Delete 'num_of_comments' inside 'PostResource'.
+Create new func convertCommentsIntoTree() inside 'PostResource'.
+Add '$childComments' inside 'Comments'.
+Update 'comments' & 'num_of_comments'->TODO inside 'CommentResource'.
+Update 'num_of_comments' & 'comments' inside 'PostResource'.
+Make use the '$childComments' inside 'CommentResource' at 'comments' & 'num_of_comments' & 'PostResource' at 'convertCommentsIntoTree()'.
+
+## Comment tree construct successfully, except num_of_comment shown in first-level comment not correct(only shown 1 comment, but actually have 1-second-level + 1-third-level of comments[2 comments])
+
+- Solve the num_of_comment issue
+Add '$numOfComments' inside 'Comment' model.
+Make use of it inside 'CommentResource' & 'PostResource'. 
+## -> solve display num_of_comment properly
+Add emit 'commentCreate' & 'commentDelete' inside 'CommentList'. 
+## -> solve issue num_of_comment auto increase after new sub-comment added
+
+#### Make Git Commit
+Commit all updated files into git with comment "Query all comments of posts with a single select and construct tree in PHP".
+
+## 1:41:50 

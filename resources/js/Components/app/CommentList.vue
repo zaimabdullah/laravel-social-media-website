@@ -22,6 +22,7 @@
       default: null
     }
   });
+  const emit = defineEmits(['commentCreate', 'commentDelete']);
 
   function startCommentEdit(comment) {
     console.log(comment);
@@ -43,6 +44,7 @@
         props.parentComment.num_of_comments++;
       }
       props.post.num_of_comments++;
+      emit('commentCreate', data);
     });
   }
 
@@ -60,6 +62,7 @@
         props.parentComment.num_of_comments--; // reduce num of sub-comment
       }
       props.post.num_of_comments--; // reduce num of total(parent+sub) comment
+      emit('commentDelete', comment);
     });
   }
 
@@ -85,6 +88,20 @@
       comment.num_of_reactions = data.num_of_reactions;
     });
   }
+
+  function onCommentCreate(comment) {
+    if (props.parentComment) {
+      props.parentComment.num_of_comments++;
+      emit('commentCreate', comment);
+    }
+  }
+  function onCommentDelete(comment) {
+    if (props.parentComment) {
+      props.parentComment.num_of_comments--;
+      emit('commentDelete', comment);
+    }
+  }
+
 
 </script>
 
@@ -159,7 +176,8 @@
           </div>
 
           <DisclosurePanel class="mt-3">
-            <CommentList :post="post" :data="{ comments: comment.comments }" :parent-comment="comment" />
+            <CommentList :post="post" :data="{ comments: comment.comments }" :parent-comment="comment"
+              @comment-create="onCommentCreate" @comment-delete="onCommentDelete" />
           </DisclosurePanel>
         </Disclosure>
       </div>
