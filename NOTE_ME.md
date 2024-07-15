@@ -1070,4 +1070,14 @@ Add emit 'commentCreate' & 'commentDelete' inside 'CommentList'.
 #### Make Git Commit
 Commit all updated files into git with comment "Query all comments of posts with a single select and construct tree in PHP".
 
-## 1:41:50 
+- Change field size + custom scrollbar for comment section
+Add h-... and overflow-auto inside DisclosurePanel 'PostItem'.
+Add 'custom-scrollbar' css inside css/app.css.
+
+20. Load More on Posts
+
+#### Make Git Commit
+Commit all updated files into git with comment "Set fixed height on comments section".
+
+
+## 00:00
