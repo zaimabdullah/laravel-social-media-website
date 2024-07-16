@@ -15,7 +15,7 @@ class PostResource extends JsonResource
   public function toArray(Request $request): array
   {
     $comments = $this->comments;
-
+    // name-convention
     return [
       'id' => $this->id,
       'body' => $this->body,

@@ -1,5 +1,8 @@
 1. Project setup with Laravel Sail + Inertia with Vue
 
+### To Remove a created controller file
+rm -rf app/Http/Controllers/GroupController.php
+
 ## Create Project
 Open Ubuntu
 Navigate to folder www = cd www
@@ -876,10 +879,6 @@ Adjust code inside function createComment() inside 'PostItem' to ensure new comm
 Adjust some style for number of comment with icon + margin between comment content and Read More=this adjust inside app.css by adding .ck-content-output > *:last-child styling.
 
 --------------------------------------------------------------------------------------------
-## (video 16) Problem comment not show 5 latest one & KIV first, currently just USE LAZY LOADING(Post Model + HomeController + PostResource where we not use latest5Comments BUT comments)
---------------------------------------------------------------------------------------------
-## But based on column in table comment now, we cannot make sub-comment
---------------------------------------------------------------------------------------------
 ## For now (video15) whenever we create a post, inside network we can see that we will get all the list of posts in response(Preview)
 --------------------------------------------------------------------------------------------
 ## We make post delete BUT DOES IT DELETE ALL ATTACHMENT RELATED to the post too ?
@@ -922,7 +921,7 @@ Close the editing comment Textareainput after success edit inside func 'updateCo
 
 18. Comment like/unlike
 
-## gonna convert post reactions table into generic reactions table & implement polymorphic relations from Posts and from Comments into Reactions table. After this, going to implement like/unlike functionality on the comments & done in the generic ways also.
+- gonna convert post reactions table into generic reactions table & implement polymorphic relations from Posts and from Comments into Reactions table. After this, going to implement like/unlike functionality on the comments & done in the generic ways also.
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement updating and deleting of comments".
@@ -930,8 +929,8 @@ Commit all updated files into git with comment "Implement updating and deleting 
 - Create icon
 Inside 'PostItem', we restructured the code + create the like & reply icon under each of comment. <!--Like & Reply comment-->
 
-## realize not create any comment reaction table in DB like currently have post_reaction table.
-## Solution: change the post_reaction table into generic table for all reaction both from post & comment. [Polymorphic relation]
+- realize not create any comment reaction table in DB like currently have post_reaction table.
+- Solution: change the post_reaction table into generic table for all reaction both from post & comment. [Polymorphic relation]
 
 - Change the DB post_reactions table to be general (post+comment)
 Run 'php artisan make:migration change_post_reactions_table', to make a changes so that we can use one table for both post & comment reaction.
@@ -951,7 +950,7 @@ Change hasMany to morphMany at func reactions in 'Post'.
 Add func object() of morphTo inside 'Reaction' [rename from PostReaction].
 
 - Rollback migration for preparation of auto insert data inside 'object_type' column
-## We want to 'write update without eloquent model'. BUT generally using models inside migration file is not good practice, here we just use regular update.
+- We want to 'write update without eloquent model'. BUT generally using models inside migration file is not good practice, here we just use regular update.
 Run 'php artisan migrate:rollback --step=1' to rollback.
 Add code for DB update inside '...._change_post_reactions_table' migration file for inserting value as given inside 'object_type' column.
 Run 'php artisan migrate'.
@@ -985,8 +984,8 @@ Change props.post to comment at .then() in func sendCommentReaction() inside 'Po
 Commit all updated files into git with comment "Implement reaction on comments".
 
 ## Currently our DB table of comment dont support of parent-child/sub comment/hierarchical data. 1way - to do this is 'Nested Set Model' - there's package for this. 2way - much simpler 'Create ParentId inside current Comment Table'. 
-## If later will have large data, then this will do frequent read from this data and it's better to read only specific level of hierarchical data for that and cos' of that 1st way is good to use.
-## For this project, we use 2nd way as i dont estimate very large set of comments on a single post. So, after finish query all comments on a single post, then i can manipulate & create this tree structure of the data using php.
+- If later will have large data, then this will do frequent read from this data and it's better to read only specific level of hierarchical data for that and cos' of that 1st way is good to use.
+- For this project, we use 2nd way as i dont estimate very large set of comments on a single post. So, after finish query all comments on a single post, then i can manipulate & create this tree structure of the data using php.
 
 - Create migration to add parentId into comment table
 Run 'php artisan make:migration add_parent_id_to_comments'.
@@ -1023,7 +1022,7 @@ Make sure parent_id is nullable, especially when the comment is parent-level.
 ## creating parent-level & child-level comment success
 
 - Solve issue of child-comment
-## BUT, after refresh, sub/child-comment display as parent-comment, after checking, reason 1 = we not add parent_id in fillable, so parent_id is not store in DB, 2 = the query for comment is problem
+- BUT, after refresh, sub/child-comment display as parent-comment, after checking, reason 1 = we not add parent_id in fillable, so parent_id is not store in DB, 2 = the query for comment is problem
 Add 'parent_id' as fillable inside 'Comment'. -> solve: parent_id store inside DB
 Add new condition to comment query '->whereNull('parent_id')' inside 'HomeController'. -> solve: subcomment only display below the related parent-comment
 
@@ -1035,19 +1034,19 @@ Change 'parent_id/parentId' inside 'CommentList' into 'parentComment' to make us
 
 - Solve issue of delete parent & sub-comment[got broken]
 Copy + paste the if-cond of parentComment exist/not from createComment() into deleteComment().
-## The comment is deleted actually but the data inside props.data.comment not removed the deleted comment because 'props.data.comment' is not reactive, so the UI cannot do the update UI.
+- The comment is deleted actually but the data inside props.data.comment not removed the deleted comment because 'props.data.comment' is not reactive, so the UI cannot do the update UI.
 Update the code inside func deleteComment() 'CommentList'. -> solve delete issue
 
 - Solve issue of number of comment (the total & the sub-comment only)
-## But the number of comment not change when deleting sub-comment
+- But the number of comment not change when deleting sub-comment
 Remove the else in 'if (props.parentComment)..' inside both func deleteComment() & createComment() inside 'CommentList'. -> solve for number of comment
 
 #### Make Git Commit
 Commit all updated files into git with comment "Create reusable CommentList.vue component for subcomments".
 
-## For now, for each level of comment, there will be new query made for it, so more level of comment made, the number of query also increase which is not very OPTIMUM.
+- For now, for each level of comment, there will be new query made for it, so more level of comment made, the number of query also increase which is not very OPTIMUM.
 
-## lets query all the comments of all the post in a single query, then process it with PHP, and convert it into some kind of tree-type of structure + all counts should be available in all the comments.
+- lets query all the comments of all the post in a single query, then process it with PHP, and convert it into some kind of tree-type of structure + all counts should be available in all the comments.
 
 - Change ways of how query of post + reaction + comment works
 Update code of query for these 3 inside 'HomeController'.
@@ -1058,7 +1057,7 @@ Update 'comments' & 'num_of_comments'->TODO inside 'CommentResource'.
 Update 'num_of_comments' & 'comments' inside 'PostResource'.
 Make use the '$childComments' inside 'CommentResource' at 'comments' & 'num_of_comments' & 'PostResource' at 'convertCommentsIntoTree()'.
 
-## Comment tree construct successfully, except num_of_comment shown in first-level comment not correct(only shown 1 comment, but actually have 1-second-level + 1-third-level of comments[2 comments])
+- Comment tree construct successfully, except num_of_comment shown in first-level comment not correct(only shown 1 comment, but actually have 1-second-level + 1-third-level of comments[2 comments])
 
 - Solve the num_of_comment issue
 Add '$numOfComments' inside 'Comment' model.
@@ -1088,6 +1087,49 @@ Change the code little bit by adding if() condition at the bottom of 'HomeContro
 #### Make Git Commit
 Commit all updated files into git with comment "Implement load more on posts".
 
-## Gonna implement group, backend-side gonna create new group controller with request classes, group resources, & frontend-side gonna create new group model component with 3-input field of name, auto approval & desc.
+- Gonna implement group, backend-side gonna create new group controller with request classes, group resources, & frontend-side gonna create new group model component with 3-input field of name, auto approval & desc.
+
+- Create the modal file
+Make a copy of 'PostModal' file & rename into 'GroupModal'.
+Delete + change any codes inside 'GroupModal' as needed.
+Make use of 'GroupModal' component by calling it + add showNewGroupModal inside 'GroupList'.
+Add all 3-input field needed inside 'GroupModal'.
+
+- Setup submit form function
+Using the func submit(), call it at @click submit btn inside 'GroupModal'.
+
+- Setup controller + resource + request file
+Create new Group controller, run 'php artisan make:controller GroupController'.
+Remove back the controller just now by running 'rm -rf app/Http/Controllers/GroupController.php'.
+Rerun back with more flag for group controller 'php artisan make:controller GroupController --model=Group --api --requests --resource'.
+## But Resource still not created
+
+- Setup route for store group
+Add new route for group create/store inside 'web.php'.
+
+- Setup the functionality for store group
+Change the authorize to true + add rules inside 'StoreGroupRequest'.
+Add the function getSlugOptions() copy from 'User' model + $fillable into 'Group'.
+Add code inside func store() inside 'GroupController'.
+Change from 'form.post' into 'axiosClient.post' at the func submit() inside 'GroupModal'.
+Change from 'return back()' into 'response(...)' inside 'GroupController'.
+
+- Create the group resource
+Run 'php artisan make:resource GroupResource'.
+Add toArray() field inside 'GroupResource'.
+## group created success
+
+- But whenever group created, we need to store a record for that group inside table group_users
+- Record the group created inside group_users
+Add $groupUserData = ... inside store() inside 'GroupController'.
+Create new enum file GroupUserStatus & GroupUserRole for 'status' & 'role' field of group_users table.
+Make use of enum inside $groupUserData = ... inside store() inside 'GroupController'.
+Add field list inside $groupUserData = ... to fillable inside 'GroupUser' model + updated_at set to null.
+## groupuser created success
+
+22. Render Groups on Home Page
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement creating group".
 
 ## 00:00
