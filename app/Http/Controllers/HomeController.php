@@ -25,10 +25,15 @@ class HomeController extends Controller
         }
       ])
       ->latest()
-      ->paginate(20);
+      ->paginate(10);
+
+    $posts = PostResource::collection($posts);
+    if ($request->wantsJson()) {
+      return $posts;
+    }
 
     return Inertia::render('Home', [
-      'posts' => PostResource::collection($posts)
+      'posts' => $posts
     ]);
   }
 }

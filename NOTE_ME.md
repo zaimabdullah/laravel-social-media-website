@@ -1079,5 +1079,15 @@ Add 'custom-scrollbar' css inside css/app.css.
 #### Make Git Commit
 Commit all updated files into git with comment "Set fixed height on comments section".
 
+- Implement load more on posts
+Add the onMounted of IntersectionObserver, func loadMore(), allPosts ref & loadMoreIntersect ref inside 'PostList'.
+Change the code little bit by adding if() condition at the bottom of 'HomeController'.
+
+21. Create Groups
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement load more on posts".
+
+## Gonna implement group, backend-side gonna create new group controller with request classes, group resources, & frontend-side gonna create new group model component with 3-input field of name, auto approval & desc.
 
 ## 00:00
