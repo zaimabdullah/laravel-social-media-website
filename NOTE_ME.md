@@ -1132,4 +1132,28 @@ Add field list inside $groupUserData = ... to fillable inside 'GroupUser' model 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement creating group".
 
-## 00:00
+- Change the create new group btn position
+Take btn of 'new group' from 'GroupList', put into 'GroupListItems'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Give proper position to new group button".
+
+
+
+## 04:31
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
