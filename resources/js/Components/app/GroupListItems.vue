@@ -6,6 +6,14 @@
 
   const searchKeyword = ref('');
   const showNewGroupModal = ref(false);
+
+  const props = defineProps({
+    groups: Array
+  });
+
+  function onGroupCreate(group) {
+    props.groups.unshift(group);
+  }
 </script>
 
 <template>
@@ -21,48 +29,9 @@
       You are not joined to any groups
     </div>
     <div v-else>
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Laravel Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <GroupItem image="https://picsum.photos/100" title="Vue.js Developers"
-        description="Lorem Ipsum is simply dummy text of the printing." />
+      <GroupItem v-for="group of groups" :group="group" />
     </div>
   </div>
 
-  <GroupModal v-model="showNewGroupModal" />
+  <GroupModal v-model="showNewGroupModal" @create="onGroupCreate" />
 </template>

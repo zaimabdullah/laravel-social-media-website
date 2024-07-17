@@ -1138,9 +1138,22 @@ Take btn of 'new group' from 'GroupList', put into 'GroupListItems'.
 #### Make Git Commit
 Commit all updated files into git with comment "Give proper position to new group button".
 
+- Load all group current user part of
+Create a new query to get the data at the bottom of 'HomeController'.
+Add groups as props inside 'Home.vue'.
 
+- Setup display of groups 
+Make 'cover_path' into 'thumbnail_url' & assign random pic link inside 'GroupResource'.
+Update the grouplist by make use of all attributes inside 'GroupListItems'.
+Pass the 'groups' object as props from Home->GroupList->GroupListItems->GroupItem.
+Utilise the data for displaying all of them properly inside 'GroupItem'.
 
-## 04:31
+23. Group Profile Page
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement loading correct groups for the user".
+
+## 00:00
 
 
 
