@@ -1207,6 +1207,9 @@ Add the showNotification.value = true inside func submitCoverImage() & submitThu
 #### Make Git Commit
 Commit all updated files into git with comment "Implement group profile page with cover and thumbnail upload".
 
+#### Make Git Commit
+Commit all updated files into git with comment "Install Laravel telescope".
+
 
 ## 00:00
 
