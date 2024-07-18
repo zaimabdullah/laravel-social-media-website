@@ -1153,7 +1153,65 @@ Utilise the data for displaying all of them properly inside 'GroupItem'.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement loading correct groups for the user".
 
+- Gonna make group profile page the same way we done for the user.
+- Create the route for group profile
+Copy+paste the route of user profile + edit it into group profile inside 'web.php'.
+
+- Create the func profile()
+Create + add code inside new func profile() inside 'GroupController'.
+Copy+paste code from index() ProfileController into profile() GroupController & edit the code.
+
+- Create the frontend file
+Create new folder 'Group' inside 'resources/Pages'.
+Create the new file 'View.vue' inside folder Group.
+Copy+paste everything from 'Profile/View.vue' into 'Group/View.vue' + edit all necessary code.
+Make a route-link from GroupItem to 'Group/View'.
+
+- Add some button into Group Profile Page
+Add 3 PrimaryButton inside 'Group/View.vue'.
+Make sure 'Invite User' btn is display only for an admin.
+Add 'isCurrentUserAdmin' var inside 'Group/View' to get the role of the current user. 
+->role/status value is store inside group_users DB Table, BUT data used inside 'Group/View' is from groups DB Table
+Add func currentUserGroup() inside 'Group' model as a relation of groups & group_users DB table.
+Load that relation inside func profile() 'GroupController'.
+Change how returning the status & role value inside 'GroupResource'.
+- Got issue, status and role is return wrong value, got to debug the Db query
+
+- Installing the laravel telescope for debug database query
+Traditional laravel, we can just install debug bar BUT because we use inertia we not sure if debug bar can work properly, thats why try to use telescope.
+Google 'laravel telescope', install with cmd given in 'Local Only Installation'.
+Follow the instruction of deleting something related to this inside 'bootstrap/provider.php' + add code given inside 'AppServiceProvider' + add code inside 'composer.json'.
+
+- now in the url, can access the telescope by adding '/telescope' in URL.
+## solve the issue of status & role return wrong value
+## Done add 3 button into Group Profile Page
+
+- Implement update group cover img & thumbnail functionality
+Add route for 'group.updateImages', connect it to updateImage() inside 'web.php'.
+Create the func updateImage() by copy+paste it from ProfileController into 'GroupController'.
+Add func isAdmin() inside 'Group' model to get boolean value & used this inside func updateImage() in 'ProfileController'.
+Update the code in func updateImage().
+## Upload cover & thumbnail img success
+
+- Make a default cover & thumbnail img
+Download some no_img.png + paste inside 'public/img' folder.
+Add code of condition either to display the img upload inside DB or use default one inside 'GroupResource'.
+- For User We Implement The Default Cover & Thumbnail inside 'Profile/View.vue' which is frontend side, for group we implement it in the backend which is inside 'GroupResource'.
+
+- Fix issue of avatar img change success msg not display randomly
+Add the showNotification.value = true inside func submitCoverImage() & submitThumbnailImage() for 'Profile/View' & 'Group/View'.
+## Solve the issue
+
+24. Send & Accept Invitations to join to Group
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement group profile page with cover and thumbnail upload".
+
+
 ## 00:00
+
+- Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
+
 
 
 
