@@ -53,10 +53,12 @@ axios - in No. 15
 --------------------------------------------------------------------------
 User Credentials
 
-Husni Zaim, husni@example.com Y3-m2gc7@pG7DEX
+Husni Zaim, husni@example.com password: password
+Hariri Abdullah, hariri@example.com password: password
 --------------------------------------------------------------------------
 MailPit
 
+http://localhost:8025 - to open mailpit in browser
 port 1025 used to send email
 port 8025 used for dashboard
 --------------------------------------------------------------------------
@@ -1210,9 +1212,64 @@ Commit all updated files into git with comment "Implement group profile page wit
 #### Make Git Commit
 Commit all updated files into git with comment "Install Laravel telescope".
 
+- Implement invite others to our group
+Copy GroupModal.vue, paste inside Group folder, & rename into 'InviteUserModal.vue'.
+Update code as needed inside 'InviteUserModal'.
 
-## 00:00
+- Add route for invite users
+Add route for this  invite user to join our group inside 'web.php'.
+Create the func use at the route inviteUsers() inside 'GroupController'.
 
+- Create custom request for controller
+Create new rule to check email exits in 'users' DB Table, run 'php artisan make:rule ExistsInUsernameOrEmail'. -> Delete back
+Create new custom request, run 'php artisan make:request InviteUsersRequest'.
+Use the custom request inside func inviteUsers().
+Add code inside 'InviteUsersRequest'. -> which give us access to $user & others.
+Make use of $user inside func inviteUsers() 'GroupController'.
+Add token related field used from func inviteUsers() inside 'GroupUser' model fillable.
+
+- Making the function submit
+Add code inside func submit() in 'InviteUserModal'.
+Add code for controlling of open/close the modal for invite user in 'Group/View' at Invite Users btn.
+## success storing in DB
+
+- Implement update the link invitation(when send twice) + sending email
+Add checking of user invited already joined the group or not by add the code inside func rules() in 'InviteUsersRequest'.
+Make used the code above to delete the previous invitation link + update to new one in DB when groupUser exist = meaning pending groupUser inside 'GroupController'.
+
+- Implement sending email 
+Make the notification(relate to sending email in laravel), run 'php artisan make:notification InvitationInGroup'.
+Add code inside 'InvitationInGroup'.
+Make use the above file inside func inviteUsers()  in 'GroupController' + pass some parameter to the above file.
+Update the code inside func __contruct(...here...) as parameters received + toMail() in 'InvitationInGroup'. -> content of the email
+
+- Implement approve/join the group invitation
+Add new route for approve-invitation inside 'web.php'.
+Make use the route name as url() pass inside the email send in 'InvitationInGroup'.
+Add more parameters pass from 'GroupController' to 'InvitationInGroup'.
+Create the func approveInvitation() inside 'groupController'.
+Inside the above func, query + check the token.
+Create new 'Error.vue' inside 'resources/js/Pages' + code it.
+Use this Error page inside func approveInvitation() at the bottom as the return inertia('Error',...).
+
+- Implement notification to admin, user is joining group
+Create new notification file, run 'php artisan make:notification InvitationApproved'.
+Add code inside 'InvitationApproved'.
+Make a relation of GroupUser to func adminUser() & user() inside 'GroupUser' model.
+Make use the new notification 'InvitationApproved' + passing the relation as the parameter to the notification inside 'GroupController'.
+
+25. Join to Groups with Auto Approval
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement sending and accepting invitations to join to groups".
+
+
+
+## 0:00:00
+
+## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
+
+- Looking at 'InviteUserModal.vue'/'GroupModal.vue', a lot of code is repetitive, so later will be separate some of it and make it separate component.
 - Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
 
 
