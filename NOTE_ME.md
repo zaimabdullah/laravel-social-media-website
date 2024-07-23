@@ -1263,6 +1263,44 @@ Make use the new notification 'InvitationApproved' + passing the relation as the
 #### Make Git Commit
 Commit all updated files into git with comment "Implement sending and accepting invitations to join to groups".
 
+- Create clickable action for join to group btn
+Create the click + function for 'Join To Group' btn in 'Group/View'.
+Make the 'Join To Group' btn only visible to login user while user not login see other btn, create the other btn in 'Group/View'.
+Update the code inside 'PrimaryButton'.
+Add new route for 'join' inside 'web.php'.
+Create the 'join()' func inside 'GroupController'.
+## success of join group with auto approval
+
+- Implement function for group with not auto approval
+Inside func 'join()' 'GroupController', the if() case is for group that not auto approval which will send email to group admins that someone want to join the join.
+Create new notification file, run 'php artisan make:notification RequestToJoinGroup' for creating the email + add necessary code in it.
+Add relation of Group with GroupUser regarding a group may have more than one admin user by adding func 'adminUsers()' inside 'Group'.
+Make use the new notif file + relation inside func join() to send the email to all group admin in 'GroupController'.
+
+26. Approve/Reject Pending Users from Group
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement join to group with auto approval".
+
+- gonna implement a tab that render all approved users of a group, a tab that show all pending user of a group & admin user of the group can approve or reject the request.
+
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 0:00:00

@@ -93,6 +93,12 @@
       },
     });
   }
+
+  function joinToGroup() {
+    const form = useForm({});
+
+    form.post(route('group.join', props.group.slug));
+  }
 </script>
 
 <template>
@@ -164,11 +170,21 @@
           <div class="flex justify-between items-center flex-1 p-4">
             <h2 class="font-bold text-lg">{{ group.name }}</h2>
 
-            <PrimaryButton @click="showInviteUserModal = true" v-if="isCurrentUserAdmin">Invite Users</PrimaryButton>
+            <PrimaryButton v-if="!authUser" :href="route('login')">
+              Login to join to this group
+            </PrimaryButton>
+
+            <PrimaryButton v-if="isCurrentUserAdmin" @click="showInviteUserModal = true">
+              Invite Users
+            </PrimaryButton>
             <!-- not member + auto approval enable -->
-            <PrimaryButton v-if="!group.role && group.auto_approval">Join to Group</PrimaryButton>
+            <PrimaryButton v-if="authUser && !group.role && group.auto_approval" @click="joinToGroup">
+              Join to Group
+            </PrimaryButton>
             <!-- not member + auto approval disable -->
-            <PrimaryButton v-if="!group.role && !group.auto_approval">Request to Join</PrimaryButton>
+            <PrimaryButton v-if="authUser && !group.role && !group.auto_approval" @click="joinToGroup">
+              Request to Join
+            </PrimaryButton>
           </div>
         </div>
       </div>
