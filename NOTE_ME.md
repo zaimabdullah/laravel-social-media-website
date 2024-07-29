@@ -1284,7 +1284,64 @@ Commit all updated files into git with comment "Implement join to group with aut
 
 - gonna implement a tab that render all approved users of a group, a tab that show all pending user of a group & admin user of the group can approve or reject the request.
 
-- 
+- Update the visibility of tab in group profile page
+Make sure 'requests' tab only visible to admin user.
+Make sure 'users' tab visible only to member of group.
+
+- Display things under 'Pending Requests' tab
+Add more data(request & user) to return in func profile() inside 'GroupController'.
+Add more relation to retrieve pending user & approved user data inside 'Group'.
+Rename 'FollowingItem' to 'UserListItem' + update all code related to this renaming inside 'FollowingListItems'.
+Update the props use in 'UserListItem'.
+Delete the use of 'UserListItem' inside 'FollowingListItems' & add inside 'Group/View' for the Users & Pending Requests tab.
+### update code in UserResource for avatar & cover url + Profile/View & UserListItem -> solve issue of default img should display when user not upload own img
+Change some styling of 'UserListItem' & 'TabPanel + div + UserListItem of v-if=isCurentUserAdmin' in 'Group/View'.
+Change div to Link to make it redirect to user profile in 'UserListItem'.
+
+-  Create approve for pending requests
+Add 'approve' btn to the list of user under pending requests tab in ;UserListItem.
+Create & connect emit of 'approve' + pass the user parameters to the btn in 'UserListItem'.
+Listen to the 'approve' method + call the func 'approveUser' at <UserListItem /> use inside 'Group/view'.
+Create func 'approveUser(user)' that call to route 'group.approveRequest' in 'Group/View'.
+Create new route 'group.approveRequest' that link to func approveRequest() at GroupController in 'web.php'.
+Create the func approveRequest() inside 'GroupController'.
+## Done display users under Pending Requests tab + create approve func
+
+- Update users display under 'Users' tab
+Copying div+UserListItem under 'Pending Requests' tab & paste it for use under 'Users' tab.
+Add search input under tab 'Users' by copying code from 'FollowingListItems'.
+Make sure btn 'Approve' inside 'UserListItem' that we display is conditional, which only display under tab 'Pending Requests' & not tab 'Users'.
+## Done
+
+- Send notification after admin approved
+Create new notification file, run 'php artisan make:notification RequestApproved'.
+Add code that make use of the RequestApproved to send email after status change from pending->approved inside func approveRequest() 'GroupCOntroller'.
+Make changes to code inside 'RequestApproved'.
+
+- Create second btn for Reject request to join group
+Inside 'UserListItem',
+Change from PrimaryButton to button so we can custom as needed + PrimaryButton got a lot of css class we not need.
+Copy+paste the btn of approve and make it for reject.
+Add custom css class to the btn for styling.
+
+- Make the reject btn works
+Create $emit of 'reject' in 'UserListItem' + listen to that emit in 'Group/View' + Copy paste func approveUser() to make rejectUser().
+Use the same endpoint for approve & reject 'group.approveUser' but with diff action.
+Add REJECTED inside 'GroupUserStatus'.
+Make another condition of approved or rejected the request to join group in func approveRequest() inside 'GroupController'.
+Add new parameter pass to RequestApproved + make use the new para inside 'RequestApproved' as email content.
+## Done
+
+27. Change User Role Inside Group
+
+#### Make Git Commit
+Commit all updated files into git with comment "Display users and requests on group profile page and implement pending request approve and reject.".
+
+
+
+
+
+
 
 
 

@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from "vue";
-import TextInput from "@/Components/TextInput.vue";
-import FollowingItem from "@/Components/app/FollowingItem.vue";
+  import { ref } from "vue";
+  import TextInput from "@/Components/TextInput.vue";
+  import UserListItem from "@/Components/app/UserListItem.vue";
 
-const searchKeyword = ref("");
+  const searchKeyword = ref("");
 </script>
 
 <template>
@@ -13,38 +13,7 @@ const searchKeyword = ref("");
       You don't have friends yet.
     </div>
     <div v-else>
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="John Doe"
-        description="Lorem Ipsum is simply dummy text of the printing." />
-      <FollowingItem image="https://picsum.photos/100" title="Elon Musk"
-        description="Lorem Ipsum is simply dummy text of the printing." />
+
     </div>
   </div>
 </template>

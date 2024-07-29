@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Enums\GroupUserRole;
+use App\Http\Enums\GroupUserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -41,5 +42,15 @@ class Group extends Model
   public function adminUsers(): BelongsToMany
   {
     return $this->belongsToMany(User::class, 'group_users')->wherePivot('role', GroupUserRole::ADMIN->value);
+  }
+
+  public function pendingUsers(): BelongsToMany
+  {
+    return $this->belongsToMany(User::class, 'group_users')->wherePivot('status', GroupUserStatus::PENDING->value);
+  }
+
+  public function approvedUsers(): BelongsToMany
+  {
+    return $this->belongsToMany(User::class, 'group_users')->wherePivot('status', GroupUserStatus::APPROVED->value);
   }
 }
