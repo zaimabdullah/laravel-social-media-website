@@ -96,7 +96,8 @@
 
                 <div class="flex justify-end gap-2 py-3 px-4">
                   <button
-                    class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 bg-gray-100 rounded-md hover:bg-gray-200">
+                    class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 bg-gray-100 rounded-md hover:bg-gray-200"
+                    @click="closeModal">
                     <XMarkIcon class="h-5 w-5" />
                     Cancel
                   </button>

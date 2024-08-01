@@ -1337,6 +1337,36 @@ Add new parameter pass to RequestApproved + make use the new para inside 'Reques
 #### Make Git Commit
 Commit all updated files into git with comment "Display users and requests on group profile page and implement pending request approve and reject.".
 
+- will display who admin user of group + can change that role(user-admin)
+- Display who admin/user of group
+Change v-if=forApprove from btn to div inside 'UserListItem'.
+Take select-input from tailwindui.com, paste + edit inside 'UserListItem'.
+Make the select-input for role in group admin or user.
+Change clickable element on list of users, so that only avatar icon & user name only clickable to go to user profile.
+
+- Make functionality to change user-admin role
+Update &users query inside func profile() in 'GroupController' to get all users data + their role.
+Create new resources file that relate between users table with group_users table, run 'php artisan make:resource GroupUserResource'.
+Copy code from UserResource + paste + add new code into 'GroupUserResource'.
+Change from UserResource::collection to GroupUserResource::collection when returning the $users data in func profile() inside 'GroupController'.
+Add new emit 'roleChange' to select-input field for functionality of changing the role + define the emit.
+Make use the emit role-change at 'Group/View' by binding it to new func 'onRoleChange()'.
+Add new route to 'group.changeRole' in web.php + create new function relate to that, func changeRole() in 'GroupController'.
+
+- Restrict change admin role of group owner + finishing functionality
+Changing code of func isAdmin() in 'Group', so it can check if given userId is an admin of a group.
+Add func isOwner() to check the owner of a group.
+## owner of group = creater, admin = anyone assign as admin of group by owner + except owner
+Make the select-input role dropdown is disable in frontend for owner of group, by adding props 'disableRoleDropdown' + make use it at select-input in 'UserListItem' & provide value from 'Group/View' UserListItem :disable-role-dropdown under Users  tab.
+## Change some styling for avatar icon in GroupList + UserListItem with w-9 h-9 object-cover
+
+- Send email for role change
+Create new notification, run 'php artisan make:notification RoleChanged'.
+Add code inside 'RoleChanged'.
+Make use 'RoleChanged' to send email inside func changeRole() 'GroupController'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement user role change inside group".
 
 
 
@@ -1348,19 +1378,7 @@ Commit all updated files into git with comment "Display users and requests on gr
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-## 0:00:00
+## 0:38:28
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 

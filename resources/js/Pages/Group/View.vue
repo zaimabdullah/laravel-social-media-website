@@ -7,6 +7,7 @@
   import PrimaryButton from "@/Components/PrimaryButton.vue";
   import TabItem from "../Profile/Partials/TabItem.vue";
   import InviteUserModal from "@/Pages/Group/InviteUserModal.vue";
+  import TextInput from "@/Components/TextInput.vue";
   import UserListItem from "@/Components/app/UserListItem.vue";
 
   const imagesForm = useForm({
@@ -77,6 +78,7 @@
 
   function submitCoverImage() {
     imagesForm.post(route('group.updateImages', props.group.slug), {
+      preserveScroll: true,
       onSuccess: () => {
         showNotification.value = true;
         resetCoverImage();
@@ -89,6 +91,7 @@
 
   function submitThumbnailImage() {
     imagesForm.post(route('group.updateImages', props.group.slug), {
+      preserveScroll: true,
       onSuccess: () => {
         showNotification.value = true;
         resetThumbnailImage();
@@ -102,7 +105,9 @@
   function joinToGroup() {
     const form = useForm({});
 
-    form.post(route('group.join', props.group.slug));
+    form.post(route('group.join', props.group.slug), {
+      preserveScroll: true
+    });
   }
 
   function approveUser(user) {
@@ -111,7 +116,9 @@
       action: 'approve'
     });
 
-    form.post(route('group.approveRequest', props.group.slug));
+    form.post(route('group.approveRequest', props.group.slug), {
+      preserveScroll: true
+    });
   }
 
   function rejectUser(user) {
@@ -121,6 +128,15 @@
     });
 
     form.post(route('group.approveRequest', props.group.slug));
+  }
+
+  function onRoleChange(user, role) {
+    const form = useForm({
+      user_id: user.id,
+      role
+    });
+
+    form.post(route('group.changeRole', props.group.slug));
   }
 
 </script>
@@ -246,7 +262,9 @@
                 <TextInput v-model="searchKeyword" placeholder="Type to search" class="w-full" />
               </div>
               <div class="grid grid-cols-2 gap-3">
-                <UserListItem v-for="user of users" :user="user" :key="user.id" class="shadow rounded-lg" />
+                <UserListItem v-for="user of users" :user="user" :key="user.id" :show-role-dropdown="isCurrentUserAdmin"
+                  :disable-role-dropdown="group.user_id === user.id" @role-change="onRoleChange"
+                  class="shadow rounded-lg" />
               </div>
             </TabPanel>
             <!-- under tab 'Pending Requests' -->
