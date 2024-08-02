@@ -1368,6 +1368,19 @@ Make use 'RoleChanged' to send email inside func changeRole() 'GroupController'.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement user role change inside group".
 
+- Gonna add about tab + make group name editable
+- Add 'About' tab + the contents
+Copy+paste the Tab & TabPanel for 'About' in 'Group/View'.
+Restructured the code of 3 input fields from 'GroupModal' into separate component 'GroupForm'.
+Make use 'GroupForm' under 'About' tab in 'Group/View'.
+Create 'submit' btn that trigger func updateGroup() under 'About' tab in 'Group/View' + create related new route 'group.update' for form submission in 'web.php'.
+Copy+paste code of rule from 'StoreGroupRequest' to 'UpdategroupRequest'.
+Add code inside func update() in 'GroupController'.
+
+28. Create and Load Group Posts
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement group update".
 
 
 
@@ -1378,7 +1391,16 @@ Commit all updated files into git with comment "Implement user role change insid
 
 
 
-## 0:38:28
+
+
+
+
+
+
+
+
+
+## 0:00:00
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
