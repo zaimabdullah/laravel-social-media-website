@@ -1382,6 +1382,51 @@ Add code inside func update() in 'GroupController'.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement group update".
 
+- Load posts for the group
+In DB table 'posts', add any group_id into all posts.
+Copy + paste code of $posts query from func index() HomeController into func profile() in 'GroupController'.
+Separate the $posts query into 'Post' model in new func postsForTimeline() then make us it inside HomeController + GroupController.
+Add new line 'posts' in return Inertia func profile() inside GroupController.
+Add posts:Object in defineProps inside 'Group/view'.
+Copy + paste PostList used in 'Home' into 'Group/View' under Posts tab.
+Change anchor tag to Link + add route to each href inside 'PostUserHeader'.
+## Change anchor tag to Link + add route to each href in CommentList + add code of default avatar_url in UserResource, CommentResource.
+
+- Create new post from inside group profile
+Add CreatePost component inside 'Group/View' under tab Posts.
+Add + passing 'group' props from 'Group/View' under tab Posts ->CreatePost->PostModal use inside func submit() -> backend StorePostRequest -> Post model fillable.
+
+- Post created successfully in Group page BUT not automatically display, need refresh
+After success submit of create new post, we can see the new created post in response body(Network->Preview->posts->data) which means already inside array of props.posts in 'PostList', but why cannot auto-load it ?.
+We can see that we iterate posts data from allPosts.data not props.posts here currently.
+So after checking with <pre></pre>, the 'allPosts.data' is not updated after new post created while 'posts' is updated = The Problem.
+Add the onUpdate() hook in 'PostList' that gonna update value inside 'allPosts.data'. === SOLVED ISSUE OF POSTS NOT AUTO-LOAD AFTER CREATED
+
+- Load more func loadMore() posts when scrolling is error
+Adding if condition inside func profile() in 'GroupController' for this load more posts in group profile after scrolling. => WORKS BUT GOT WARNING WHICH BECAUSE OF onUpdated() hooks earlier.
+Comment the onUpdate() hook, add watch() hook for AUTO-LOAD POST AFTER CREATED + LOAD MORE POSTS WHEN SCROLLING SUCCESS but IF:-
+### user scroll & all posts loaded, then user create new post + the post auto display suceessfully BUT all loaded post just now will back to only 20post loaded/display only which means all posts loaded inside allPosts.value loss it data, which works but not ideal.
+
+- Make sure only member of group can make a post inside group
+Add validation rule in 'StorePostRequest' that will stop execution when error happen + give error msg.
+Handle the error msg get from backend inside frontend by displaying it between PostUserHeader & ckeditor in 'PostModal'. 
+
+## add code of default avatar_url in GroupUserResource + remove of displaying default avatar code => '|| '/img/default_avatar.webp'' in frontend(already setup in backend now) which is in UserListItem, Profile/View, CommentList & PostUserHeader before.
+
+- Make the create post input field not visible to user who not member of group
+Add new helper func hasApprovedUser() in 'Group' for checking of current user is a member of a group.
+Make use of it in func profile() of posts query inside 'GroupController'.
+Update the posts query for the if-else condition which is user either a member of the group or not.
+Update code at allPosts = ref, watch() in 'PostList'.
+Add code for display when user not a member of group in 'Group/View'.
+
+29. Deleting Posts and Comments by Admin Users
+
+- admin user = able to delete posts from regular users inside group
+- owner of posts = able to delete comment on their posts
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement loading posts on group page and implement creating posts inside group".
 
 
 

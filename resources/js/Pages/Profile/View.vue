@@ -43,8 +43,7 @@
           <div
             class=" flex items-center justify-center relative group/avatar -mt-[64px] ml-[48px] w-[128px] h-[128px] rounded-full">
             <!-- Avatar -->
-            <img :src="avatarImageSrc || user.avatar_url || '/img/default_avatar.webp'"
-              class="w-full h-full object-cover rounded-full" />
+            <img :src="avatarImageSrc || user.avatar_url" class="w-full h-full object-cover rounded-full" />
             <button v-if="!avatarImageSrc"
               class="absolute left-0 top-0 right-0 bottom-0 bg-black/50 text-gray-200 rounded-full opacity-0 flex items-center justify-center group-hover/avatar:opacity-100">
               <CameraIcon class="h-8 w-8" />

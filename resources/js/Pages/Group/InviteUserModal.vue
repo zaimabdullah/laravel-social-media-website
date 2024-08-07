@@ -17,6 +17,7 @@
 
   const page = usePage();
 
+  // dont know use or not
   const formErrors = ref({});
 
   const form = useForm({
@@ -38,6 +39,7 @@
 
   function resetModal() {
     form.reset();
+    page.props.errors.email = '';
     formErrors.value = {};
   }
 
@@ -91,7 +93,6 @@
                       v-model="form.email" required autofocus />
                     <div class="text-red-500">{{ page.props.errors.email }}</div>
                   </div>
-
                 </div>
 
                 <div class="flex justify-end gap-2 py-3 px-4">

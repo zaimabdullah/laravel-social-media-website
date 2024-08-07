@@ -15,18 +15,7 @@ class HomeController extends Controller
   public function index(Request $request)
   {
     $userId = Auth::id();
-    $posts = Post::query() // 1- SELECT * FROM posts
-      ->withCount('reactions') // 2- SELECT COUNT(*) from reactions
-      ->with([
-        'comments' => function ($query) use ($userId) {
-          $query->withCount('reactions'); // 3- SELECT * FROM comments WHERE post_id IN (1)
-          // SELECT COUNT(*) from reactions
-        },
-        'reactions' => function ($query) use ($userId) {
-          $query->where('user_id', $userId); // SELECT * FROM reactions WHERE user_id = ?authuser
-        }
-      ])
-      ->latest()
+    $posts = Post::postsForTimeline($userId)
       ->paginate(10);
 
     $posts = PostResource::collection($posts);
@@ -45,7 +34,7 @@ class HomeController extends Controller
 
     return Inertia::render('Home', [
       'posts' => $posts,
-      'groups' => GroupResource::collection($groups)
+      'groups' => GroupResource::collection($groups),
     ]);
   }
 }

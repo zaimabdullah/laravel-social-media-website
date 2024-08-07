@@ -12,6 +12,13 @@
     user: authUser
   });
 
+  defineProps({
+    group: {
+      type: Object,
+      default: null
+    }
+  });
+
   function showCreatePostModal() {
     showModal.value = true;
   }
@@ -22,20 +29,9 @@
   <div class="p-4 bg-white rounded-lg border mb-3">
     <div @click="showCreatePostModal"
       class="py-2 px-3 border-2 border-gray-200 text-gray-500 rounded-md shadow-sm mb-3 w-full">
-      Click here to create new post</div>
-    <!-- <pre>{{ newPostForm.body }}</pre> -->
-    <!-- <div class="flex gap-2 justify-between">
-      <button type="button"
-        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 relative">
-        Attach Files
-        <input type="file" class="absolute left-0 top-0 right-0 bottom-0 opacity-0" />
-      </button>
-      <button @click="submit" type="submit"
-        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-        Submit
-      </button>
-    </div> -->
+      Click here to create new post
+    </div>
 
-    <PostModal :post="newPost" v-model="showModal" />
+    <PostModal :post="newPost" :group="group" v-model="showModal" />
   </div>
 </template>

@@ -6,7 +6,6 @@
     TransitionChild,
     Dialog,
     DialogPanel,
-    DialogTitle,
   } from '@headlessui/vue';
 
   const props = defineProps({

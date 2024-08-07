@@ -44,7 +44,7 @@ class InviteUsersRequest extends FormRequest
             ->first();
 
           if (!$this->user) {
-            $fail('User does not exist');
+            return $fail('User does not exist');
           }
 
           $this->groupUser = GroupUser::where('user_id', $this->user->id)->where('group_id', $this->group->id)->first();

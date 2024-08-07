@@ -26,7 +26,7 @@
     <div class="flex items-center gap-2 py-2 px-2">
       <!-- Link on avatar icon -->
       <Link :href="route('profile', user.username)">
-      <img :src="user.avatar_url || '/img/default_avatar.webp'" class="w-9 h-9 rounded-full object-cover" alt="" />
+      <img :src="user.avatar_url" class="w-9 h-9 rounded-full object-cover" alt="" />
       </Link>
       <div class="flex justify-between flex-1">
         <!-- Link on user name -->

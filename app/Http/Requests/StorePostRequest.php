@@ -2,18 +2,34 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Enums\GroupUserStatus;
+use App\Models\GroupUser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
 
 class StorePostRequest extends FormRequest
 {
   // validation of MIME types Not extensions
   public static array $extensions = [
-    'jpg', 'jpeg', 'png', 'gif', 'webp', 'svg',
-    'mp3', 'wav', 'mp4',
-    "doc", "docx", "pdf", "csv", "xls", "xlsx",
-    "zip", "rar"
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+    'webp',
+    'svg',
+    'mp3',
+    'wav',
+    'mp4',
+    "doc",
+    "docx",
+    "pdf",
+    "csv",
+    "xls",
+    "xlsx",
+    "zip",
+    "rar",
   ];
   /**
    * Determine if the user is authorized to make this request.
@@ -37,7 +53,7 @@ class StorePostRequest extends FormRequest
         'max:50',
         function ($attribute, $value, $fail) {
           // Custom rule to check the total size of all files
-          $totalSize = collect($value)->sum(fn (UploadedFile $file) => $file->getSize());
+          $totalSize = collect($value)->sum(fn(UploadedFile $file) => $file->getSize());
 
           // Total size is in kilobytes, 1 * 1024 (kilo) * 1024 (mega) * 1024 (giga)
           if ($totalSize > 1 * 1024 * 1024 * 1024) {
@@ -49,7 +65,21 @@ class StorePostRequest extends FormRequest
         'file',
         File::types(self::$extensions),
       ],
-      'user_id' => ['numeric']
+      'user_id' => ['numeric'],
+      'group_id' => [
+        'nullable',
+        'exists:groups,id',
+        function ($attribute, $value, \Closure $fail) {
+          $groupUser = GroupUser::where('user_id', Auth::id())
+            ->where('group_id', $value)
+            ->where('status', GroupUserStatus::APPROVED->value)
+            ->exists();
+
+          if (!$groupUser) {
+            $fail('You don\'t have permission to create post in this group');
+          }
+        }
+      ],
     ];
   }
 

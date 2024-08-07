@@ -82,7 +82,7 @@
         </DisclosureButton>
       </div>
 
-      <DisclosurePanel class="scrollbar-thin mt-3 h-[400px] overflow-auto">
+      <DisclosurePanel class="scrollbar-thin mt-3 max-h-[400px] overflow-auto">
         <CommentList :post="post" :data="{ comments: post.comments }" />
       </DisclosurePanel>
     </Disclosure>

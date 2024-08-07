@@ -10,6 +10,8 @@
   import TextInput from "@/Components/TextInput.vue";
   import UserListItem from "@/Components/app/UserListItem.vue";
   import GroupForm from "@/Components/app/GroupForm.vue";
+  import PostList from "@/Components/app/PostList.vue";
+  import CreatePost from "@/Components/app/CreatePost.vue";
 
   const imagesForm = useForm({
     thumbnail: null,
@@ -35,6 +37,7 @@
     group: {
       type: Object,
     },
+    posts: Object,
     users: Array,
     requests: Array
   });
@@ -163,14 +166,18 @@
           class="my-2 py-2 px-3 font-medium text-sm bg-emerald-500 text-white dark:bg-emerald-300">
           {{ success }}
         </div>
+
         <div v-if="errors.cover" class="my-2 py-2 px-3 font-medium text-sm bg-red-400 text-white">
           {{ errors.cover }}
         </div>
+
         <div class="group relative bg-white">
           <!-- <pre>{{ user }}</pre> -->
+
           <!-- Cover Image -->
           <img :src="coverImageSrc || group.cover_url || '/img/default_cover.jpg'"
             class="w-full h-[200px] object-cover" />
+
           <div v-if="isCurrentUserAdmin" class="absolute top-2 right-2">
             <button v-if="!coverImageSrc"
               class="bg-gray-50 hover:bg-gray-100 text-gray-800 py-1 px-2 text-xs flex items-center opacity-0 group-hover:opacity-100">
@@ -184,6 +191,7 @@
               Update Cover Image
               <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0" @change="onCoverChange">
             </button>
+
             <div v-else class="flex gap-2 bg-white p-2 opacity-0 group-hover:opacity-100">
               <button @click="resetCoverImage"
                 class="bg-gray-50 hover:bg-gray-100 text-gray-800 py-1 px-2 text-xs flex items-center">
@@ -204,12 +212,14 @@
               <!-- Thumbnail -->
               <img :src="thumbnailImageSrc || group.thumbnail_url || '/img/default_avatar.webp'"
                 class="w-full h-full object-cover rounded-full" />
+
               <button v-if="isCurrentUserAdmin && !thumbnailImageSrc"
                 class="absolute left-0 top-0 right-0 bottom-0 bg-black/50 text-gray-200 rounded-full opacity-0 flex items-center justify-center group-hover/thumbnail:opacity-100">
                 <CameraIcon class="h-8 w-8" />
 
                 <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0" @change="onThumbnailChange">
               </button>
+
               <div v-else-if="isCurrentUserAdmin"
                 class="absolute top-1 right-0 flex flex-col gap-2 opacity-0 group-hover/thumbnail:opacity-100">
                 <button @click="resetThumbnailImage"
@@ -222,6 +232,7 @@
                 </button>
               </div>
             </div>
+
             <div class="flex justify-between items-center flex-1 p-4">
               <h2 class="font-bold text-lg">{{ group.name }}</h2>
 
@@ -232,14 +243,17 @@
               <PrimaryButton v-if="isCurrentUserAdmin" @click="showInviteUserModal = true">
                 Invite Users
               </PrimaryButton>
+
               <!-- not member + auto approval enable -->
               <PrimaryButton v-if="authUser && !group.role && group.auto_approval" @click="joinToGroup">
                 Join to Group
               </PrimaryButton>
+
               <!-- not member + auto approval disable -->
               <PrimaryButton v-if="authUser && !group.role && !group.auto_approval" @click="joinToGroup">
                 Request to Join
               </PrimaryButton>
+
             </div>
           </div>
         </div>
@@ -247,32 +261,46 @@
       <div class="border-t p-4 pt-0">
         <TabGroup>
           <TabList class="flex bg-white">
+
             <!-- tab Posts -->
             <Tab v-slot="{ selected }" as="template">
               <TabItem text="Posts" :selected="selected" />
             </Tab>
+
             <!-- tab Users -->
             <Tab v-if="isJoinedToGroup" v-slot="{ selected }" as="template">
               <TabItem text="Users" :selected="selected" />
             </Tab>
+
             <!-- tab Pending Requests -->
             <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
               <TabItem text="Pending Requests" :selected="selected" />
             </Tab>
+
             <!-- tab Photos -->
             <Tab v-slot="{ selected }" as="template">
               <TabItem text="Photos" :selected="selected" />
             </Tab>
+
             <!-- tab About -->
             <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
               <TabItem text="About" :selected="selected" />
             </Tab>
+
           </TabList>
 
           <TabPanels class="mt-2">
-            <TabPanel class="bg-white p-3 shadow">
-              Posts
+            <!-- under tab 'Posts' -->
+            <TabPanel>
+              <template v-if="posts">
+                <CreatePost :group="group" />
+                <PostList :posts="posts.data" class="flex-1" />
+              </template>
+              <div v-else class="py-8 text-center dark:text-white">
+                You don't have permission to view these posts.
+              </div>
             </TabPanel>
+
             <!-- under tab 'Users' -->
             <TabPanel v-if="isJoinedToGroup" key>
               <div class="mb-3">
@@ -284,25 +312,29 @@
                   class="shadow rounded-lg" />
               </div>
             </TabPanel>
+
             <!-- under tab 'Pending Requests' -->
             <TabPanel v-if="isCurrentUserAdmin" key>
-              <div class="grid grid-cols-2 gap-3">
-                <UserListItem v-if="requests.length" v-for="user of requests" :user="user" :key="user.id"
-                  :for-approve="true" class="shadow rounded-lg" @approve="approveUser" @reject="rejectUser" />
-                <div class="py-8 text-center">
-                  There are no pending requests
-                </div>
+              <div v-if="requests.length" class="grid grid-cols-2 gap-3">
+                <UserListItem v-for="user of requests" :user="user" :key="user.id" :for-approve="true"
+                  class="shadow rounded-lg" @approve="approveUser" @reject="rejectUser" />
+              </div>
+              <div v-else class="py-8 text-center dark:text-gray-100">
+                There are no pending requests.
               </div>
             </TabPanel>
+
             <TabPanel key class="bg-white p-3 shadow">
               Photos
             </TabPanel>
+
             <TabPanel key class="bg-white p-3 shadow">
               <GroupForm :form="aboutForm" />
               <PrimaryButton @click="updateGroup">
                 Submit
               </PrimaryButton>
             </TabPanel>
+
           </TabPanels>
         </TabGroup>
       </div>
