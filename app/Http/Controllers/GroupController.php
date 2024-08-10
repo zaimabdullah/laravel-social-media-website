@@ -20,6 +20,7 @@ use App\Notifications\InvitationInGroup;
 use App\Notifications\RequestApproved;
 use App\Notifications\RequestToJoinGroup;
 use App\Notifications\RoleChanged;
+use App\Notifications\UserRemovedFromGroup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -291,38 +292,81 @@ class GroupController extends Controller
 
   }
 
-  public function changeRole(Request $request, Group $group)
+  public function removeUser(Request $request, Group $group)
   {
+    // curr-user not admin group
     if (!$group->isAdmin(Auth::id())) {
       return response("You don't have permission to perform this action", 403);
     }
 
+    // validate given data(from UserListItem->Group/View)
     $data = $request->validate([
       'user_id' => ['required'],
-      'role' => ['required', Rule::enum(GroupUserRole::class)],
     ]);
 
     $user_id = $data['user_id'];
 
     // Table group, col user_id = owner of the group
+    // if given user = owner of group
     if ($group->isOwner($user_id)) {
-      return response("You can't change role of the owner of the group", 403);
+      return response("The owner of the group cannot be removed", 403);
     }
 
-
+    // find that particular group user of the group
     $groupUser = GroupUser::where('user_id', $user_id)
       ->where('group_id', $group->id)
       ->first();
 
+    if ($groupUser) {
+      // get that user
+      $user = $groupUser->user;
+      $groupUser->delete();
+
+      // Send email that his/her has been removed from group
+      $user->notify(new UserRemovedFromGroup($group));
+    }
+
+    return back();
+  }
+
+
+  public function changeRole(Request $request, Group $group)
+  {
+    // curr-user not admin group
+    if (!$group->isAdmin(Auth::id())) {
+      return response("You don't have permission to perform this action", 403);
+    }
+
+    // validate given data(from UserListItem->Group/View)
+    $data = $request->validate([
+      'user_id' => ['required'],
+      'role' => ['required', Rule::enum(GroupUserRole::class)],
+    ]);
+
+    // get the user_id
+    $user_id = $data['user_id'];
+
+    // Table group, col user_id = owner of the group
+    // if given user = owner of group
+    if ($group->isOwner($user_id)) {
+      return response("You can't change role of the owner of the group", 403);
+    }
+
+    // find that particular group user of the group
+    $groupUser = GroupUser::where('user_id', $user_id)
+      ->where('group_id', $group->id)
+      ->first();
+
+    // if that user exists
     if ($groupUser) {
       $groupUser->role = $data['role'];
       $groupUser->save();
 
       // Send email that his/her role has changed
       $groupUser->user->notify(new RoleChanged($group, $data['role']));
-
-      return back();
     }
+
+    return back();
   }
 
 }

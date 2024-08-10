@@ -1460,14 +1460,27 @@ Commit all updated files into git with comment "Allow admin users to delete post
 
 - Remove regular users from group by admin users
 
+- Add remove btn at the user list
+Add button delete in 'UserListItem'.
+Make use of 'disableRoleDropdown' to ensure owner of group cannot be delete, make the delete button disable.
+Add new emit 'delete' + use on the button.
+Add the emit @delete at the UserListItem being used in 'Group/View' + connect it to the func deleteUser().
+Create the func deleteUser() + routing it to new route 'group.removeUser' in 'Group/View'.
+Define the new route 'group.removeUser' with connection to new func removeUser() at GroupController inside 'web.php'.
+Create the new func removeUser() + add code inside 'GroupController'.
+Make new notif for notify the user who got removed from group, run 'php artisan make:notification UserRemovedFromGroup'.
+Add code inside 'UserRemovedFromGroup' + make of notify in the func deleteUser() inside 'GroupController'.
 
+31. Send Email Notifications on Various actions
 
+Make notifications of below actions to corresponding users
+- post is created
+- comment is created
+- post is liked
+- comment is liked
 
-
-
-
-
-
+#### Make Git Commit
+Commit all updated files into git with comment "Allow admin users to remove users from group, send notifications also".
 
 
 

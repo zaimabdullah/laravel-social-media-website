@@ -137,7 +137,23 @@
       action: 'reject'
     });
 
-    form.post(route('group.approveRequest', props.group.slug));
+    form.post(route('group.approveRequest', props.group.slug), {
+      preserveScroll: true
+    });
+  }
+
+  function deleteUser(user) {
+    if (!window.confirm(`Are you sure you want to remove user "${user.name}" from this group?`)) {
+      return false;
+    }
+
+    const form = useForm({
+      user_id: user.id
+    });
+
+    form.delete(route('group.removeUser', props.group.slug), {
+      preserveScroll: true
+    });
   }
 
   function onRoleChange(user, role) {
@@ -308,8 +324,8 @@
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <UserListItem v-for="user of users" :user="user" :key="user.id" :show-role-dropdown="isCurrentUserAdmin"
-                  :disable-role-dropdown="group.user_id === user.id" @role-change="onRoleChange"
-                  class="shadow rounded-lg" />
+                  :disable-role-dropdown="group.user_id === user.id" class="shadow rounded-lg"
+                  @role-change="onRoleChange" @delete="deleteUser" />
               </div>
             </TabPanel>
 
