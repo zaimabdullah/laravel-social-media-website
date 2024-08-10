@@ -48,7 +48,7 @@
 
       <PostUserHeader :post="post" />
 
-      <EditDeleteDropdown :user="post.user" @edit="openEditModal" @delete="deletePost" />
+      <EditDeleteDropdown :user="post.user" :post="post" @edit="openEditModal" @delete="deletePost" />
     </div>
     <div class="mb-3">
       <!-- ReadMoreReadLess for post content -->

@@ -11,6 +11,8 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\PostAttachment;
 use App\Models\Reaction;
+use App\Notifications\CommentDeleted;
+use App\Notifications\PostDeleted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +45,7 @@ class PostController extends Controller
           'path' => $path,
           'mime' => $file->getMimeType(),
           'size' => $file->getSize(),
-          'created_by' => $user->id
+          'created_by' => $user->id,
         ]);
       }
 
@@ -104,7 +106,7 @@ class PostController extends Controller
           'path' => $path,
           'mime' => $file->getMimeType(),
           'size' => $file->getSize(),
-          'created_by' => $user->id
+          'created_by' => $user->id,
         ]);
       }
 
@@ -127,16 +129,21 @@ class PostController extends Controller
    */
   public function destroy(Post $post)
   {
-    // TODO maybe change later
     $id = Auth::id();
 
-    if ($post->user_id !== $id) {
-      return response("You don't have permission to delete this post", 403);
+    // curr-user is owner of post OR post is for a group OR cur-user admin of group
+    if ($post->isOwner($id) || $post->group && $post->group->isAdmin($id)) {
+      $post->delete();
+
+      // if curr-user NOT owner of post, means the other 2 case from above
+      if (!$post->isOwner($id)) {
+        $post->user->notify(new PostDeleted($post->group));
+      }
+
+      return back();
     }
 
-    $post->delete();
-
-    return back();
+    return response("You don't have permission to delete this post", 403);
   }
 
   public function downloadAttachment(PostAttachment $attachment)
@@ -171,7 +178,7 @@ class PostController extends Controller
         'object_id' => $post->id,
         'object_type' => Post::class,
         'user_id' => $userId,
-        'type' => $data['reaction']
+        'type' => $data['reaction'],
       ]);
     }
 
@@ -188,7 +195,7 @@ class PostController extends Controller
   {
     $data = $request->validate([
       'comment' => ['required'],
-      'parent_id' => ['nullable', 'exists:comments,id']
+      'parent_id' => ['nullable', 'exists:comments,id'],
     ]);
 
     $comment = Comment::create([
@@ -203,12 +210,23 @@ class PostController extends Controller
 
   public function deleteComment(Comment $comment)
   {
-    if ($comment->user_id !== Auth::id()) {
-      return response("You don't have permission to delete this comment.", 403);
+    $post = $comment->post;
+    $id = Auth::id();
+
+    // owner of comment OR owner of post only can delete the comment
+    if ($comment->isOwner($id) || $post->isOwner($id)) {
+      $comment->delete();
+
+      // notify user or not + user is owner of comment or not
+      // current user not the owner of comment BUT owner of post
+      if (!$comment->isOwner($id)) {
+        $comment->user->notify(new CommentDeleted($comment, $post));
+      }
+
+      return response('', 204);
     }
 
-    $comment->delete();
-    return response('', 204);
+    return response("You don't have permission to delete this comment.", 403);
   }
 
   public function updateComment(UpdateCommentRequest $request, Comment $comment)
@@ -246,7 +264,7 @@ class PostController extends Controller
         'object_id' => $comment->id,
         'object_type' => Comment::class,
         'user_id' => $userId,
-        'type' => $data['reaction']
+        'type' => $data['reaction'],
       ]);
     }
 

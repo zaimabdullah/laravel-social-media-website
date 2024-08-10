@@ -1422,11 +1422,44 @@ Add code for display when user not a member of group in 'Group/View'.
 
 29. Deleting Posts and Comments by Admin Users
 
-- admin user = able to delete posts from regular users inside group
-- owner of posts = able to delete comment on their posts
+- admin user = able to delete posts made by regular + other admin users inside group, edit posts of own/other admin user, CANNOT delete comment in other user post
+
+- owner of posts = able to delete their own posts & own/others comment on their posts (either regular or group admin comment)
+
+- when another user delete our comment/admin user delete our post = should notify user the comment/post is being deleted
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement loading posts on group page and implement creating posts inside group".
+
+- Make edit-delete dropdown of post visible to admin user
+Add prop 'post' + make change of 'group' return data as GroupResource() in 'PostResource' + pass the :post data from 'PostItem' to component EditDeleteDropdown + make use of prop post to access the group data (props.post.group) at delete dropdown-btn in 'EditDeleteDropdown'.
+Update code inside func destroy() 'PostController' + add func isOwner() inside 'Post' & make use of it in func destroy().
+Now admin user have delete func for each posts inside their group. (other than the owner of post)
+
+- Make edit-delete dropdown of post+comment visible conditionally
+Make almost the same changes in func deleteComment() 'PostController' + 'Comment'.
+Pass data :post at the 'EditDeleteDropwon' used in 'CommentList'.
+Add one more check at the delete btn in 'EditDeleteDropwon' 'props.post.user.id === authUser.id' for checking current user is the owner of the post. => can delete any comment in their own post
+Add deleteAllowed() + editAllowed() func for displaying the 'edit'+'delete' button inside 'EditDeleteDropdown'.
+Remove props user, add prop comment in 'EditDeleteDropdown'.
+
+- Make notify user/owner that their comment got deleted
+Run 'php artisan make:notification CommentDeleted'.
+Run 'php artisan make:notification PostDeleted'.
+Add code inside 'CommentDeleted' + make use of it inside func deleteComment() in 'PostController'. --> there's TODO in CommentDelete for view post
+
+- Make notify user/owner that their post got deleted
+Make something similar as above in func destroy() inside 'PostController' & 'PostDeleted'.
+
+### for the notify of deleted comment+post, the email not give much info like which comment or post got deleted & it related to content of post may have word or have only attachment.
+
+30. Remove Users from Groups
+
+#### Make Git Commit
+Commit all updated files into git with comment "Allow admin users to delete posts from group. Allow post owners to delete comments on the post. Send notifications in both cases.".
+
+- Remove regular users from group by admin users
+
 
 
 
