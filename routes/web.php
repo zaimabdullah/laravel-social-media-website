@@ -17,7 +17,9 @@ Route::get('/g/{group:slug}', [GroupController::class, 'profile'])
 Route::get('/group/approve-invitation/{token}', [GroupController::class, 'approveInvitation'])
   ->name('group.approveInvitation');
 
+// Route that secure with Authentication
 Route::middleware('auth')->group(function () {
+
   Route::post('/profile/update-images', [ProfileController::class, 'updateImage'])
     ->name('profile.updateImages');
 
@@ -49,9 +51,13 @@ Route::middleware('auth')->group(function () {
   //   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
   // Posts
+  Route::get('/post/{post}', [PostController::class, 'view'])
+    ->name('post.view');
+
   Route::post('/post', [PostController::class, 'store'])
     ->name('post.create');
 

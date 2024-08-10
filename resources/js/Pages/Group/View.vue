@@ -340,10 +340,12 @@
               </div>
             </TabPanel>
 
+            <!-- under tab 'Photos' -->
             <TabPanel key class="bg-white p-3 shadow">
               Photos
             </TabPanel>
 
+            <!-- under tab 'About' -->
             <TabPanel key class="bg-white p-3 shadow">
               <GroupForm :form="aboutForm" />
               <PrimaryButton @click="updateGroup">

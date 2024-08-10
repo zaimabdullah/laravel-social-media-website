@@ -1504,7 +1504,7 @@ Add code in 'ReactionAddedOnComment'.
 
 32. Created Dedicated Post Page
 
-- Creating dedicated post page, make easier for sharing specific post to others(each post will have own url link) 
+- Creating dedicated post page, make easier for sharing specific post to others(each post will have own url link), can make use in notification pages when email need to provide url link for specific page to receiver
 
 #### Make Git Commit
 Commit all updated files into git with comment 
@@ -1516,14 +1516,37 @@ When post is liked
 When comment is liked
 ".
 
+- Create dedicated page for post
+Create new func view() in 'PostController'.
+Create new folder 'Post' in 'resources/js/Pages' + create new file 'View.vue' in it.
+Add the based code of '*.vue', <script setup></script> <template></template> <style scoped></style>.
+Call PostItem component which is the template for rendering a single post data we use.
+Add routing of 'post.view' + connect to func view() inside 'web.php'.
+Add some more code in 'Post/view'.
 
+- Add view post page link + copy post link in dropdown
+Add new MenuItem for open post menu inside 'EditDeleteDropdown'.
+Issues: when opening post with more than 4 attachments, displaying other attachments will not work for now.
+Add new MenuItem for copy post link menu inside 'EditDeleteDropdown'.
+Add new func copyToClipboard with some chatgpt generated code+edit the code.
 
+- Adjust the 'Post/View' display + functionality
+Update the code of 'Post/View', to adjust on how single post should be display, size, scrolling. --> the scroll not good design for now
+Update the code so owner of post still can edit their own post inside 'Post/View'.
+Copy some code from 'PostList' paste into 'Post/View' for edit post content, preview of attachment functionality, open/close of edit post modal & attachment preview modal.
+## Done of dedicated page for a post
 
+- Make use of sharing url link of post inside some of notification files
+Add the route to 'post.view' inside url() of 'CommentCreated', 'CommentDeleted', 'PostCreated', 'ReactionAddedOnComment', 'ReactionAddedOnPost' notification files.
+Add $post as new argument for 'CommentCreated' notification file inside 'CommentCreated' func __construct & func createComment() 'PostController'.
 
+- Make sure reactions functionality works properly in single post page
+Add lines of code for getting data/counts of reactions on post and comments in func view() inside 'PostController'. Copy+paste from 'Post.php'
 
+33. Display About Group Tab on Group's Profile Page
 
-
-
+#### Make Git Commit
+Commit all updated files into git with comment "Create dedicated post page".
 
 
 
