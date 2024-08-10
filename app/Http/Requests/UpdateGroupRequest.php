@@ -34,4 +34,11 @@ class UpdateGroupRequest extends FormRequest
 
     ];
   }
+
+  protected function prepareForValidation(): void
+  {
+    $this->merge([
+      'about' => nl2br($this->about),
+    ]);
+  }
 }

@@ -1526,7 +1526,6 @@ Add some more code in 'Post/view'.
 
 - Add view post page link + copy post link in dropdown
 Add new MenuItem for open post menu inside 'EditDeleteDropdown'.
-Issues: when opening post with more than 4 attachments, displaying other attachments will not work for now.
 Add new MenuItem for copy post link menu inside 'EditDeleteDropdown'.
 Add new func copyToClipboard with some chatgpt generated code+edit the code.
 
@@ -1548,6 +1547,19 @@ Add lines of code for getting data/counts of reactions on post and comments in f
 #### Make Git Commit
 Commit all updated files into git with comment "Create dedicated post page".
 
+- Update about content under tab about in group profile
+Add div that use v-html in 'Group/View' under tab 'About'.
+To ensure that admin users of group will have input field under 'About' tab, while other users will see only info text under it.
+Add func prepareForValidation() inside 'UpdateGroupRequest' & 'StoreGroupRequest' to make sure the about content we save to DB is displayed properly with newline included too.
+
+34. Follow user, Show Posts, followers and followings
+
+- follow & unfollow functionality
+- display post for a specific user on the user's profile
+- show all the followers & following of a specific user on its profile page
+
+#### Make Git Commit
+Commit all updated files into git with comment "Display about tag in group profile page for guest users".
 
 
 
@@ -1565,8 +1577,7 @@ Commit all updated files into git with comment "Create dedicated post page".
 
 
 
-
-## 0:00:00
+## 0:04:47
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 

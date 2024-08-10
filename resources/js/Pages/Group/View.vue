@@ -299,7 +299,7 @@
             </Tab>
 
             <!-- tab About -->
-            <Tab v-if="isCurrentUserAdmin" v-slot="{ selected }" as="template">
+            <Tab v-slot="{ selected }" as="template">
               <TabItem text="About" :selected="selected" />
             </Tab>
 
@@ -347,10 +347,15 @@
 
             <!-- under tab 'About' -->
             <TabPanel key class="bg-white p-3 shadow">
-              <GroupForm :form="aboutForm" />
-              <PrimaryButton @click="updateGroup">
-                Submit
-              </PrimaryButton>
+              <template v-if="isCurrentUserAdmin">
+                <GroupForm :form="aboutForm" />
+                <PrimaryButton @click="updateGroup">
+                  Submit
+                </PrimaryButton>
+              </template>
+              <div v-else v-html="group.about">
+
+              </div>
             </TabPanel>
 
           </TabPanels>
