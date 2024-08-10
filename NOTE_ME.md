@@ -1446,12 +1446,10 @@ Remove props user, add prop comment in 'EditDeleteDropdown'.
 - Make notify user/owner that their comment got deleted
 Run 'php artisan make:notification CommentDeleted'.
 Run 'php artisan make:notification PostDeleted'.
-Add code inside 'CommentDeleted' + make use of it inside func deleteComment() in 'PostController'. --> there's TODO in CommentDelete for view post
+Add code inside 'CommentDeleted' + make use of it inside func deleteComment() in 'PostController'.
 
 - Make notify user/owner that their post got deleted
 Make something similar as above in func destroy() inside 'PostController' & 'PostDeleted'.
-
-### for the notify of deleted comment+post, the email not give much info like which comment or post got deleted & it related to content of post may have word or have only attachment.
 
 30. Remove Users from Groups
 
@@ -1481,6 +1479,60 @@ Make notifications of below actions to corresponding users
 
 #### Make Git Commit
 Commit all updated files into git with comment "Allow admin users to remove users from group, send notifications also".
+
+- Make multiple notifications file
+Run 'php artisan make:notification PostCreated'.
+Run 'php artisan make:notification CommentCreated'.
+Run 'php artisan make:notification ReactionAddedOnPost'.
+Run 'php artisan make:notification ReactionAddedOnComment'.
+
+- Send notif a post created to every users part(except the creator of post) of the group
+Added the send notification code using Notification in func store() inside 'PostController'.
+Add code in 'PostCreated'.
+
+- Send notif a comment created to owner of post
+Add send notify code in func createComment() inside 'PostController'.
+Add code in 'CommentCreated'.
+
+- Send notif a post reaction created to owner of post
+Add send notify code in func postReaction() inside 'PostController'.
+Add code in 'ReactionAddedOnPost'.
+
+- Send notif a comment reaction created to owner of comment
+Add send notify code in func commentReaction() inside 'PostController'.
+Add code in 'ReactionAddedOnComment'.
+
+32. Created Dedicated Post Page
+
+- Creating dedicated post page, make easier for sharing specific post to others(each post will have own url link) 
+
+#### Make Git Commit
+Commit all updated files into git with comment 
+"Implement sending notifcations on these cases
+
+When post is created 
+When comment is placed
+When post is liked
+When comment is liked
+".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
