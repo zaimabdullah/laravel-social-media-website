@@ -18,6 +18,7 @@ class HomeController extends Controller
     $posts = Post::postsForTimeline($userId)
       ->paginate(10);
 
+    // laod more functionality of posts
     $posts = PostResource::collection($posts);
     if ($request->wantsJson()) {
       return $posts;

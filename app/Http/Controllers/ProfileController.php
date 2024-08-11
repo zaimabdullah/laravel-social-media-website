@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\PostResource;
 use App\Http\Resources\UserResource;
 use App\Models\Follower;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -16,16 +18,40 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
-  public function index(User $user)
+  public function index(request $request, User $user)
   {
     $isCurrentUserFollower = false;
 
+    // check curr-user has followed the user or not
     if (!Auth::guest()) {
       $isCurrentUserFollower = Follower::where('user_id', $user->id)->where('follower_id', Auth::id())->exists();
     }
 
     // dd($isCurrentUserFollower);
     $followerCount = Follower::where('user_id', $user->id)->count();
+
+    $posts = Post::postsForTimeline(Auth::id())
+      ->where('user_id', $user->id)
+      ->paginate(10);
+
+    // laod more functionality of posts
+    $posts = PostResource::collection($posts);
+    if ($request->wantsJson()) {
+      return $posts;
+    }
+
+    $followers = User::query()
+      ->select('users.*')
+      ->join('followers AS f', 'f.follower_id', 'users.id')
+      // not curr-auth-user, but the one curr-auth-user open the profile = $user->id
+      ->where('f.user_id', $user->id)
+      ->get();
+
+    $followings = User::query()
+      ->select('users.*')
+      ->join('followers AS f', 'f.user_id', 'users.id')
+      ->where('f.follower_id', $user->id)
+      ->get();
 
     return Inertia::render('Profile/View', [
       'mustVerifyEmail' => $user instanceof MustVerifyEmail,
@@ -34,6 +60,9 @@ class ProfileController extends Controller
       'isCurrentUserFollower' => $isCurrentUserFollower,
       'followerCount' => $followerCount,
       'user' => new UserResource($user),
+      'posts' => $posts,
+      'followers' => UserResource::collection($followers),
+      'followings' => UserResource::collection($followings),
     ]);
   }
 

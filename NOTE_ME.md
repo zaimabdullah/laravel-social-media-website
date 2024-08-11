@@ -1594,31 +1594,58 @@ Add code inside 'FollowUser' + make use of it inside func follow() in 'UserContr
 #### Make Git Commit
 Commit all updated files into git with comment "Implement follow/unfollow on user, send email notifications as well."
 
-- Display list of users under tab 'Followers' & 'Following'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Make a proper layout for 'Profile/View' page
+Gonna alter the layout of 'Profile/View', so AuthenticatedLayout is the main layout, & will have a child layout which used for every content of each tab 'Posts/Followers/Following/Photos' as each one will have big content + each tab will give diff url link later.
 
 Update code by adding Route::prefix + add all related route to /group within that prefix inside 'web.php', except 'group.approveInvitation'.
 Update code by adding Route::prefix + add all related route to /post within that prefix inside 'web.php'.
 
+- Display posts data under tab 'Posts' in Profile/View
+Create the $posts data query + pass it to 'Profile/View' inside func index() 'ProfileController'.
+Copy+paste code under tab 'Posts' from Group/View to 'Profile/View' + add props posts as needed inside 'Profile/View'.
 
-Issue: at list of group, can be seen the group about display <br /> within its text after we updated code in 33.
-Solve: add strip_tags() at the 'about'&'description' inside 'GroupResource'. ==> still got ISSUES
+- Displays lists of users under tab 'Followers' & 'Followings'
+Create the query for $followers & $followings & pass the datas to 'Profile/View' inside func index() 'ProfileController'.
+Copy+paste the code under tab 'Users' from 'Group/View' into 'Profile/View' & make use of followers & followings in it.
+
+- Solving issue of load more functionality on Post in 'Profile/View'
+Copy the functionality of load more from 'HomeController' & paste into 'ProfileController'. ==> NOT SOLVE/WORKING AS EXPECTED
+### working in home page posts, not working under posts tab inside group profile, not event open the profile page because of tab post.
+Edit the code of 'posts' => in Inertia::render inside func index in 'ProfileController'. ==> SOLVE display posts + load more posts in profile page
+Edit also code in func profile() inside 'GroupController'. ==> SOLVE load more posts in group profile
+
+- Issue: at list of group, can be seen the group about display <br /> within its text after we updated code in 33.
+- Solve: add strip_tags() at the 'about' & 'description' inside 'GroupResource'. ==> still got ISSUES
+- Solve 2: remove strip_tags() at 'about' 'GroupResource'. <br /> showup inside textarea of about when user admin group.
+- Solve 3: Change the InputTextarea to ckeditor use inside 'GroupForm' + put css class at the div for about in 'Group/View'. ===> about content preserve & display correctly inside form input / opening inside incognito.
+
+- Issue 4: the group desc display in group list at home page show nbsp; for whitespace.
+Change how that desc display, by using v-html instead of {{}} inside 'GroupItem'.
+
+Add some code for when there is no post under tab 'Posts' inside 'Group/View' & 'Profile/View'.
+
+35. Show Only Relevant Posts on Home Page
+
+#### There are 3 main conditions to display posts on my HOME page. (from creator comment)
+1. I see all the posts which are posted by users I am following to.
+2. I see all the posts which are posted in the groups I am part of.
+3. I see my posts.
+
+#### (Update can be made)
+Thanks for coming back, I really appreciate it. we are totally invested in the project to see it through.
+1. All new posts must be available on the homepage otherwise, how do you know about new users and wanting to follow them.
+2. All groups must be displayed giving users the chance to see their About page before they join.
+3. We want to limit new and updated posts to 550 chars with a message display 
+4. Users must be able to see their own and their followers' posts on their profile post page.
+5. Loadmore not working on a large screen.
+6. Optionally, Maybe users should be able to block other users.
+
+#### Make Git Commit
+Commit all updated files into git with comment "
+Output posts, followers and followings on user profile page
+
+Use ckeditor in group about
+".
 
 
 
@@ -1633,7 +1660,21 @@ Solve: add strip_tags() at the 'about'&'description' inside 'GroupResource'. ==>
 
 
 
-## 0:33:13
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 0:00:00
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 

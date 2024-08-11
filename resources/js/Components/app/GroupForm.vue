@@ -1,12 +1,16 @@
 <script setup>
+  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   import TextInput from '../TextInput.vue';
   import Checkbox from '../Checkbox.vue';
-  import InputTextarea from '../InputTextarea.vue';
 
   defineProps({
     form: Object
   });
 
+  const editor = ClassicEditor;
+  const editorConfig = {
+    toolbar: ['heading', '|', 'bold', 'italic', '|', 'link', '|', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote']
+  };
 
 
 </script>
@@ -26,7 +30,7 @@
 
   <div class="mb-3">
     <label>About Group</label>
-    <InputTextarea v-model="form.about" class="w-full" />
+    <ckeditor :editor="editor" v-model="form.about" :config="editorConfig"></ckeditor>
   </div>
 </template>
 

@@ -59,7 +59,7 @@ class GroupController extends Controller
 
     // for the load more posts when scroll
     if ($request->wantsJson()) {
-      return PostResource::collection($posts);
+      return $posts;
     }
 
     // return data of user combine with role & status(from groupuser table)
