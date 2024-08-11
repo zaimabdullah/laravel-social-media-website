@@ -1561,6 +1561,40 @@ Add func prepareForValidation() inside 'UpdateGroupRequest' & 'StoreGroupRequest
 #### Make Git Commit
 Commit all updated files into git with comment "Display about tag in group profile page for guest users".
 
+- Following functionality on the user
+Add PrimaryButton for 'Follow User' in 'Profile/View'.
+Add new @click handler on that btn with the func followerUser() that will get trigger.
+Create the func followUser() in 'Profile/View'.
+
+Issue: But the controller will not be ProfileController as this one relate to 'we want to do something with our own profile' then we need separate controller.
+Solve: create new controller, run 'php artisan make:controller UserController'.
+
+Now create new route but not using '/profile' path, but 'user/follow/..' connected to 'UserController', func follow() with name 'user.follow' in 'web.php'.
+Use this route name inside func follow() in 'Profile/View'.
+Create the func follow() inside 'UserController'.
+Inside func follow(), make use of Follower model, so inside 'Follower' model add the $fillable field same as use in 'UserController'.
+## Following other user success
+
+- Make unfollow functionality + change of btn
+Issue: The 'Follow User' btn should change after we success followed him/her. 
+Need that information send to 'Profile/View', either through 'UserResource' or 'ProfileController' index().
+Add $isCurrentUserFollower in 'ProfileController' for getting data either curr-user has followed him/her & pass the data to 'Profile/View'.
+Make use the 'isCurrentUserFollower' for displaying 'Follow/Unfollow' btn in 'Profile/View'.
+Add the 'follow' inside useForm() func followUser() in 'Profile/View' so we can use same function for following & unfollowing.
+Add if condition of value 'follow' for either to follow or unfollow the user inside 'UserController'.
+
+- Add the number of follower(s) on user profile
+Add $followerCount inside func index() 'ProfileController' & pass it to 'Profile/View'.
+Accept & use the 'followerCount' inside 'Profile/View'.
+
+- Sending notification when has follow/unfollow
+Run 'php artisan make:notification FollowUser'.
+Add code inside 'FollowUser' + make use of it inside func follow() in 'UserController'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement follow/unfollow on user, send email notifications as well."
+
+- Display list of users under tab 'Followers' & 'Following'
 
 
 
@@ -1577,7 +1611,29 @@ Commit all updated files into git with comment "Display about tag in group profi
 
 
 
-## 0:04:47
+
+
+Update code by adding Route::prefix + add all related route to /group within that prefix inside 'web.php', except 'group.approveInvitation'.
+Update code by adding Route::prefix + add all related route to /post within that prefix inside 'web.php'.
+
+
+Issue: at list of group, can be seen the group about display <br /> within its text after we updated code in 33.
+Solve: add strip_tags() at the 'about'&'description' inside 'GroupResource'. ==> still got ISSUES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 0:33:13
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 

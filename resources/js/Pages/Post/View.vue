@@ -1,4 +1,6 @@
 <script setup>
+  import { usePage } from '@inertiajs/vue3';
+  import { ref } from 'vue';
   import AttachmentPreviewModal from '@/Components/app/AttachmentPreviewModal.vue';
   import PostItem from '@/Components/app/PostItem.vue';
   import PostModal from '@/Components/app/PostModal.vue';
