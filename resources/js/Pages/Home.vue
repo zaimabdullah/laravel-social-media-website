@@ -8,7 +8,8 @@
 
   defineProps({
     posts: Object,
-    groups: Array
+    groups: Array,
+    followings: Array
   });
 </script>
 
@@ -23,7 +24,7 @@
         <GroupList :groups="groups" />
       </div>
       <div class="lg:col-span-3 lg:order-3 h-full overflow-hidden">
-        <FollowingList />
+        <FollowingList :users="followings" />
       </div>
       <div class="lg:col-span-6 lg:order-2 h-full overflow-hidden flex flex-col">
         <CreatePost />

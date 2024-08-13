@@ -1141,7 +1141,7 @@ Take btn of 'new group' from 'GroupList', put into 'GroupListItems'.
 Commit all updated files into git with comment "Give proper position to new group button".
 
 - Load all group current user part of
-Create a new query to get the data at the bottom of 'HomeController'.
+Create a new query to get the $groups data + pass it to 'Home.vue' inside 'HomeController'.
 Add groups as props inside 'Home.vue'.
 
 - Setup display of groups 
@@ -1629,12 +1629,12 @@ Add some code for when there is no post under tab 'Posts' inside 'Group/View' & 
 #### There are 3 main conditions to display posts on my HOME page. (from creator comment)
 1. I see all the posts which are posted by users I am following to.
 2. I see all the posts which are posted in the groups I am part of.
-3. I see my posts.
+3. I see my posts. (planning to not see this one in home)
 
 #### (Update can be made)
 Thanks for coming back, I really appreciate it. we are totally invested in the project to see it through.
 1. All new posts must be available on the homepage otherwise, how do you know about new users and wanting to follow them.
-2. All groups must be displayed giving users the chance to see their About page before they join.
+2. All groups must be displayed giving users the chance to see their About page before they join. (check $group query in HomeController)
 3. We want to limit new and updated posts to 550 chars with a message display 
 4. Users must be able to see their own and their followers' posts on their profile post page.
 5. Loadmore not working on a large screen.
@@ -1647,15 +1647,35 @@ Output posts, followers and followings on user profile page
 Use ckeditor in group about
 ".
 
+- in video, creator test the SQL queries in console that can give result from DB tables first, then translate the query into PHP in HomeController
 
+- Create queries for display posts data in home page with above 3 conditions
+Can see in 'sql-queries-for-posts-in-home-page.sql' for sql queries.
+Translate the sql queries into PHP query in func index() inside 'HomeController' for posts being display at Home Page.
 
+- Notify followers when i made a posts
+Gonna try to use the same notification file 'PostCreated' which for notify all members of group that new posts created in it + for this cases
+Create new func followers() to get all users who following me inside 'User' & make use of it in func store() 'PostController'.
+Create also for func followings() based on it just change the places of ids inside 'User'.
+Make use of these 2 new func of queries to change code at $followers & $followings inside func index() 'ProfileController'.
+Pass the followers data of curr-auth-user to 'PostCreated' for notify email in func store() 'PostController'.
+Update all Notification::send(PostCreated) as we add one more parameter + change the group para to optional.
+Update code inside 'PostCreated'.
 
+- Display list of user(s) we follow in home page
+Add 'followings' line to the data we pass to 'Home.vue' inside 'HomeController'.
+Define the new props 'followings' to  receive data passing from HomeController & pass it to FollowingList as :users inside 'Home.vue'.
+Define the props 'users' & pass the props as value to :users of FollowingListItems inside 'FollowingList'.
+Copy UserListItem from 'Profile/View' & paste into 'FollowingListItems' + edit any props or emits from it.
 
+- Change list of group display in home page
+Remove display a bit of group desc at list of group display in home page, code inside 'GroupItem'.
+Change position + size of status of group user are in inside 'GroupItem'.
 
+36. Implement Photos Tab
 
-
-
-
+#### Make Git Commit
+Commit all updated files into git with comment "On main timeline only show posts that are relevant to the current user".
 
 
 

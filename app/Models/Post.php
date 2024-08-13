@@ -56,9 +56,8 @@ class Post extends Model
     return Post::query() // 1- SELECT * FROM posts
       ->withCount('reactions') // 2- SELECT COUNT(*) from reactions
       ->with([
-        'comments' => function ($query) {
-          $query->withCount('reactions'); // 3- SELECT * FROM comments WHERE post_id IN (1)
-          // SELECT COUNT(*) from reactions
+        'comments' => function ($query) { // 3- SELECT * FROM comments
+          $query->withCount('reactions'); // SELECT COUNT(*) from reactions
         },
         'reactions' => function ($query) use ($userId) {
           $query->where('user_id', $userId); // SELECT * FROM reactions WHERE user_id = ?authuser

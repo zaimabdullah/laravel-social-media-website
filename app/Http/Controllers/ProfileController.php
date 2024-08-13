@@ -40,18 +40,22 @@ class ProfileController extends Controller
       return $posts;
     }
 
-    $followers = User::query()
-      ->select('users.*')
-      ->join('followers AS f', 'f.follower_id', 'users.id')
-      // not curr-auth-user, but the one curr-auth-user open the profile = $user->id
-      ->where('f.user_id', $user->id)
-      ->get();
+    // make use of func followers() & followings() in User.php
 
-    $followings = User::query()
-      ->select('users.*')
-      ->join('followers AS f', 'f.user_id', 'users.id')
-      ->where('f.follower_id', $user->id)
-      ->get();
+    $followers = $user->followers;
+    // User::query()
+    //   ->select('users.*')
+    //   ->join('followers AS f', 'f.follower_id', 'users.id')
+    // not curr-auth-user, but the one curr-auth-user open the profile = $user->id
+    // ->where('f.user_id', $user->id)
+    // ->get();
+
+    $followings = $user->followings;
+    // User::query()
+    //   ->select('users.*')
+    //   ->join('followers AS f', 'f.user_id', 'users.id')
+    //   ->where('f.follower_id', $user->id)
+    //   ->get();
 
     return Inertia::render('Profile/View', [
       'mustVerifyEmail' => $user instanceof MustVerifyEmail,
