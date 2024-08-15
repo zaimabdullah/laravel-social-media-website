@@ -1,6 +1,6 @@
 <script setup>
-  import { PaperClipIcon } from '@heroicons/vue/20/solid';
   import { isImage } from '@/helpers';
+  import { PaperClipIcon } from '@heroicons/vue/20/solid';
   import { ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
 
   defineProps({

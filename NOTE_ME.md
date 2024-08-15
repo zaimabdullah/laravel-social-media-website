@@ -1422,7 +1422,7 @@ Add code for display when user not a member of group in 'Group/View'.
 
 29. Deleting Posts and Comments by Admin Users
 
-- admin user = able to delete posts made by regular + other admin users inside group, edit posts of own/other admin user, CANNOT delete comment in other user post
+- admin user = able to delete posts made by regular + other admin users inside group, CANNOT edit posts inside of own group, CANNOT delete comment in other user post
 
 - owner of posts = able to delete their own posts & own/others comment on their posts (either regular or group admin comment)
 
@@ -1674,10 +1674,50 @@ Change position + size of status of group user are in inside 'GroupItem'.
 
 36. Implement Photos Tab
 
+- Display data under tab 'Photos' inside Profile/View & Group/View.
+
 #### Make Git Commit
 Commit all updated files into git with comment "On main timeline only show posts that are relevant to the current user".
 
+- Display photos ONLY attachment under tab 'Photos' in Profile/View
+Get the data $photos with query & pass it to 'Profile/View' in func index() 'ProfileController'.
+Copy code of PostAttachments for rendering the attachments from 'PostItem' & paste it under tab 'Photos' in 'Profile/View'.
+Declare the props.photos & make use of props photos by passing it to PostAttachments to display the photos inside 'Profile/View'.
+Copy func openAttachmentPreviewModal() from 'Post/View' & paste to 'Profile/View', make use of it at @attachmentClick of PostAttachment.
+### Photos is rendered under tab 'Photos' profile/view
 
+- Make new component for rendering photos under tab 'Photos' Profile/View
+Create file 'TabPhotos.vue' inside folder '/Profile'.
+Copy+paste code from PostAttachment into 'TabPhotos' & edit the code as needed.
+Cut use of PostAttachment + its functionality & ref() from 'Profile/View' & paste into 'TabPhotos' & the func is rename into 'openPhoto'.
+Make use of TabPhotos at the tab 'Photos' inside 'Profile/View'.
+### Photos is rendered under tab 'Photos' profile/view
+
+- Make photo modal & preview work properly
+Copy+paste code AttachmentPreviewModal from PostList into 'TabPhotos'.
+Update the code accordingly.
+### Photo modal & preview works
+
+- Make the same things to Group tab 'Photos'
+Copy code of $photos from ProfileController & paste into func profile() 'GroupController' + modify as needed. 
+Pass the $photos data to 'Group/View' by adding it at Inertia::render inside func profile() 'GroupController'.
+
+- Make use of photos data inside Group/View
+Declare photos props.
+Call TabPhotos with passing photos props as value needed under tab 'Photos' inside 'Group/View'.
+### Photo is rendered & photo modal preview also works
+
+### translate the php query into sql query, add dd($photos->toSql()) in controller below the php query we write as example, will provide the sql query for that $photos. Exm: in GroupController profile() under $photos
+
+- Update the $photos query in func profile() inside 'GroupController' & func index() 'ProfileController'.
+
+37. Generate Post Content with Chat GPT API 
+
+- use openAI API & implement generate post content with the help of AI
+- can just provide a prompt, hit the AI btn & it will render & generate the post content for us
+
+#### Make Git Commit
+Commit all updated files into git with comment "Display photos in Group profile page and in user profile page".
 
 
 

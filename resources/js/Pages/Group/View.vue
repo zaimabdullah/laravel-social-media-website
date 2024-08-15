@@ -12,6 +12,7 @@
   import GroupForm from "@/Components/app/GroupForm.vue";
   import PostList from "@/Components/app/PostList.vue";
   import CreatePost from "@/Components/app/CreatePost.vue";
+  import TabPhotos from "../Profile/TabPhotos.vue";
 
   const imagesForm = useForm({
     thumbnail: null,
@@ -39,7 +40,8 @@
     },
     posts: Object,
     users: Array,
-    requests: Array
+    requests: Array,
+    photos: Array,
   });
 
   const aboutForm = useForm({
@@ -345,7 +347,7 @@
 
             <!-- under tab 'Photos' -->
             <TabPanel key class="bg-white p-3 shadow">
-              Photos
+              <TabPhotos :photos="photos" />
             </TabPanel>
 
             <!-- under tab 'About' -->

@@ -7,6 +7,7 @@
     Dialog,
     DialogPanel,
   } from '@headlessui/vue';
+  import { isImage } from '@/helpers';
 
   const props = defineProps({
     attachments: {

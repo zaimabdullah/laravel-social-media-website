@@ -12,6 +12,7 @@
   import PostList from "@/Components/app/PostList.vue";
   import UserListItem from "@/Components/app/UserListItem.vue";
   import TextInput from "@/Components/TextInput.vue";
+  import TabPhotos from "./TabPhotos.vue";
 
   const imagesForm = useForm({
     avatar: null,
@@ -23,6 +24,7 @@
   const avatarImageSrc = ref('');
   const searchFollowersKeyword = ref('');
   const searchFollowingsKeyword = ref('');
+
   const authUser = usePage().props.auth.user;
 
   const isMyProfile = computed(() => authUser && authUser.id === props.user.id);
@@ -46,6 +48,7 @@
     posts: Object,
     followers: Array,
     followings: Array,
+    photos: Array,
   });
 
   function onCoverChange(event) {
@@ -279,7 +282,7 @@
 
             <!-- under tab 'Photos' -->
             <TabPanel key class="bg-white p-3 shadow">
-              Photos
+              <TabPhotos :photos="photos" />
             </TabPanel>
 
             <!-- under tab 'My Profile' -->
