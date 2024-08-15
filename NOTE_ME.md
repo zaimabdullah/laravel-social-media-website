@@ -50,6 +50,8 @@ headlessui in No. 4
 heroicons in No. 6
 ckeditor in No. 9
 axios - in No. 15
+laravel telescope - for debug - in No. 23 
+OpenAI-PHP Laravel v0.10.1 - in No. 37
 --------------------------------------------------------------------------
 User Credentials
 
@@ -1718,6 +1720,49 @@ Call TabPhotos with passing photos props as value needed under tab 'Photos' insi
 
 #### Make Git Commit
 Commit all updated files into git with comment "Display photos in Group profile page and in user profile page".
+
+- install package needed in laravel to use openai
+From 'https://github.com/openai-php/laravel'.
+Run 'composer require openai-php/laravel' as in github document
+Run 'php artisan openai:install' next.
+#### OpenAI-PHP Laravel v0.10.1 15/8/2024
+
+## MUST READ
+### ISSUES Happen in Video: he run the 'composer install ...' given by github-doc of openai-php with newest version v0.8.1, but after installing it, inside composer.json, it show the project/composer install v0.8.0 because of some conflict ---normal things to happen real-world, but have to check the github-doc of other version to know this things is happening to our project.
+### SOLVE: he update two things/dependencies who conflict with openai-php at first, & after that success to install latest version of openai-php
+
+- Setup the openai inside project
+In OpenAI Dashboard, generate new api key with name 'Laravel Social Media Project', copy the key & paste inside '.env' file.
+Go to OpenAI Settings, and copy Organization API key & paste inside '.env' file.
+
+- Make backend functionality for create post content with openAI
+From github documentation, copy the code of usage OpenAI facade to to access the OpenAI API.
+Create new func aiPostContent() & Paste the code before in it inside 'PostController'.
+Update the code accordingly.
+#### The 'content' => is the our prompt to the chatgpt on how our post content should looks like when generated.
+#### can change 'model' => into any listed model available in https://platform.openai.com/settings/organization/limits
+Add new route of name 'post.aiContent' inside of //Posts prefix() in 'web.php'.
+
+- Create the functionality & UI in frontend
+Add button for 'AI Post' that connect to the click to new function inside 'PostModal'.
+Create the new function getAIContent() that use axiosClient for send request inside 'PostModal'.
+Import SparklesIcon, wrap ckeditor into a div & use this icon wrap within button below the ckeditor in 'PostModal'.
+Add click event on the button & call getAIContent on it.
+
+- Make a loading icon/animation while waiting response from openAI
+Take the spining svg from inspect element code of tailwindcss - search spin - result page, copy the code & paste above the SparklesIcon in 'PostModal'.
+Define new ref 'aiButtonLoading' & make use of it on button for the SparklesIcon & on the spining svg.
+So, if SparklesIcon not display, then spining will display & vice versa.
+#### the response from OpenAI will take times
+Add more tailwind class for styling.
+
+ISSUE: always error 'you exceed your current quota,...'
+SOLVE: need to pay to use
+
+38. Global Search for Users, Groups. Posts
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement accessing open AI API to generate post content".
 
 
 
