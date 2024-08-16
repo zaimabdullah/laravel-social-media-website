@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -102,6 +103,10 @@ Route::middleware('auth')->group(function () {
 
   Route::post('/comment/{comment}/reaction', [PostController::class, 'commentReaction'])
     ->name('comment.reaction');
+
+  // Global Search
+  Route::get('/search/{search?}', [SearchController::class, 'search'])
+    ->name('search');
 
 });
 

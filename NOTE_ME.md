@@ -1761,22 +1761,41 @@ SOLVE: need to pay to use
 
 38. Global Search for Users, Groups. Posts
 
+- Gonna add global search bar
+- Implement searching for users, groups & posts from the home page
+
 #### Make Git Commit
 Commit all updated files into git with comment "Implement accessing open AI API to generate post content".
 
+- Make search bar & functionality in frontend & backend
+Add TextInput inside of 'AuthenticatedLayout'.
+In TextInput, add @keyup.enter that call search func.
+Create the func seacrh() in 'AuthenticatedLayout' for the frontend.
+Define new controller for the functionality, run 'php artisan make:controller SearchController'.
+Add func search() inside 'SearchController' for the backend that give results of search.
 
+- Make search component
+Create new component 'Search.vue' inside 'resources/js/Pages'.
+Add code for the layout of where search results will be displayed.
+Make UserListItem, GroupItem & PostList for the search results template.
 
+- Define new route for global search
+Define the new route of name 'search' inside 'web.php'.
 
+- Make use of route in frontend
+Add new ref 'keywords'.
+Make use of the new route inside func search() in 'AuthenticatedLayout'.
+Connect the new ref to v-model in TextInput.
 
+- Make redirect to dashboard when search is null/no value insert
+Add the if condition to check whether $search got value or not & redirect to 'dashboard' inside 'SearchController'.
+Add '?' at the 'web.php' of route 'search'.
+Add $search = null in func search() inside 'SearchController'.
 
+39. Search for Posts with Hash tags
 
-
-
-
-
-
-
-
+#### Make Git Commit
+Commit all updated files into git with comment "Implement global search to search inside users, groups and posts".
 
 
 ## 0:00:00
