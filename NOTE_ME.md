@@ -1794,15 +1794,69 @@ Add $search = null in func search() inside 'SearchController'.
 
 39. Search for Posts with Hash tags
 
+- Implement rendering hastags properly with a diff color
+- Implement functionality to search posts with its hashtags
+
 #### Make Git Commit
 Commit all updated files into git with comment "Implement global search to search inside users, groups and posts".
+
+- Make sure global search can search #somethings
+Update code func search() in 'AuthenticatedLayout' to use encodeURIComponent(keywords.value) so that, '#' can be allowed to be used & search.
+ISSUE: BUT now, the result do not highlight/show the hashtags in the result that being search.
+
+SOLVE:
+- Make link from result(the hashtags) to the search url
+Gonna find every word until found word that start with # & take that word until hits a space = the regex = (#\w+).
+Then add the anchor tag around those <a>#wordfounds</a> that gonna link to search url link.
+Do all the above inside func prepareForValidation() in 'StorePostRequest', use preg_replace_callback() + urlencode().
+
+Issue: this gonna repeat itself (wrap anchor tag around hashtags) when we search the same thing later
+SOLVE: Possible to avoid or solve this using regex as it has positive/negative lookahead. Use the negative lookahead assertion in our regex(regular expression) => (#\w+)(?![^<]*<\/a>).
+Replace /#\w+/ with the /(#\w+)(?![^<]*<\/a>)/ inside func prepareForValidation() in 'StorePostRequest'.
+
+ISSUE: When we updated a post with #hashtag, & we update the #hashtags itself, only the words will change while the link created is still the same old one which gonna be issue.
+SOLVE: store this specific anchor tag for #hashtags inside DB Table posts & while updated post, this #hashtags will display not as link but normal words.
+
+- Store anchor tags use at #hashtags inside DB
+Undo all code writed at func prepareForValidation() in 'StorePostRequest'.
+Add computed property name postBody = computed() that gonna replace all #hashtags words into a words that wrap around anchor link inside 'PostItem'.
+Make use the 'postBody' at the ReadMoreReadLess component used inside 'PostItem'.
+### Dones
+
+- Makes changes to TextInput & InputTextarea to be the same as in github owner, not use  defineModel but defineProps + emit for modelValue.
+
+Add some bg-color to each #hashtags word, by adding class at the const postBody in 'PostItem' + add .ck-content-output a.hashtag in 'app.css'.
+When search #hashtags, only posts field result should be display, user & group should not be display.
+
+40. Attachment Video Preview
+
+- Implement video preview on the post attachments(MP4 file only)
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement searching posts with hashtags".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 0:00:00
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
-- Looking at 'InviteUserModal.vue'/'GroupModal.vue', a lot of code is repetitive, so later will be separate some of it and make it separate component.
 - Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
 
 

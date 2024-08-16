@@ -1,9 +1,10 @@
 <script setup>
+  import { router } from '@inertiajs/vue3';
+  import { computed } from 'vue';
   import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
   import { HandThumbUpIcon, ChatBubbleLeftRightIcon } from '@heroicons/vue/24/outline';
-  import PostUserHeader from '@/Components/app/PostUserHeader.vue';
-  import { router } from '@inertiajs/vue3';
   import axiosClient from '@/axiosClient.js';
+  import PostUserHeader from '@/Components/app/PostUserHeader.vue';
   import ReadMoreReadLess from './ReadMoreReadLess.vue';
   import EditDeleteDropdown from './EditDeleteDropdown.vue';
   import PostAttachments from './PostAttachments.vue';
@@ -14,6 +15,14 @@
   });
 
   const emit = defineEmits(['editClick', 'attachmentClick']);
+
+  const postBody = computed(() => props.post.body.replace(
+    /(#\w+)(?![^<]*<\/a>)/g,
+    (match, group) => {
+      const encodedGroup = encodeURIComponent(group);
+      return `<a href="/search/${encodedGroup}" class="hashtag">${group}</a>`;
+    }
+  ));
 
   function openEditModal() {
     emit('editClick', props.post);
@@ -52,7 +61,7 @@
     </div>
     <div class="mb-3">
       <!-- ReadMoreReadLess for post content -->
-      <ReadMoreReadLess :content="post.body" />
+      <ReadMoreReadLess :content="postBody" />
     </div>
     <!-- Attachments of post content -->
     <div class="grid gap-3 mb-3" :class="[
