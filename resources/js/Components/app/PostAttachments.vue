@@ -1,7 +1,7 @@
 <script setup>
-  import { isImage } from '@/helpers';
+  import { isImage, isVideo } from '@/helpers';
   import { PaperClipIcon } from '@heroicons/vue/20/solid';
-  import { ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
+  import { ArrowDownTrayIcon, PlayIcon } from '@heroicons/vue/24/outline';
 
   defineProps({
     attachments: Array
@@ -32,6 +32,12 @@
 
       <!-- Image File -->
       <img v-if="isImage(attachment)" :src="attachment.url" class="object-contain aspect-square" />
+      <!-- Video File -->
+      <div v-else-if="isVideo(attachment)" class="relative flex justify-center items-center">
+        <PlayIcon class="absolute w-16 h-16 z-20 text-gray-100 opacity-70" />
+        <div class="absolute left-0 top-0 w-full h-full bg-black/50 z-10"></div>
+        <video :src="attachment.url"></video>
+      </div>
       <!-- Not Image File -->
       <div v-else class="flex flex-col justify-center items-center">
         <PaperClipIcon class="w-10 h-10 mb-3" />

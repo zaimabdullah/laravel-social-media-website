@@ -1828,6 +1828,8 @@ Make use the 'postBody' at the ReadMoreReadLess component used inside 'PostItem'
 Add some bg-color to each #hashtags word, by adding class at the const postBody in 'PostItem' + add .ck-content-output a.hashtag in 'app.css'.
 When search #hashtags, only posts field result should be display, user & group should not be display.
 
+## ISSUE: search result page not scrollable anymore, only scrollable when width of screen till 1023 x 824(fixed). whne go up 1024 n more, scrollable not work anymore.
+
 40. Attachment Video Preview
 
 - Implement video preview on the post attachments(MP4 file only)
@@ -1835,10 +1837,17 @@ When search #hashtags, only posts field result should be display, user & group s
 #### Make Git Commit
 Commit all updated files into git with comment "Implement searching posts with hashtags".
 
+- Create the preview for the video after video uploaded in post
+Just like how we make isImage before this inside 'helpers.js',  lets do for video too.
+Copy+paste+edit the isImage into isVideo, change to 'video'.
+Make use of this inside 'PostAttachments' & 'AttachmentPreviewModal' below the img, add video html tag one without controls & one with it plus autoplay.
 
+41. Implement URL Preview
 
+- Implement like post the url from blog, it's going to fetch the OG information of that url & display it nice preview.
 
-
+#### Make Git Commit
+Commit all updated files into git with comment "Implement preview of the uploaded video on post".
 
 
 
