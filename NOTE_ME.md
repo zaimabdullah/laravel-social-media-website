@@ -1828,7 +1828,8 @@ Make use the 'postBody' at the ReadMoreReadLess component used inside 'PostItem'
 Add some bg-color to each #hashtags word, by adding class at the const postBody in 'PostItem' + add .ck-content-output a.hashtag in 'app.css'.
 When search #hashtags, only posts field result should be display, user & group should not be display.
 
-## ISSUE: search result page not scrollable anymore, only scrollable when width of screen till 1023 x 824(fixed). whne go up 1024 n more, scrollable not work anymore.
+ISSUE: search result page not scrollable anymore, only scrollable when width of screen till 1023 x 824(fixed). whne go up 1024 n more, scrollable not work anymore.
+SOLVE: add overflow-y-auto max-h-screen on the main div inside 'Search.vue' + change to p-8 instead of p-4, scroll bar display.
 
 40. Attachment Video Preview
 

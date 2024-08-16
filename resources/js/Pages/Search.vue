@@ -15,7 +15,7 @@
 
 <template>
   <AuthenticatedLayout>
-    <div class="p-4">
+    <div class="p-8 overflow-y-auto max-h-screen">
       <div v-if="!search.startsWith('#')" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div class="shadow bg-white p-3 rounded mb-3">
           <h2 class="text-lg font-bold">Users</h2>
