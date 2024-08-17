@@ -1845,11 +1845,101 @@ Make use of this inside 'PostAttachments' & 'AttachmentPreviewModal' below the i
 
 41. Implement URL Preview
 
-- Implement like post the url from blog, it's going to fetch the OG information of that url & display it nice preview.
+- Implement URL preview (OG URL) like when we paste the url from blog into our create posts input field, it's going to fetch the OG(Open Graph) information of that URL & display its preview.
+
+https://youtu.be/Wn3IPX_ax-0?si=AqIfflbvxV-dVlP_
+https://www.freecodecamp.org/news/javascript-debounce-example/
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement preview of the uploaded video on post".
 
+- Make the ckeditor get the OG tags & not make a preview of YT video & this must work for all sort of URL link not YT only
+For now, when paste YT link into ckeditor it will give/change into preview video that gonna store iframe into DB that we don't want.
+Disable the above first by, 
+Adding mediaEmbed: [] inside const editorConfig for ckeditor inside 'PostModal'.
+The list [...] is taken from here =>
+'https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#removing-media-providers'.
+
+- Fetching URL in frontend
+Add @input in the ckeditor, make it call func onInputChange() that will check & retrieve URL from the ckeditor form.body inside 'PostModal'.
+Add & update code inside func onInputChange() to make sure the URL retrieve properly especially the regex.
+Change method by making new func matchHref() & matchLink(), call this 2 func inside func onInputChange().
+
+ISSUE: this onInputChange that getting call from ckeditor sometimes get called many times.
+SOLVE: gonna make a vue debounce with new func fetchPreview() + const debounceTimeout.
+About debounce => https://www.freecodecamp.org/news/javascript-debounce-example/
+
+- Make the functionality of fetch URL in backend
+Create new func fetchUrlPreview() inside 'PostController'.
+Create new route within prefix('posts'), name 'post.fetchUrlPreview'.
+Make use of this route in func fetchPreview() using axiosClient in 'PostModal'.
+## got the content, now need to load into DOM, need to do in the backend
+Add the codes under // prepare to load contents into DOM, in func fetchUrlPreview() inside 'PostController'.
+## when use res in .then func fetchPreview() 'PostModal' + console.log it, can see all og: datas retrieve.
+
+- Take out data we retrieve & make a preview
+Destructure the data by add {data} in .then func fetchPreview() in 'PostModal'.
+Create 2 var urlPreview & previewUrl.
+Retrieve 3 datas for usage into urlPreview & use it below ckeditor to display the preview.
+## Done preview display when paste a URL link
+
+Issue: after paste url+prev display, then delete url, the preview not remove/gone.
+Solve: inside 'onInputChange()', just call the fetchPreview() withot any condition. Inside 'fetchPreview()', make condition that request only send when url is exists only.
+
+Issue: if the title from og: of url have some symbols like '-', it display weirdly in preview. & this things totally included in backend too, inspect-Network-Preview-og:title. test with this link => https://youtu.be/Wn3IPX_ax-0?si=AqIfflbvxV-dVlP_
+Solve: KIV
+
+- After submitting, want to store that preview on the backend too so it will display that again as a submitted posts & not just display normal link
+Add preview col inside Posts Table, will be a json column & will have this 
+preview title, img & desc.
+## preview column as type json, which can store [] array values
+Create new migration, run 'php artisan make:migration add_preview_column_to_posts_table'.
+Add code inside '...._add_preview_column_to_posts_table'.
+
+Issue: either to save all datas related to preview into DB from frontend as it already has all things, or need to get from backend as the frontend, user can alter the datas like change preview img/title/desc but url is somethings else, BUT now backend dont have the url + gonna need to generate preview AGAIN on backend before save into DB.
+Solve: choose save data coming from frontend, as it will be not a big deal.
+
+- Store preview into DB (cont...)
+Add 'preview' into $fillable inside 'Post'.
+Add 'preview' into func rules() inside 'StorePostRequest'.
+Add 'preview' into useForm() inside 'PostModal'.
+Change all urlPreview into form.preview inside 'PostModal'.
+Execute the migration to add col preview inside Posts table, run 'php artisan migrate'.
+
+Issue: error of 'array to string conversion' on preview after submitting.
+Solve: Add $casts inside 'Post' model, neccessary when data type json being saved.
+
+- Make the posts with this preview display properly
+Add 'preview' in func toArray() inside 'PostResource'.
+Add new div below ReadMoreReadLess inside 'PostItem' specific place to display this.
+As we already display preview below ckeditor before, lets extract it & make new component jsut for displaying this preview.
+Create new component call 'UrlPreview.vue' in '/resources/js/Components/app'.
+Cut+paste the code from 'PostModal' into 'UrlPreview'.
+Make use of UrlPreview inside 'PostModal' & 'PostItem'.
+
+Issue: the url is not store inside DB, so when we use UrlPreview in PostItem, prop url from UrlPreview cannot accept any value from PostItem.
+Solve: Add one more column, update migration file '...._add_preview_column_to_posts_table' to add col 'preview_url'
+run 'php artisan migrate:rollback --step=1'.
+run 'php artisan migrate'.
+Now add this new field 'preview_url', inside 'Post', 'StorePostRequest','PostModal', 'PostResource'.
+Change all previewUrl into form.preview_url inside 'PostModal'.
+
+Issue: when url link has #hashtags in it, it will effect with the detect #hashtag functionality we built. => https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#removing-media-providers
+Solve: Update the regex in const postBody inside 'PostItem'.
+
+Make sure to call onInputChange() inside watch() inside 'PostModal', so when edit post, preview still works.
+We make changes in func prepareForValidation() inside 'StorePostRequest' for 'body', to ensure we remove any preview_url from it when exist/paste in input field.
+
+Issue: the changes on 'body' works properly, BUT some url don't have preview, & with the changes, when users paste url that dont havepreview + submit, that will make a posts without any content at all.
+Solve: Add code inside 'UrlPreview'.
+
+42. Pin Posts at the top of the Profile Page
+
+- Implement pin posts on the user/groups profile pages.
+- Only admin user able to pin posts in group profile pages.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement preview of the URL".
 
 
 
@@ -1862,8 +1952,20 @@ Commit all updated files into git with comment "Implement preview of the uploade
 
 
 
+### UNDERSTANDING REGEX: 
+### (https?:\/\/[^\s<]+)
+### starting with 'http' = http, with 's' is optional = s?, must have 2 '//' = \/\/, and after 'sec-slash /' must have any characters except whitespace [^ = any character, \s = except whitespace] & '<' symbol from '</..>'.
 
-## 0:00:00
+### <!-- <a.+href="((https?):\/\/[^"]+)" -->
+### have a/anchor tags, have anything/might be additional attr = '.+', have href = 'href', & match the URL/content after first " = '="' until find the second " then stop taking the URL/content = '((https?):\/\/[^"]+)', add another " as the second ".  
+
+
+
+
+
+
+
+## 1:02:00
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 

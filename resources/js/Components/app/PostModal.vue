@@ -14,10 +14,14 @@
   import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   import { isImage } from '@/helpers';
   import axiosClient from '@/axiosClient.js';
+  import UrlPreview from './UrlPreview.vue';
 
   const editor = ClassicEditor;
   const editorConfig = {
-    toolbar: ['heading', '|', 'bold', 'italic', '|', 'link', '|', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote']
+    toolbar: ['heading', '|', 'bold', 'italic', '|', 'link', '|', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote'],
+    mediaEmbed: {
+      removeProviders: ['dailymotion', 'spotify', 'youtube', 'vimeo', 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook']
+    }
   };
 
   const props = defineProps({
@@ -51,6 +55,8 @@
     group_id: null,
     attachments: [],
     deleted_file_ids: [],
+    preview: {},
+    preview_url: null,
     _method: 'POST'
   });
 
@@ -82,7 +88,9 @@
   const emit = defineEmits(['update:modelValue', 'hide']);
 
   watch(() => props.post, () => {
+    console.log('This is triggered', props.post);
     form.body = props.post.body || '';
+    onInputChange();
   });
 
   function closeModal() {
@@ -209,6 +217,72 @@
       });
   }
 
+  function fetchPreview(url) {
+    // new pasted url the same with current one, dont send req
+    if (url === form.preview_url) {
+      return;
+    }
+
+    // if not, set these 2 var
+    form.preview_url = url;
+    form.preview = {};
+    // only send req when url exist
+    if (url) {
+      axiosClient.post(route('post.fetchUrlPreview'), { url })
+        .then(({ data }) => {
+          // console.log(res);
+          form.preview = {
+            title: data['og:title'],
+            description: data['og:description'],
+            image: data['og:image']
+          };
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
+  function onInputChange() {
+    let url = matchHref();
+    // console.log(url);
+    if (!url) {
+      url = matchLink();
+    }
+    // gonna call either url exist or not
+    fetchPreview(url);
+  }
+
+  function matchHref() {
+    // Regular expression (regex) to macth URLs
+    const urlRegex = /<a.+href="((https?):\/\/[^"]+)"/;
+
+    // Match the first URL in the HTML content
+    const match = form.body.match(urlRegex);
+
+    // Check if a match is found
+    if (match && match.length > 0) {
+      // console.log(match[0]);
+      return match[1];
+    }
+    return null; // No URL found
+  }
+
+  function matchLink() {
+    // Regular expression (regex) to macth URLs
+    const urlRegex = /(?:https?):\/\/[^\s<]+/;
+
+    // Match the first URL in the HTML content
+    const match = form.body.match(urlRegex);
+
+    // Check if a match is found
+    if (match && match.length > 0) {
+      // console.log(match[0]);
+      return match[0];
+    }
+    return null; // No URL found
+  }
+
 </script>
 
 <template>
@@ -246,7 +320,11 @@
                   </div>
 
                   <div class="relative group">
-                    <ckeditor :editor="editor" v-model="form.body" :config="editorConfig"></ckeditor>
+                    <ckeditor :editor="editor" v-model="form.body" :config="editorConfig" @input="onInputChange">
+                    </ckeditor>
+
+                    <!-- Preview from URL -->
+                    <UrlPreview :preview="form.preview" :url="form.preview_url" />
 
                     <!-- OpenAI btn -->
                     <button @click="getAIContent" :disabled="aiButtonLoading"

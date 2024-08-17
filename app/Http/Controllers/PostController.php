@@ -341,4 +341,38 @@ class PostController extends Controller
 
     return response(['content' => $result->choices[0]->message->content]);
   }
+
+  public function fetchUrlPreview(Request $request)
+  {
+    $data = $request->validate([
+      'url' => 'url',
+    ]);
+    $url = $data['url'];
+
+    $html = file_get_contents($url);
+
+    // prepare to load contents into DOM
+    $dom = new \DOMDocument();
+
+    // Suppress warnings for malformed HTML
+    libxml_use_internal_errors(true);
+
+    // Load HTML content into the DOMDocument
+    $dom->loadHTML($html);
+
+    // Restore error handling to its previous state
+    libxml_use_internal_errors(false);
+
+    // Find all meta tags with property attribute starting with 'og:
+    $ogTags = [];
+    $metaTags = $dom->getElementsByTagName('meta');
+    foreach ($metaTags as $tag) {
+      $property = $tag->getAttribute('property');
+      if (str_starts_with($property, 'og:')) {
+        $ogTags[$property] = $tag->getAttribute('content');
+      }
+    }
+
+    return $ogTags;
+  }
 }
