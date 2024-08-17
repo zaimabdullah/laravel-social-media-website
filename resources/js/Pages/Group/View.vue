@@ -251,7 +251,7 @@
               </div>
             </div>
 
-            <div class="flex justify-between items-center flex-1 p-4">
+            <div class="flex justify-between items-center flex-1 p-4 mb-2">
               <h2 class="font-bold text-lg">{{ group.name }}</h2>
 
               <PrimaryButton v-if="!authUser" :href="route('login')">
@@ -276,7 +276,7 @@
           </div>
         </div>
       </div>
-      <div class="border-t p-4 pt-0">
+      <div class="border-t m-4 mt-0">
         <TabGroup>
           <TabList class="flex bg-white">
 

@@ -1,8 +1,8 @@
 <script setup>
-  import { router } from '@inertiajs/vue3';
+  import { router, useForm, usePage } from '@inertiajs/vue3';
   import { computed } from 'vue';
   import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-  import { HandThumbUpIcon, ChatBubbleLeftRightIcon } from '@heroicons/vue/24/outline';
+  import { HandThumbUpIcon, ChatBubbleLeftRightIcon, MapPinIcon } from '@heroicons/vue/24/outline';
   import axiosClient from '@/axiosClient.js';
   import PostUserHeader from '@/Components/app/PostUserHeader.vue';
   import ReadMoreReadLess from './ReadMoreReadLess.vue';
@@ -14,6 +14,9 @@
   const props = defineProps({
     post: Object
   });
+
+  const authUser = usePage().props.auth.user;
+  const group = usePage().props.group;
 
   const emit = defineEmits(['editClick', 'attachmentClick']);
 
@@ -27,6 +30,14 @@
     );
 
     return content;
+  });
+
+  const isPinned = computed(() => {
+    if (group?.id) {
+      return group?.pinned_post_id === props.post.id;
+    }
+
+    return authUser?.pinned_post_id === props.post.id;
   });
 
   function openEditModal() {
@@ -54,6 +65,31 @@
     });
   }
 
+  function pinUnpinPost() {
+    const form = useForm({
+      forGroup: group?.id
+    });
+
+    let isPinned = false;
+
+    if (group?.id) {
+      isPinned = group?.pinned_post_id === props.post.id;
+    } else {
+      isPinned = authUser.pinned_post_id === props.post.id;
+    }
+
+    form.post(route('post.pinUnpin', props.post.id), {
+      preserveScroll: true,
+      onSuccess: () => {
+        if (group?.id) {
+          group.pinned_post_id = isPinned ? null : props.post.id;
+        } else {
+          authUser.pinned_post_id = isPinned ? null : props.post.id;
+        }
+      }
+    });
+  }
+
 </script>
 
 <template>
@@ -61,8 +97,14 @@
     <div class="flex items-center justify-between mb-3">
 
       <PostUserHeader :post="post" />
-
-      <EditDeleteDropdown :user="post.user" :post="post" @edit="openEditModal" @delete="deletePost" />
+      <div class="flex items-center gap-2">
+        <div v-if="isPinned" class="flex items-center text-sm">
+          <MapPinIcon class="mr-1 h-4 w-4" aria-hidden="true" />
+          pinned
+        </div>
+        <EditDeleteDropdown :user="post.user" :post="post" @edit="openEditModal" @delete="deletePost"
+          @pin="pinUnpinPost" />
+      </div>
     </div>
     <div class="mb-3">
       <!-- ReadMoreReadLess for post content -->

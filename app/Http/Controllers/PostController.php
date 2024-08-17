@@ -375,4 +375,53 @@ class PostController extends Controller
 
     return $ogTags;
   }
+
+  public function pinUnpin(Request $request, Post $post)
+  {
+    // getting this from useForm in PostItem
+    $forGroup = $request->get('forGroup', false);
+    $group = $post->group;
+
+    // is for-group but group doesnt exists
+    if ($forGroup && !$group) {
+      return response("Invalid Request", 400);
+    }
+
+    // is for-group but curr-user not admin of group
+    if ($forGroup && !$group->isAdmin(Auth::id())) {
+      return response("You don't have permission to perform this action", 403);
+    }
+
+    $pinned = false;
+    // if for-group & curr-user admin of group
+    if ($forGroup && $group->isAdmin(Auth::id())) {
+      // check if pinned exists
+      if ($group->pinned_post_id === $post->id) {
+        // for unpinned
+        $group->pinned_post_id = null;
+      } else {
+        // new pinned
+        $pinned = true;
+        $group->pinned_post_id = $post->id;
+      }
+      $group->save();
+    }
+
+    // if not for-group, then for user profile
+    if (!$forGroup) {
+      $user = $request->user();
+      // check if pinned exists
+      if ($user->pinned_post_id === $post->id) {
+        // for unpinned
+        $user->pinned_post_id = null;
+      } else {
+        // new pinned
+        $pinned = true;
+        $user->pinned_post_id = $post->id;
+      }
+      $user->save();
+    }
+
+    return back()->with('success', 'Post was successfully ' . ($pinned ? 'pinned' : 'unpinned'));
+  }
 }

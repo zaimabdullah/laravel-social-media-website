@@ -1829,7 +1829,7 @@ Add some bg-color to each #hashtags word, by adding class at the const postBody 
 When search #hashtags, only posts field result should be display, user & group should not be display.
 
 ISSUE: search result page not scrollable anymore, only scrollable when width of screen till 1023 x 824(fixed). whne go up 1024 n more, scrollable not work anymore.
-SOLVE: add overflow-y-auto max-h-screen on the main div inside 'Search.vue' + change to p-8 instead of p-4, scroll bar display.
+SOLVE: add overflow-y-auto max-h-full on the main div inside 'Search.vue' + change to p-8 instead of p-4, scroll bar display.
 
 40. Attachment Video Preview
 
@@ -1941,6 +1941,109 @@ Solve: Add code inside 'UrlPreview'.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement preview of the URL".
 
+- Make new nav for pin in dropdown
+Copy the MenuItem of edit post, change the icon, emit name, styling inside 'EditDeleteDropdown'.
+Define the emit inside 'EditDeleteDropdown'.
+Add computed property pinAllowed that gonna check the owner of post or admin user of a group.
+Make use of pinAllowed on MenuItem for pin icon.
+Replace the icon with MapPinIcon for now.
+
+- Make the pin/unpin functionality front/backend
+// frontend
+Add @pin on 'EditDeleteDropdown' component being used inside 'PostItem' & call func pinUnpinPost().
+Create new func pinUnpinPost() inside 'PostItem'.
+//backend
+Add new route 'post.pinUnpin' inside 'web.php', call func pinUnpin() located at PostController.
+Create new func pinUnpin() inside 'PostController' + add code.
+Create new col 'pinned' as boolean type inside posts table in DB, make migration, run 'php artisan make:migration add_pinned_column_to_posts_table' + add code in it.
+Run 'php artisan migrate'.
+
+Now add this new field 'pinned', inside 'Post','PostModal', 'PostResource'.
+
+Add /** Group $group */ at the top of 'Post' model file to get autocomplete when use $post->group->got suggestion now inside 'PostController' or anywhere.
+//frontend
+Make use of the route 'post.pinUnpin' inside func pinUnpinPost() + add .then on the axiosClient inside 'PostItem'.
+### Pinned successfully stored
+
+- Make the pinned posts at the top
+Update code in func postsForTimeline() by adding new parameter, $pinnedPosts.
+Update 2/4 place that use postsForTimeline() with true bool for this para at 'GroupController', &'ProfileController'.
+Add template + MapPinIcon inside 'PostItem' that display which posts has been pinned.
+
+- Update of backend + frontend code for pin/unpin works properly
+Add code to delete/unpinned any available pinned posts when new pinned posts is made either inside group profile or user profile, inside func pinUnpin() 'PostController'.
+Made the 'Unpin' the prev 'Pinned' post auto remove/without refresh browser the 'Pinned' status when new one is 'Pinned'.
+Change from axiosClient to form = useForm inside func pinUnpinPost() 'PostItem'.
+Change from response() to back()->with() inside fun pinUnpin() inside 'PostController'.
+### Done for User Profile pinned/unpinned post
+
+- Check on group pinned/unpinned post
+Issue: when post of some member in group got pinned inside group, that post also got pin inside that user profile page.
+
+Solve: 
+Run 'php artisan migrate:rollback --step=1', remove the pinned col from posts table.
+Delete the 'add_pinned_column_to_posts_table' migration file completely.
+Run 'php artisan make:migration add_pinned_post_id_column_to_groups_and_users_table'.
+Add code inside this new migration file & run 'php artisan migrate'. Now table groups & users have pinned_post_id column added.
+Remove 'pinned' from $fillable inside 'Post'.
+
+Update the query in func postsFormTimeline() inside 'Post' & func profile() inside 'GroupController'.
+In func postsFormTimeline(), second para changes, the query in if also change.
+In func profile(), add more query in this & second para pass to postsFormTimeline() change to false to make it works like this:
+ <!--
+ 
+ select g.pinned_post_id, p.* from posts p
+ left join 'groups' g on g.pinned_post_id = p.id
+ where p.group_id = ? 
+ order by pinned_post_id desc, p.created_at desc
+
+  -->
+ 
+Issue: Displaying the pinned is not working after changed
+Solve: 
+Add 'pinned_post_id' inside 'GroupResource', 'Group', 'User'.
+Add const group = usePage()... & make use of it to either display the 'pinned' word + icon on a post inside 'PostItem'.
+
+Issue: change ways of code for pinned within profile group or not
+Solve: 
+Add forGroup identifier inside useForm to pass to func pinUnpin() PostController inside func pinUnpinPost() 'PostItem'.
+Update code inside func pinUnpin() inside 'PostController'.
+Add const group = usePage()... & make use of it to either display the 'Pin'/'Unpin' in dropdown inside 'EditDeleteDropdown'.
+Update code inside func pinUnpin() inside 'PostController'.
+### pinned post go-to top whenever pinned post changed success
+
+Issue: The icon + pinned word not change to new pinned post accordingly
+Solve-Attempt: 
+Add onSuccess in func pinUnpinPost() inside 'PostItem'.
+Add isPinned in func pinUnpinPost() inside 'PostItem'.
+### Pin/Unpin success within group profile
+
+Issue: when update post in group profile, the group_id of that post change to null as when we sent req of update we provide group_id as null
+Solve: Add $rules + unset inside 'UpdatePostRequest', but if user update the post too fast click submit not all content will be included. it kinda have debounce, the PostModal retrieve what is being typed is pretty slow.
+##### Bug-1
+
+- Make this pin/unpin works in user profile
+Add 'pinned_post_id' inside 'UserResource'.
+Add computed property isPinned & make use of 'pinned_post_id' from auth.user that coming from UserResource inside 'PostItem'.
+Add leftjoin + 2 where clause into $posts query in func index() inside 'ProfileController'.
+Add code for authUser.pinned_post_id ... in func pinUnpinPost() inside 'PostItem'.
+Add isPinned of computed property for either display Pin/Unpin nav words inside 'EditDeleteDropdown'.
+### pin/unpin in user profile success
+
+Remove 'pinned' from 'PostResource'.
+
+BUG: if you are the admin user of a group, you still can see the pin icon on a other member post that created on your group but inside their user profile page. Also visible in home page too.
+
+BUG: Loadmore not working only on home page in large screen, only work in 1242 & lower.
+
+43. Debug and Optimize Number of Queries
+
+- Debug
+- Understand how many DB query were made
+- Optimize using telescope & reduce the number of query  
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement functionality to pin/unpin posts on group or user profile pages".
 
 
 
@@ -1948,8 +2051,11 @@ Commit all updated files into git with comment "Implement preview of the URL".
 
 
 
+## 1:14:26
 
+## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
+- Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
 
 
 ### UNDERSTANDING REGEX: 
@@ -1958,20 +2064,6 @@ Commit all updated files into git with comment "Implement preview of the URL".
 
 ### <!-- <a.+href="((https?):\/\/[^"]+)" -->
 ### have a/anchor tags, have anything/might be additional attr = '.+', have href = 'href', & match the URL/content after first " = '="' until find the second " then stop taking the URL/content = '((https?):\/\/[^"]+)', add another " as the second ".  
-
-
-
-
-
-
-
-## 1:02:00
-
-## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
-
-- Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
-
-
 
 
 
