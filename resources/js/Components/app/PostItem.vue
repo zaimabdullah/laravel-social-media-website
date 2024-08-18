@@ -93,7 +93,7 @@
 </script>
 
 <template>
-  <div class="bg-white border rounded p-4 mb-3">
+  <div class="bg-white dark:bg-slate-950 dark:border-slate-900 dark:text-gray-100 border rounded p-4 mb-3">
     <div class="flex items-center justify-between mb-3">
 
       <PostUserHeader :post="post" />
@@ -122,8 +122,9 @@
       <!-- Like & Comment buttons -->
       <div class="flex gap-2">
         <button @click="sendReaction"
-          class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 rounded-lg flex-1" :class="[
-            post.current_user_has_reaction ? 'bg-sky-100 hover:bg-sky-200' : 'bg-gray-100 hover:bg-gray-200'
+          class="flex text-gray-800 dark:text-gray-100 gap-1 items-center justify-center py-2 px-4 rounded-lg flex-1"
+          :class="[
+            post.current_user_has_reaction ? 'bg-sky-100 dark:bg-sky-900 hover:bg-sky-200 dark:hover:bg-sky-950' : 'bg-gray-100 dark:bg-slate-900 hover:bg-gray-200 dark:hover:bg-slate-800'
           ]">
           <HandThumbUpIcon class="h-5 w-5" />
           <span class="mr-2">{{ post.num_of_reactions }}</span>
@@ -132,14 +133,14 @@
 
         <!-- Comments Section -->
         <DisclosureButton
-          class="flex text-gray-800 gap-1 items-center justify-center py-2 px-4 bg-gray-100 rounded-lg hover:bg-gray-200 flex-1">
+          class="flex text-gray-800 dark:text-gray-100 gap-1 items-center justify-center py-2 px-4 bg-gray-100 dark:bg-slate-900 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-800 flex-1">
           <ChatBubbleLeftRightIcon class="h-5 w-5" />
           <span class="mr-2">{{ post.num_of_comments }}</span>
           Comment
         </DisclosureButton>
       </div>
 
-      <DisclosurePanel class="scrollbar-thin mt-3 max-h-[400px] overflow-auto">
+      <DisclosurePanel class="mt-3 max-h-[400px] overflow-auto">
         <CommentList :post="post" :data="{ comments: post.comments }" />
       </DisclosurePanel>
     </Disclosure>

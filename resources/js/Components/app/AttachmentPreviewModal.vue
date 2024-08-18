@@ -67,7 +67,7 @@
               leave-from="opacity-100 scale-100" leave-to="opacity-0 scale-95">
 
               <DialogPanel
-                class="flex flex-col w-full transform overflow-hidden bg-slate-800 text-left align-middle shadow-xl transition-all">
+                class="flex flex-col w-full transform overflow-hidden bg-slate-900 text-left align-middle shadow-xl transition-all">
 
                 <!-- Close Button -->
                 <button @click="closeModal"

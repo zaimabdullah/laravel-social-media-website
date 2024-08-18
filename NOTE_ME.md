@@ -2050,10 +2050,94 @@ we need to make the number of queries static even how many paginate is used.
 
 44. Implement Dark Mode
 
+- Implement dark mode
+- Make reusable component for modal
+- Update scrollbar styling
 
 #### Make Git Commit
 Commit all updated files into git with comment "Implement query optimization".
 
+- Start the dark mode conf
+Add darkMode: 'class' in 'tailwind.config.js'.
+Add dark in class of html tag, , dark:bg-slate-800 in body tag inside 'app.blade.php'.
+
+- Update each seactions to enable dark mode properly
+
+- On Home Page
+// GroupList
+Add dark: on main div. dark:bg-slate-800 dark:border-slate-900 dark:text-gray-100
+
+// GroupItem
+Add dark: on main div for hover. dark:hover:bg-slate-900
+
+// FolowingList
+Same in GroupList
+
+// UserListItem
+Just add dark:bg-slate-800 for bg-color.
+
+// CreatePost
+Add dark:bg-slate-800 dark:border-slate-900.
+
+// PostItem
+Add dark: on main div. dark:bg-slate-800 dark:border-slate-900 dark:text-gray-100 dark:bg-slate-900 dark:hover:bg-slate-950 dark:bg-sky-900 dark:hover:bg-sky-950
+
+// AuthenticatedLayout
+Change 900 - 800 dark:bg-gray-800
+
+Swap all add before this for bg-slate-800 into 900 & -900  to -800
+
+- On HomePage Modal
+Make a reusable component for this repetitive code name as 'BaseModal.vue'.
+Copy code from PostModal, paste into BaseModal + edit the code.
+Make use of this BaseModal inside 'PostModal',
+
+// BaseModal
+Add dark:bg-slate-900, dark:bg-slate-800, dark:text-gray-100,dark:hover:bg-black/30. Also add some style for button:focus-visible.
+
+// PostModal on call PostUserHeader
+Add dark:text-gray-100
+
+## This html.dark is depend on class dark used at 'app.blade.php'.
+
+// Make the modal dark mode
+Add html.dark .ckeditor... under /* ckeditor update styling */ inside app.css.
+
+// GroupModal
+Swap to use BaseModal & add dark:text-gray-100 on first div.
+
+// TextInput
+Change dark:...-gray... into dark:..-slate...
+
+- On Group Profile Page
+
+// InviteUserModal
+Swap to use BaseModal & add dark:text-gray-100 on the first div.
+
+- On User Profile Page
+
+// Profile/View
+Add dark:bg-slate-950.
+
+// TabItem
+Add dark:bg-slate-900, dark:text-gray-200
+
+// UserListItem
+Add dark:text-gray-100, dark:bg-slate-900
+
+// Edit
+Change all dark:bg-gray-800 into dark:bg-slate-900.
+
+// Search
+Add dark:bg-slate-950, dark:text-gray-100.
+
+- Customize the scrollbar
+Remove .scrollbar-thin in front of ::-webkit-... under /* custom-scrollbar */ inside 'app.css' making it global custom for scrollbar
+Remove all usage of scrollbar-thin as class name at 'PostItem' for comment & 'Home' > 'PostList' component.
+Add golbal styling for dark version of scrollbar too.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement dark mode based on css class".
 
 
 
@@ -2065,15 +2149,7 @@ Commit all updated files into git with comment "Implement query optimization".
 
 
 
-
-
-
-
-
-
-
-
-## 0:00:00
+## 1:38:30
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
@@ -2081,7 +2157,6 @@ Commit all updated files into git with comment "Implement query optimization".
 
 - BUG: if you are the admin user of a group, you still can see the pin icon on a other member post that created on your group but inside their user profile page. Also visible in home page too.
 
-- BUG: Loadmore not working only on home page in large screen, only work in 1242 & lower. => add scrollbar-thin css class in PostList use inside 'Home' solve this.
 
 ### UNDERSTANDING REGEX: 
 ### (https?:\/\/[^\s<]+)

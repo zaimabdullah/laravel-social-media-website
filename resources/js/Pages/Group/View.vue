@@ -189,7 +189,7 @@
           {{ errors.cover }}
         </div>
 
-        <div class="group relative bg-white">
+        <div class="group relative bg-white dark:bg-slate-900">
           <!-- <pre>{{ user }}</pre> -->
 
           <!-- Cover Image -->
