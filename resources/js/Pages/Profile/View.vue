@@ -245,7 +245,7 @@
               <template v-if="posts">
                 <CreatePost />
                 <PostList v-if="posts.data.length" :posts="posts.data" class="flex-1" />
-                <div v-else class="py-8 text-center">
+                <div v-else class="py-8 text-center dark:text-white">
                   There are no posts created yet.
                 </div>
               </template>
@@ -281,7 +281,7 @@
             </TabPanel>
 
             <!-- under tab 'Photos' -->
-            <TabPanel key class="bg-white p-3 shadow">
+            <TabPanel key class="bg-white p-3 shadow dark:bg-slate-950">
               <TabPhotos :photos="photos" />
             </TabPanel>
 

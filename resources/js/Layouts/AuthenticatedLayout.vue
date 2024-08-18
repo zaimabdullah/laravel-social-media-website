@@ -6,6 +6,7 @@
   import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
   import { Link, router, usePage } from '@inertiajs/vue3';
   import TextInput from '@/Components/TextInput.vue';
+  import { MoonIcon } from '@heroicons/vue/24/solid';
 
   const showingNavigationDropdown = ref(false);
   const keywords = ref(usePage().props.search || '');
@@ -16,6 +17,17 @@
     router.get(route('search', encodeURIComponent(keywords.value)));
   }
 
+  function toggleDarkMode() {
+    const html = window.document.documentElement;
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      localStorage.setItem('darkMode', '0');
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('darkMode', '1');
+    }
+  }
+
 </script>
 
 <template>
@@ -23,8 +35,8 @@
     <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
       <!-- Primary Navigation Menu -->
       <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between gap-4 h-16">
-          <div class="flex">
+        <div class="flex items-center justify-between gap-2 h-16">
+          <div class="flex mr-2">
             <!-- Logo -->
             <div class="shrink-0 flex items-center">
               <Link :href="route('dashboard')">
@@ -34,9 +46,13 @@
 
           </div>
 
-          <div class="flex-1">
+          <div class="flex items-center gap-3 flex-1">
             <!-- <pre>{{ keywords }}</pre> -->
             <TextInput v-model="keywords" placeholder="Search on the website" class="w-full" @keyup.enter="search" />
+
+            <button @click="toggleDarkMode" class="dark:text-white">
+              <MoonIcon class="h-5 w-5" />
+            </button>
           </div>
 
           <div class="hidden sm:flex sm:items-center">

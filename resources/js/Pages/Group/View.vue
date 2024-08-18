@@ -189,7 +189,7 @@
           {{ errors.cover }}
         </div>
 
-        <div class="group relative bg-white dark:bg-slate-900">
+        <div class="group relative bg-white dark:bg-slate-950 dark:text-gray-100">
           <!-- <pre>{{ user }}</pre> -->
 
           <!-- Cover Image -->
@@ -278,7 +278,7 @@
       </div>
       <div class="border-t m-4 mt-0">
         <TabGroup>
-          <TabList class="flex bg-white">
+          <TabList class="flex bg-white dark:bg-slate-950">
 
             <!-- tab Posts -->
             <Tab v-slot="{ selected }" as="template">
@@ -313,7 +313,7 @@
               <template v-if="posts">
                 <CreatePost :group="group" />
                 <PostList v-if="posts.data.length" :posts="posts.data" class="flex-1" />
-                <div v-else class="py-8 text-center">
+                <div v-else class="py-8 text-center dark:text-white">
                   There are no posts in this group. Be the first and create it.
                 </div>
               </template>
@@ -340,18 +340,18 @@
                 <UserListItem v-for="user of requests" :user="user" :key="user.id" :for-approve="true"
                   class="shadow rounded-lg" @approve="approveUser" @reject="rejectUser" />
               </div>
-              <div v-else class="py-8 text-center dark:text-gray-100">
+              <div v-else class="py-8 text-center dark:text-white">
                 There are no pending requests.
               </div>
             </TabPanel>
 
             <!-- under tab 'Photos' -->
-            <TabPanel key class="bg-white p-3 shadow">
+            <TabPanel key class="bg-white p-3 shadow dark:bg-slate-950">
               <TabPhotos :photos="photos" />
             </TabPanel>
 
             <!-- under tab 'About' -->
-            <TabPanel key class="bg-white p-3 shadow">
+            <TabPanel key class="bg-white p-3 shadow dark:bg-slate-950 dark:text-gray-100">
               <template v-if="isCurrentUserAdmin">
                 <GroupForm :form="aboutForm" />
                 <PrimaryButton @click="updateGroup">

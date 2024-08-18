@@ -2114,10 +2114,13 @@ Change dark:...-gray... into dark:..-slate...
 // InviteUserModal
 Swap to use BaseModal & add dark:text-gray-100 on the first div.
 
+// Group/View
+Add dark:bg-slate-950, dark:text-white
+
 - On User Profile Page
 
 // Profile/View
-Add dark:bg-slate-950.
+Add dark:bg-slate-950, dark:text-white
 
 // TabItem
 Add dark:bg-slate-900, dark:text-gray-200
@@ -2131,6 +2134,9 @@ Change all dark:bg-gray-800 into dark:bg-slate-900.
 // Search
 Add dark:bg-slate-950, dark:text-gray-100.
 
+// TabPhotos
+Add dark:text-gray-100
+
 - Customize the scrollbar
 Remove .scrollbar-thin in front of ::-webkit-... under /* custom-scrollbar */ inside 'app.css' making it global custom for scrollbar
 Remove all usage of scrollbar-thin as class name at 'PostItem' for comment & 'Home' > 'PostList' component.
@@ -2139,10 +2145,15 @@ Add golbal styling for dark version of scrollbar too.
 #### Make Git Commit
 Commit all updated files into git with comment "Implement dark mode based on css class".
 
+- Make toggle btn for switching dark/light mode inside 'AuthenticatedLayout'
+Add btn + MoonIcon.
+Add new func toggleDarkMode().
+Add styling on div wrap the btn + icon.
+Add styling on the icon. 
+Add code for define default mode + get mode store inside localStorage inside 'app.js'.
 
-
-
-
+#### Make Git Commit
+Commit all updated files into git with comment "Implement switch to dark/light mode and saved the mode in localStorage".
 
 
 
@@ -2153,10 +2164,7 @@ Commit all updated files into git with comment "Implement dark mode based on css
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
-- Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
-
 - BUG: if you are the admin user of a group, you still can see the pin icon on a other member post that created on your group but inside their user profile page. Also visible in home page too.
-
 
 ### UNDERSTANDING REGEX: 
 ### (https?:\/\/[^\s<]+)
