@@ -2155,7 +2155,12 @@ Add code for define default mode + get mode store inside localStorage inside 'ap
 #### Make Git Commit
 Commit all updated files into git with comment "Implement switch to dark/light mode and saved the mode in localStorage".
 
+Issue: when try to open any user profile page => http://localhost/u/hilmi when not authenticated, got error cannot read properties of null id.
+Solve: rather than use authUser.id,  change to 
+<!-- Follow/Unfollow User btn --><div v-if="!isMyProfile"> at here inside 'Profile/View'.
 
+#### Make Git Commit
+Commit all updated files into git with comment "Fix Profile/View bug for guest users".
 
 
 

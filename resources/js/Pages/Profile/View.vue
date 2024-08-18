@@ -206,7 +206,7 @@
               </div>
 
               <!-- Follow/Unfollow User btn -->
-              <div v-if="authUser.id != user.id">
+              <div v-if="!isMyProfile">
                 <PrimaryButton v-if="!isCurrentUserFollower" @click="followUser">
                   Follow User
                 </PrimaryButton>
