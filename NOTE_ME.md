@@ -2029,12 +2029,7 @@ Add leftjoin + 2 where clause into $posts query in func index() inside 'ProfileC
 Add code for authUser.pinned_post_id ... in func pinUnpinPost() inside 'PostItem'.
 Add isPinned of computed property for either display Pin/Unpin nav words inside 'EditDeleteDropdown'.
 ### pin/unpin in user profile success
-
 Remove 'pinned' from 'PostResource'.
-
-BUG: if you are the admin user of a group, you still can see the pin icon on a other member post that created on your group but inside their user profile page. Also visible in home page too.
-
-BUG: Loadmore not working only on home page in large screen, only work in 1242 & lower.
 
 43. Debug and Optimize Number of Queries
 
@@ -2045,18 +2040,48 @@ BUG: Loadmore not working only on home page in large screen, only work in 1242 &
 #### Make Git Commit
 Commit all updated files into git with comment "Implement functionality to pin/unpin posts on group or user profile pages".
 
+- Debug number of query + optimize to reduce it
+Open localhost + localhost/telescope inside Queries, check all queries & optimize accordingly.
+Add 'user', 'group', 'attachments', 'comments.user', 'comments.reactions', in func postsForTimeline() inside 'Post' as this 3 is repeating in Queries, now it not repeated.
+
+Issue: For now, we paginate to 10, but if 100, there will be a lot of queries happen. 
+Solve:
+we need to make the number of queries static even how many paginate is used.
+
+44. Implement Dark Mode
+
+
+#### Make Git Commit
+Commit all updated files into git with comment "Implement query optimization".
 
 
 
 
 
 
-## 1:14:26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 0:00:00
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
 - Later we will do optimization on query of reactions and users that shown in telescope it was running a lot of times
 
+- BUG: if you are the admin user of a group, you still can see the pin icon on a other member post that created on your group but inside their user profile page. Also visible in home page too.
+
+- BUG: Loadmore not working only on home page in large screen, only work in 1242 & lower. => add scrollbar-thin css class in PostList use inside 'Home' solve this.
 
 ### UNDERSTANDING REGEX: 
 ### (https?:\/\/[^\s<]+)
