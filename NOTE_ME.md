@@ -2162,10 +2162,36 @@ Solve: rather than use authUser.id,  change to
 #### Make Git Commit
 Commit all updated files into git with comment "Fix Profile/View bug for guest users".
 
+45. Laravel Hosting with Github Actions
+
+- deploy on hostinger with github action
+
+#### Make Git Commit
+Commit all updated files into git with comment "Fix version in composer.json".
+
+In one of video before this, he add "ext-dom": "" inside composer.json, now he add "*" in it.
 
 
 
-## 1:38:30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 0:00:00
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
