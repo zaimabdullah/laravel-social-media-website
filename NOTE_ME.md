@@ -2169,7 +2169,7 @@ Commit all updated files into git with comment "Fix Profile/View bug for guest u
 #### Make Git Commit
 Commit all updated files into git with comment "Fix version in composer.json".
 
-In one of video before this, he add "ext-dom": "" inside composer.json, now he add "*" in it.
+In one of video before this MAYBE video 42. as it related to DOM manipulation, he add "ext-dom": "" inside composer.json, now he add "*" in it.
 
 
 
