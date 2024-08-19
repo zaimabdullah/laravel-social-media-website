@@ -53,7 +53,7 @@
             <option :selected="user.role === 'user'">user</option>
           </select>
           <button @click="$emit('delete', user)"
-            class="text-xs py-1.5 px-2 rounded bg-gray-700 hover:bg-gray-800 text-white ml-3 disabled:bg-gray-500"
+            class="text-xs py-1.5 px-2 rounded bg-gray-700 dark:bg-red-600 hover:bg-gray-800 dark:hover:bg-red-700 text-white ml-3 disabled:bg-gray-500 dark:disabled:bg-red-400"
             :disabled="disableRoleDropdown">delete</button>
         </div>
       </div>

@@ -313,11 +313,11 @@
               <template v-if="posts">
                 <CreatePost :group="group" />
                 <PostList v-if="posts.data.length" :posts="posts.data" class="flex-1" />
-                <div v-else class="py-8 text-center dark:text-white">
+                <div v-else class="py-8 text-center dark:text-gray-100">
                   There are no posts in this group. Be the first and create it.
                 </div>
               </template>
-              <div v-else class="py-8 text-center dark:text-white">
+              <div v-else class="py-8 text-center dark:text-gray-100">
                 You don't have permission to view these posts.
               </div>
             </TabPanel>
@@ -340,18 +340,18 @@
                 <UserListItem v-for="user of requests" :user="user" :key="user.id" :for-approve="true"
                   class="shadow rounded-lg" @approve="approveUser" @reject="rejectUser" />
               </div>
-              <div v-else class="py-8 text-center dark:text-white">
-                There are no pending requests.
+              <div v-else class="py-8 text-center dark:text-gray-100">
+                There are no pending requests
               </div>
             </TabPanel>
 
             <!-- under tab 'Photos' -->
-            <TabPanel key class="bg-white p-3 shadow dark:bg-slate-950">
+            <TabPanel>
               <TabPhotos :photos="photos" />
             </TabPanel>
 
             <!-- under tab 'About' -->
-            <TabPanel key class="bg-white p-3 shadow dark:bg-slate-950 dark:text-gray-100">
+            <TabPanel key>
               <template v-if="isCurrentUserAdmin">
                 <GroupForm :form="aboutForm" />
                 <PrimaryButton @click="updateGroup">

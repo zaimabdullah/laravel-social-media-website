@@ -245,11 +245,11 @@
               <template v-if="posts">
                 <CreatePost />
                 <PostList v-if="posts.data.length" :posts="posts.data" class="flex-1" />
-                <div v-else class="py-8 text-center dark:text-white">
+                <div v-else class="py-8 text-center dark:text-gray-100">
                   There are no posts created yet.
                 </div>
               </template>
-              <div v-else class="py-8 text-center dark:text-white">
+              <div v-else class="py-8 text-center dark:text-gray-100">
                 You don't have permission to view these posts.
               </div>
             </TabPanel>
@@ -262,7 +262,7 @@
               <div v-if="followers.length" class="grid grid-cols-2 gap-3">
                 <UserListItem v-for="user of followers" :user="user" :key="user.id" class="shadow rounded-lg" />
               </div>
-              <div v-else class="text-center py-8">
+              <div v-else class="text-center py-8 dark:text-gray-100">
                 User does not have followers.
               </div>
             </TabPanel>
@@ -275,13 +275,13 @@
               <div v-if="followings.length" class="grid grid-cols-2 gap-3">
                 <UserListItem v-for="user of followings" :user="user" :key="user.id" class="shadow rounded-lg" />
               </div>
-              <div v-else class="text-center py-8">
+              <div v-else class="text-center py-8 dark:text-gray-100">
                 The user is not following to anybody
               </div>
             </TabPanel>
 
             <!-- under tab 'Photos' -->
-            <TabPanel key class="bg-white p-3 shadow dark:bg-slate-950">
+            <TabPanel key>
               <TabPhotos :photos="photos" />
             </TabPanel>
 

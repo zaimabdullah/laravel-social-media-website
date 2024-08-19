@@ -2117,6 +2117,9 @@ Swap to use BaseModal & add dark:text-gray-100 on the first div.
 // Group/View
 Add dark:bg-slate-950, dark:text-white
 
+// GroupForm
+Add dark:text-gray-100
+
 - On User Profile Page
 
 // Profile/View
@@ -2171,6 +2174,22 @@ Commit all updated files into git with comment "Fix version in composer.json".
 
 In one of video before this MAYBE video 42. as it related to DOM manipulation, he add "ext-dom": "" inside composer.json, now he add "*" in it.
 
+Just watch the video, 
+
+for laravel, need to run 'npm run build' for prod, but in VPS(cmd of hosting), this npm is not-avail, they dont have nodejs or something like that, so one way to do that is, run 'npm run build' in local, check your .gitignore file must have /public/build folder as one of the ignore files from commit. Remove them from .gitignore, then commit into private repo github. Now in VPS, can just git pull them, DONE.
+
+But when implement cicd pipelines with GitHub actions, better not do that ways.
+
+'npm run build'/'npm' is avail within a Runner server through GitHub actions. So, just run 'npm run build' within Runner server then copy that into main hosting server. + every push of commit to github will auto-reflect into deploy project.
+
+This video teach how to deploy this project into hostinger using
+1. manual style
+2. GitHub actions style
+
+- Add register url link inside 'Login'.
+
+#### Make Git Commit
+Commit all updated files into git with comment "Fix UI bugs in dark mode in group and user view".
 
 
 
@@ -2181,21 +2200,13 @@ In one of video before this MAYBE video 42. as it related to DOM manipulation, h
 
 
 
-
-
-
-
-
-
-
-
-
-
-## 0:00:00
+## 0:43:40
 
 ## Depends on how am going to make the request, 1- if using the inertia form submission, then going to redirect the user back() 2- if using axios, then onsuccess + onerror
 
 - BUG: if you are the admin user of a group, you still can see the pin icon on a other member post that created on your group but inside their user profile page. Also visible in home page too.
+
+BUG: reaction/like count not display in posts at home page properly
 
 ### UNDERSTANDING REGEX: 
 ### (https?:\/\/[^\s<]+)
