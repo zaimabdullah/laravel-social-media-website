@@ -52,19 +52,6 @@
     }
   }
 
-  function openAttachment(ind) {
-    emit('attachmentClick', props.post, ind);
-  }
-
-  function sendReaction() {
-    axiosClient.post(route('post.reaction', props.post), {
-      reaction: 'like'
-    }).then(({ data }) => {
-      props.post.current_user_has_reaction = data.current_user_has_reaction;
-      props.post.num_of_reactions = data.num_of_reactions;
-    });
-  }
-
   function pinUnpinPost() {
     const form = useForm({
       forGroup: group?.id
@@ -87,6 +74,19 @@
           authUser.pinned_post_id = isPinned ? null : props.post.id;
         }
       }
+    });
+  }
+
+  function openAttachment(ind) {
+    emit('attachmentClick', props.post, ind);
+  }
+
+  function sendReaction() {
+    axiosClient.post(route('post.reaction', props.post), {
+      reaction: 'like'
+    }).then(({ data }) => {
+      props.post.current_user_has_reaction = data.current_user_has_reaction;
+      props.post.num_of_reactions = data.num_of_reactions;
     });
   }
 
@@ -127,7 +127,7 @@
             post.current_user_has_reaction ? 'bg-sky-100 dark:bg-sky-900 hover:bg-sky-200 dark:hover:bg-sky-950' : 'bg-gray-100 dark:bg-slate-900 hover:bg-gray-200 dark:hover:bg-slate-800'
           ]">
           <HandThumbUpIcon class="h-5 w-5" />
-          <span class="mr-2">{{ post.num_of_reactions }}</span>
+          <span class="mr-2">{{ post.num_of_reactions || 0 }}</span>
           {{ post.current_user_has_reaction ? 'Unlike' : 'Like' }}
         </button>
 

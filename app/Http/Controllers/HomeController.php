@@ -43,7 +43,6 @@ class HomeController extends Controller
     if ($request->wantsJson()) {
       return $posts;
     }
-
     $groups = Group::query()
       ->with('currentUserGroup')
       ->select(['groups.*'])

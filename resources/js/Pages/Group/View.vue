@@ -347,11 +347,14 @@
 
             <!-- under tab 'Photos' -->
             <TabPanel>
-              <TabPhotos :photos="photos" />
+              <TabPhotos v-if="photos" :photos="photos" />
+              <div v-else class="py-8 text-center dark:text-gray-100">
+                You don't have permission to view these photos.
+              </div>
             </TabPanel>
 
             <!-- under tab 'About' -->
-            <TabPanel key>
+            <TabPanel key class="dark:text-gray-100">
               <template v-if="isCurrentUserAdmin">
                 <GroupForm :form="aboutForm" />
                 <PrimaryButton @click="updateGroup">
