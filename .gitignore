@@ -18,3 +18,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+sql-queries-for-posts-in-home-page.sql
+sql-query-for-list-all-groups-in-home-page.sql
