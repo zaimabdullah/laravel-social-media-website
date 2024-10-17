@@ -13,36 +13,46 @@ This project is a Laravel-based social platform designed for managing user inter
 ## Web Pages
 |  Register                             |  Login                          |
 |-----------------------------------------|-----------------------------------------|
-|  |  |
+| ![Screenshot 2024-10-17 114936](https://github.com/user-attachments/assets/09d00fe2-dfff-4a2e-b644-df9a14df0c02) | ![Screenshot 2024-10-17 115015](https://github.com/user-attachments/assets/169bbd2e-9358-414d-bd47-a4cb2fb347cf) |
 
-|  Home                             |                            |
-|-----------------------------------------|-----------------------------------------|
-|  |  |
+|  Home                             |
+|-----------------------------------------|
+| ![Screenshot 2024-10-17 115120](https://github.com/user-attachments/assets/d9b36fc4-816f-4f5a-858b-7e25765d46e6) |
 
-|  Posts - Home                             |                            |
+|  Posts                             |                            |
 |-----------------------------------------|-----------------------------------------|
-|  |  |
+| ![Screenshot 2024-10-17 115216](https://github.com/user-attachments/assets/513920ae-8879-4cf1-b69a-2905895aa46c) | ![Screenshot 2024-10-17 115241](https://github.com/user-attachments/assets/a50df82f-6f4a-45b4-bd87-9d9e3217c209) |
+| ![Screenshot 2024-10-17 133411](https://github.com/user-attachments/assets/2cbf31f0-8cd4-4dba-9c75-5dd4ce22fe42) | ![Screenshot 2024-10-17 133503](https://github.com/user-attachments/assets/59b4da7e-b484-437e-a4d0-5e3cf4ec2dcc) |
 
-|  Comments & Like/Unlike                             |                            |
-|-----------------------------------------|-----------------------------------------|
-|  |  |
+|  Comments & Like/Unlike                             |
+|-----------------------------------------|
+| ![Screenshot 2024-10-17 133930](https://github.com/user-attachments/assets/8228b5f1-dc96-4d5f-95c4-0072694b0730) |
 
 |  Group                             |                            |
 |-----------------------------------------|-----------------------------------------|
-|  |  |
+| ![Screenshot 2024-10-17 115736](https://github.com/user-attachments/assets/18f27ece-a497-4cea-810a-a9518466d3f3) | ![Screenshot 2024-10-17 120013](https://github.com/user-attachments/assets/3386af28-2873-432e-bac9-229da90e142a) |
+| ![Screenshot 2024-10-17 120025](https://github.com/user-attachments/assets/0a75cc67-0e7f-45b4-977c-952b4059526c) | ![Screenshot 2024-10-17 120036](https://github.com/user-attachments/assets/70c356cb-dec0-4e38-83ca-fbb0c0233f9e) |
+| ![Screenshot 2024-10-17 120732](https://github.com/user-attachments/assets/a2223ccd-b508-4b18-a94c-91517e43dc21) | ![Screenshot 2024-10-17 120837](https://github.com/user-attachments/assets/1c4e380d-09ed-4ef1-81e7-cb0a74fd5d2f) |
+| ![Screenshot 2024-10-17 120850](https://github.com/user-attachments/assets/8d41dda8-73cf-487c-af60-3e3e338e66d7) |
 
-|  Profile                             |                            |
+|  Own Profile                            |                            |
 |-----------------------------------------|-----------------------------------------|
-|  |  |
-|  |  |
+| ![Screenshot 2024-10-17 120106](https://github.com/user-attachments/assets/5bef194d-d2b1-4f1c-ab34-bb8d3f93c230) | ![Screenshot 2024-10-17 120114](https://github.com/user-attachments/assets/8b7b137d-f8c0-4a48-a120-19d07897b19c) |
+| ![Screenshot 2024-10-17 120125](https://github.com/user-attachments/assets/ab5df321-289c-4aaa-9cd0-84fa5f30c3d9) | ![Screenshot 2024-10-17 120134](https://github.com/user-attachments/assets/8264d86e-7048-4f69-a5a4-de138283287b) |
+| ![Screenshot 2024-10-17 120149](https://github.com/user-attachments/assets/4a87f3cc-58c7-4d0b-80d2-4aff352094bc) |
+
+|  Other User Profile                             |                            |
+|-----------------------------------------|-----------------------------------------|
+| ![Screenshot 2024-10-17 120106](https://github.com/user-attachments/assets/c63cac53-f7da-4e9e-98af-2a005a469cb2) | ![Screenshot 2024-10-17 121009](https://github.com/user-attachments/assets/f93250a9-aef0-40f5-ac1a-717a3e895259) |
+
+|  Search                             |
+|-----------------------------------------|
+| ![Screenshot 2024-10-17 120251](https://github.com/user-attachments/assets/5380a279-b737-4c4b-8e59-c6f3f1d91d26) | 
 
 |  Email Notification                             |                            |
 |-----------------------------------------|-----------------------------------------|
-|  |  |
-
-|  Light / Dark Mode                             |                            |
-|-----------------------------------------|-----------------------------------------|
-|  |  |
+| ![Screenshot 2024-10-17 120430](https://github.com/user-attachments/assets/24d40fe2-4115-47ba-bfc3-ab65e4905abf) | ![Screenshot 2024-10-17 120505](https://github.com/user-attachments/assets/21ec991e-515f-47c6-87e1-ab14fd3a6dfe) |
+| ![Screenshot 2024-10-17 120902](https://github.com/user-attachments/assets/6120d5bc-01af-4519-a2a6-61d5a74b24d3) | ![Screenshot 2024-10-17 121020](https://github.com/user-attachments/assets/17190f2a-ad88-4331-a0ea-2aac796faba9) |
 
 ## Features
 - Post Management: Users can pin or unpin posts on their profiles or group pages, improving content organization and visibility.
