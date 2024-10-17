@@ -1,25 +1,66 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Notes Mobile Application
+Welcome to Laravel Social Media! This is a Social Media web application project that utilized the [Laravel](https://laravel.com/).
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
+- [Introduction](#introduction)
+- [Web Pages](#web-pages)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
 
-## About Laravel
+## Introduction
+This project is a Laravel-based social platform designed for managing user interactions within profile and group pages. It features post management, optimized database queries, and dark mode for enhanced user experience. The platform integrates AI capabilities for generating post content from prompts, although this functionality is currently inactive due to unpaid OpenAI credits. It is built with Inertia.js and Vue.js for front-end development, providing a modern, reactive user interface, and has been thoroughly tested in a local environment with MySQL as the database and Laravel Telescope for query monitoring.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Web Pages
+|  Register                             |  Login                          |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+|  Home                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+|  Posts - Home                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
+
+|  Comments & Like/Unlike                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
+
+|  Group                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
+
+|  Profile                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
+|  |  |
+
+|  Email Notification                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
+
+|  Light / Dark Mode                             |                            |
+|-----------------------------------------|-----------------------------------------|
+|  |  |
+
+## Features
+- Post Management: Users can pin or unpin posts on their profiles or group pages, improving content organization and visibility.
+- Friend and Group System: Users can add friends, create groups, invite others to groups, and join groups. Groups can be customized with profile and banner images.
+- Engagement Features: Users can create posts, comment on posts, like/unlike posts and comments, and receive email notifications for various actions such as new posts, comments, reactions, group invitations, and membership requests.
+- Search Functionality: The platform includes powerful search capabilities across all aspects, including user names, group names, and post content.
+- AI-Generated Post Content: An OpenAI API is integrated to generate post content from prompts (currently inactive due to credit requirements).
+- Query Optimization: Debugging and optimization of database queries reduce redundancy, enhancing performance. Static query limitations ensure consistent query numbers regardless of pagination.
+- Dark Mode: Dark mode is implemented for better accessibility in low-light environments, along with reusable modal components and styled scrollbars.
+- Email Notifications: Automated email notifications for key events, such as group invitations, post reactions, and membership approvals or rejections.
+
+## Technologies Used
+- Laravel: The PHP framework used to manage the backend, providing routing, controller features, and database integration.
+- Inertia.js & Vue.js: These are used for the front-end, offering a reactive user experience that integrates seamlessly with the Laravel backend.
+- MySQL: The database management system for storing user, group, and post data.
+- Telescope: A debugging tool for monitoring queries, requests, and overall application performance.
+- OpenAI API: Integrated (though inactive) for generating post content based on user prompts.
+- Dark Mode: Implemented using CSS and JavaScript for enhanced user experience in low-light settings.
 
 ## Learning Laravel
 
@@ -28,39 +69,3 @@ Laravel has the most extensive and thorough [documentation](https://laravel.com/
 You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
