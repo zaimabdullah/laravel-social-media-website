@@ -21,8 +21,11 @@ This project is a Laravel-based social platform designed for managing user inter
 
 |  Posts                             |                            |
 |-----------------------------------------|-----------------------------------------|
-| ![Screenshot 2024-10-17 115216](https://github.com/user-attachments/assets/513920ae-8879-4cf1-b69a-2905895aa46c) | ![Screenshot 2024-10-17 115241](https://github.com/user-attachments/assets/a50df82f-6f4a-45b4-bd87-9d9e3217c209) |
 | ![Screenshot 2024-10-17 133411](https://github.com/user-attachments/assets/2cbf31f0-8cd4-4dba-9c75-5dd4ce22fe42) | ![Screenshot 2024-10-17 133503](https://github.com/user-attachments/assets/59b4da7e-b484-437e-a4d0-5e3cf4ec2dcc) |
+
+|  Create New Posts                             |  Manage Posts                          |
+|-----------------------------------------|-----------------------------------------|
+| ![Screenshot 2024-10-17 115216](https://github.com/user-attachments/assets/513920ae-8879-4cf1-b69a-2905895aa46c) | ![Screenshot 2024-10-17 115241](https://github.com/user-attachments/assets/a50df82f-6f4a-45b4-bd87-9d9e3217c209) |
 
 |  Comments & Like/Unlike                             |
 |-----------------------------------------|
@@ -32,8 +35,14 @@ This project is a Laravel-based social platform designed for managing user inter
 |-----------------------------------------|-----------------------------------------|
 | ![Screenshot 2024-10-17 115736](https://github.com/user-attachments/assets/18f27ece-a497-4cea-810a-a9518466d3f3) | ![Screenshot 2024-10-17 120013](https://github.com/user-attachments/assets/3386af28-2873-432e-bac9-229da90e142a) |
 | ![Screenshot 2024-10-17 120025](https://github.com/user-attachments/assets/0a75cc67-0e7f-45b4-977c-952b4059526c) | ![Screenshot 2024-10-17 120036](https://github.com/user-attachments/assets/70c356cb-dec0-4e38-83ca-fbb0c0233f9e) |
-| ![Screenshot 2024-10-17 120732](https://github.com/user-attachments/assets/a2223ccd-b508-4b18-a94c-91517e43dc21) | ![Screenshot 2024-10-17 120837](https://github.com/user-attachments/assets/1c4e380d-09ed-4ef1-81e7-cb0a74fd5d2f) |
-| ![Screenshot 2024-10-17 120850](https://github.com/user-attachments/assets/8d41dda8-73cf-487c-af60-3e3e338e66d7) |
+
+|  Create New Group                             |
+|-----------------------------------------|
+| ![Screenshot 2024-10-17 120732](https://github.com/user-attachments/assets/a2223ccd-b508-4b18-a94c-91517e43dc21) | 
+
+| Invite User Join Group                   |                            |
+|-----------------------------------------|-----------------------------------------|
+| ![Screenshot 2024-10-17 120837](https://github.com/user-attachments/assets/1c4e380d-09ed-4ef1-81e7-cb0a74fd5d2f) | ![Screenshot 2024-10-17 120850](https://github.com/user-attachments/assets/8d41dda8-73cf-487c-af60-3e3e338e66d7) |
 
 |  Own Profile                            |                            |
 |-----------------------------------------|-----------------------------------------|
@@ -43,7 +52,7 @@ This project is a Laravel-based social platform designed for managing user inter
 
 |  Other User Profile                             |                            |
 |-----------------------------------------|-----------------------------------------|
-| ![Screenshot 2024-10-17 120106](https://github.com/user-attachments/assets/c63cac53-f7da-4e9e-98af-2a005a469cb2) | ![Screenshot 2024-10-17 121009](https://github.com/user-attachments/assets/f93250a9-aef0-40f5-ac1a-717a3e895259) |
+| ![Screenshot 2024-10-17 121009](https://github.com/user-attachments/assets/f93250a9-aef0-40f5-ac1a-717a3e895259) |
 
 |  Search                             |
 |-----------------------------------------|
