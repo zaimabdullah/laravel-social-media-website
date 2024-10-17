@@ -1,4 +1,4 @@
-# Notes Mobile Application
+# Laravel Social Media
 Welcome to Laravel Social Media! This is a Social Media web application project that utilized the [Laravel](https://laravel.com/).
 
 ## Table of Contents
