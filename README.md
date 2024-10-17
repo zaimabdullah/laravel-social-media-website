@@ -51,7 +51,7 @@ This project is a Laravel-based social platform designed for managing user inter
 - Search Functionality: The platform includes powerful search capabilities across all aspects, including user names, group names, and post content.
 - AI-Generated Post Content: An OpenAI API is integrated to generate post content from prompts (currently inactive due to credit requirements).
 - Query Optimization: Debugging and optimization of database queries reduce redundancy, enhancing performance. Static query limitations ensure consistent query numbers regardless of pagination.
-- Dark Mode: Dark mode is implemented for better accessibility in low-light environments, along with reusable modal components and styled scrollbars.
+- Light/Dark Mode: Dark mode is implemented for better accessibility in low/high-light environments, along with reusable modal components and styled scrollbars.
 - Email Notifications: Automated email notifications for key events, such as group invitations, post reactions, and membership approvals or rejections.
 
 ## Technologies Used
@@ -61,7 +61,6 @@ This project is a Laravel-based social platform designed for managing user inter
 - MySQL: The database management system for storing user, group, and post data.
 - Telescope: A debugging tool for monitoring queries, requests, and overall application performance.
 - OpenAI API: Integrated (though inactive) for generating post content based on user prompts.
-- Dark Mode: Implemented using CSS and JavaScript for enhanced user experience in low-light settings.
 
 ## Learning Laravel
 
