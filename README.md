@@ -23,9 +23,13 @@ This project is a Laravel-based social platform designed for managing user inter
 |-----------------------------------------|-----------------------------------------|
 | ![Screenshot 2024-10-17 133411](https://github.com/user-attachments/assets/2cbf31f0-8cd4-4dba-9c75-5dd4ce22fe42) | ![Screenshot 2024-10-17 133503](https://github.com/user-attachments/assets/59b4da7e-b484-437e-a4d0-5e3cf4ec2dcc) |
 
-|  Create New Posts                             |  Manage Posts                          |
+|  Create New Posts                             |                          |
 |-----------------------------------------|-----------------------------------------|
-| ![Screenshot 2024-10-17 115216](https://github.com/user-attachments/assets/513920ae-8879-4cf1-b69a-2905895aa46c) | ![Screenshot 2024-10-17 115241](https://github.com/user-attachments/assets/a50df82f-6f4a-45b4-bd87-9d9e3217c209) |
+| ![Screenshot 2024-10-17 115216](https://github.com/user-attachments/assets/513920ae-8879-4cf1-b69a-2905895aa46c) | ![Screenshot 2024-10-17 140747](https://github.com/user-attachments/assets/322431a9-973d-4b11-aeec-07d687af293f) |
+
+|  Manage Posts                          |
+|-----------------------------------------|
+| ![Screenshot 2024-10-17 115241](https://github.com/user-attachments/assets/a50df82f-6f4a-45b4-bd87-9d9e3217c209) |
 
 |  Comments & Like/Unlike                             |
 |-----------------------------------------|
