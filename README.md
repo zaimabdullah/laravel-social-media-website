@@ -57,6 +57,7 @@ This project is a Laravel-based social platform designed for managing user inter
 ## Technologies Used
 - Laravel: The PHP framework used to manage the backend, providing routing, controller features, and database integration.
 - Inertia.js & Vue.js: These are used for the front-end, offering a reactive user experience that integrates seamlessly with the Laravel backend.
+- Tailwind CSS: A utility-first CSS framework used for styling.
 - MySQL: The database management system for storing user, group, and post data.
 - Telescope: A debugging tool for monitoring queries, requests, and overall application performance.
 - OpenAI API: Integrated (though inactive) for generating post content based on user prompts.
